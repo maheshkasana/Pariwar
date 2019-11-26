@@ -3,14 +3,14 @@ package com.mkasana.FamilyTree.Pariwar.model;
 public class LoginResponse {
 
     private String userName;
-    private String AuthTocken;
+    private String AuthToken;
     private int id;
 
     @Override
     public String toString() {
         return "LoginResponse{" +
                 "userName='" + userName + '\'' +
-                ", AuthTocken='" + AuthTocken + '\'' +
+                ", AuthTocken='" + AuthToken + '\'' +
                 ", id=" + id +
                 '}';
     }
@@ -18,9 +18,9 @@ public class LoginResponse {
     public LoginResponse() {
     }
 
-    public LoginResponse(String userName, String authTocken, int id) {
+    public LoginResponse(String userName, String authToken, int id) {
         this.userName = userName;
-        AuthTocken = authTocken;
+        AuthToken = authToken;
         this.id = id;
     }
 
@@ -32,12 +32,12 @@ public class LoginResponse {
         this.userName = userName;
     }
 
-    public String getAuthTocken() {
-        return AuthTocken;
+    public String getAuthToken() {
+        return AuthToken;
     }
 
-    public void setAuthTocken(String authTocken) {
-        AuthTocken = authTocken;
+    public void setAuthToken(String authToken) {
+        AuthToken = authToken;
     }
 
     public int getId() {

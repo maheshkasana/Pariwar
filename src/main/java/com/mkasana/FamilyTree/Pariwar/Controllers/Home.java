@@ -15,7 +15,7 @@ public class Home {
 
     @RequestMapping("/index")
     public String index() {
-        System.out.println("in /Home Controller");
+        System.out.println("in /index Controller");
         return "index";
     }
 }
