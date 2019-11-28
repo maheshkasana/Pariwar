@@ -16,6 +16,13 @@ function sendHttpRequest()
 }
 
 
+function responseFromLoginCheck(details)
+{
+    alert("In responseFromLoginCheck");
+    alert(details);
+}
+
+
 //check the login credentials
 function check_login_user()
 {
@@ -26,12 +33,11 @@ function check_login_user()
 
     requestJSON = new LoginRequestBody(username,password);
 
-    /*
     xhttp.onreadystatechange = function()
     {
   	    if(this.readyState<4)
   	    {
-//  	   	document.getElementById('loading').innerHTML="<img src='img/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
+     	   	document.getElementById('login_loading').innerHTML="<img src='images/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
   	    }
         else if(this.readyState==4)
             {
@@ -39,32 +45,27 @@ function check_login_user()
     		    {
       		        if(this.responseText==1)
                     {
-                        alert(this.responseText);
-//                      document.getElementById('loading').innerHTML="<p style='color: green;'><b>Login successful, and im redirecting you wait......</b></p>";
-                        setCookie(user_kno);
-//                      window.location.href = "user_file.php";
+                        document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
+                        responseFromLoginCheck(this.responseText);
                     }
                     else
                     {
-                        alert(this.responseText);
-//                      document.getElementById('loading').innerHTML="<p style='color: red;'><b>Kno or password doesnt existed</b></p>" ;
+                        document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
+                        responseFromLoginCheck(this.responseText);
                     }
 		   	    }
      		    else
      		    {
-     		        alert(this.responseText);
-//     		        document.getElementById('loading').innerHTML="<p style='color: red;'><b>Login Failed... </b></p>";
-
+     		        document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Login Failed... </b></p>";
     		    }
 		    }
     };
-*/
 
-  xhttp.open('POST', "http://localhost:8081/login/validate", false);
-  xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
-  xhttp.setRequestHeader("Accept","application/json");
-  xhttp.setRequestHeader("Content-Type","application/json");
-  xhttp.send(JSON.stringify(requestJSON));
-  alert(this.responseText);
-  return this.responseText;
+    xhttp.open('POST', "http://localhost:8081/login/validate", true);
+    xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
+    xhttp.setRequestHeader("Accept","application/json");
+    xhttp.setRequestHeader("Content-Type","application/json");
+    xhttp.send(JSON.stringify(requestJSON));
+    //location.replace("http://localhost:8081/index")
+    return this.responseText;
 }
