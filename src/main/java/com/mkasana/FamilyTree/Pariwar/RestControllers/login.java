@@ -1,4 +1,4 @@
-package com.mkasana.FamilyTree.Pariwar.RestController;
+package com.mkasana.FamilyTree.Pariwar.RestControllers;
 
 import com.mkasana.FamilyTree.Pariwar.login.LoginValidation;
 import com.mkasana.FamilyTree.Pariwar.model.LoginResponse;
