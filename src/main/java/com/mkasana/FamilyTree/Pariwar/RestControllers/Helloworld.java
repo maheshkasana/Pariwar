@@ -16,6 +16,7 @@ public class Helloworld {
 
         try {
 
+
             /*
             //DatabaseConnectionImpl databaseConnection =  new DatabaseConnectionImpl();
             ResultSet result = databaseConnection.executeQuery("select  * from testKasana");
@@ -23,7 +24,7 @@ public class Helloworld {
                 System.out.println(result.getString("id")+", "+result.getString("name")+", "+result.getString("lastname")+"\n");
             }
             */
-            String result = databaseConnection.executeScript("test.sql");
+            //String result = databaseConnection.executeScript("test.sql");
             //Initialize the script runner
             //ScriptRunner sr = new ScriptRunner(con);
             //Creating a reader object
@@ -32,7 +33,7 @@ public class Helloworld {
             //sr.runScript("select * from testKasana");
         }
         catch(Exception e) {
-            System.out.println("Fat gya bhai try");
+            System.out.println("Fat gya bhai try"+e);
         }
         return "Yo Bro Kasana, Tujh se na ho payega";
     }

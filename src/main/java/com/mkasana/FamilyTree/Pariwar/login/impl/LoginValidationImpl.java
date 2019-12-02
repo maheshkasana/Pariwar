@@ -9,7 +9,7 @@ public class LoginValidationImpl implements LoginValidation {
 
     @Override
     public LoginResponse validateUser() {
-        LoginResponse login = new LoginResponse("MkasanaGurjar","asdasasd",101);
+        LoginResponse login = new LoginResponse("MkasanaGurjar","asdasasd",101, Boolean.TRUE);
         return login;
     }
 }

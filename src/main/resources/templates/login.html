@@ -1,10 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all" href="static/css/login.css" th:href="@{css/login.css}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="js/login.js"></script>
+<style>
+        body {
+            background: url(images/NetworkHome.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+             background-size: cover;
+            }
+
+        html, body
+        {
+             height: 100%;
+             width: 100%;
+        }
+     </style>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pariwar</title>
 </head>
-<body>
+
+<body class="bodyclass" onload="checkIfAlreadyLoggedIn()">
+
+<div style=" width : 100%; height: 20%;"></div>
+<div style="width: 100%; height: 10%;">
+    <solid><h1 style="color: white; font-size:48px;"><center>Pariwar</center></h1></solid>
+</div>
+
+<div style=" width : 100%; margin-top: 5%;">
+    <button style="width: 20%; margin-left: 25%;" onclick="document.getElementById('login').style.display='block'" ><h3 style="font-size:18px;">Login&nbsp;&nbsp;<i class="fa fa-sign-in" style="font-size:18px;"></i></h3></button>
+    <button style="width: 20%; margin-left: 10%;"  onclick="document.getElementById('register').style.display='block'"><h3 style="font-size:18px;">Register&nbsp;&nbsp;<i class="fa fa-pencil-square-o" style="font-size:18px;"></i></h3></button>
+</div>
+<div style=" width : 100%; margin-top: 5%;">
+    <button style="width: 50%; margin-left: 25%;" onclick="document.getElementById('search').style.display='block'"><h3 style="font-size:18px;">Search&nbsp;&nbsp;<i class="fa fa-search" style="font-size:18px;"></i></h3></button>
+</div>
+
+<div id="login" class="modal">
+    <div class="modal-content animate">
+        <div class="imgcontainer">
+            <span  class="close" onclick="document.getElementById('login').style.display='none'" title="Close Modal">&times;</span>
+            <img style="width: 10%;" src="images/logo1.png" alt="User" class="avatar">
+        </div>
+        <div class="container">
+            <label><b>Username or Phone</b></label>
+            <input type="text" placeholder="Enter Username or Phone number" id="login_username" name="login_username" required><div id="login_username_valid"></div>
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="login_password" name="login_password" required><div id="login_password_valid"></div>
+            <button onclick="check_login_user()">Login</button>
+            <div id="login_loading" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('login').style.display='none'"  class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+    </div>
+</div>
+
+<div id="register" class="modal">
+    <div class="modal-content animate">
+        <div class="imgcontainer">
+            <span class="close" onclick="document.getElementById('register').style.display='none'" title="Close Modal">&times;</span>
+            <img style="width: 10%;" src="images/logo1.png" alt="Register" class="avatar">
+        </div>
+        <div class="container" style="width:50%;">
+            <label><b>First Name</b></label>
+            <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  ><div id="valid_register_firstname"></div>
+            <label><b>Last Name</b></label>
+            <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
+            <label><b>Email Address</b></label>
+            <input type="text" placeholder="Email" id="register_email" name="register_email"  required  ><div id="valid_register_email"></div>
+            <label><b>Phone Number</b></label>
+            <input type="text" placeholder="Phone Number" id="register_phone" name="register_phone"  required  ><div id="valid_register_phone"></div>
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Username" id="register_username" name="register_username"  required  ><div id="valid_register_username"></div>
+            <label><b>State</b></label>
+            <input type="text" placeholder="State" id="register_state" name="register_state"  required  ><div id="valid_register_state"></div>
+            <label><b>District</b></label>
+            <input type="text" placeholder="District" id="register_district" name="register_district"  required  ><div id="valid_register_district"></div>
+            <label><b>Village/Town/Street</b></label>
+            <input type="text" placeholder="Village/Town/Street" id="register_localarea" name="register_localarea"  required  ><div id="valid_register_localareat"></div>
+            <label><b>Pin Code</b></label>
+            <input type="text" placeholder="Pin Code" id="register_pincode" name="register_pincode"  required  ><div id="valid_register_pincode"></div>
+            <label><b>Religion</b></label>
+            <input type="text" placeholder="Religion" id="register_religion" name="register_religion"  required  ><div id="valid_register_religion"></div>
+            <label><b>Cast</b></label>
+            <input type="text" placeholder="Cast" id="register_cast" name="register_cast"  required  ><div id="valid_register_cast"></div>
+            <label><b>Sub Cast</b></label>
+            <input type="text" placeholder="Sub Cast" id="register_subcast" name="register_subcast"  required  ><div id="valid_register_subcast"></div>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="register_password"  required  name="register_password"><div id="valid_register_password"></div>
+            <label><b>Re-Enter Password</b></label>
+            <input type="password" placeholder="Re-Enter Password" id="register_verify_password"  required  name="register_verify_password"><div id="valid_register_verify_password"></div>
+
+            <button onclick="showCookies()">Register</button>
+            <div id="loading_register" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button"  class="cancelbtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+a
+
+<div id="search" class="modal">
+    <div class="modal-content animate">
+        <div class="imgcontainer">
+            <span class="close" onclick="document.getElementById('search').style.display='none'"  title="Close Modal">&times;</span>
+            <img style="width: 10%;" src="images/logo1.png" alt="SubStation" class="avatar">
+        </div>
+
+        <div class="container">
+            <label><b>Search</b></label>
+            <input type="text" placeholder="Enter Station ID" id="adam_s_id" name="adam_s_id"  required  ><div id="valid_sid"></div>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="adam_psw"  required  name="adam_psw">
+
+            <button onclick="resetCookie()">Login</button>
+            <div id="loading_adam" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button"  class="cancelbtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

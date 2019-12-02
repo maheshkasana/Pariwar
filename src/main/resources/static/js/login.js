@@ -5,7 +5,15 @@ class LoginRequestBody {
     }
 }
 
-function sendHttpRequest()
+class LoginResponseBody {
+    constructor(username, token, status) {
+        this.username = username;
+        this.token = token;
+        this.status = status;
+    }
+}
+
+function TestsendHttpRequest()
 {
     alert("in Sed HTTP");
     var xmlHttp = new XMLHttpRequest();
@@ -15,13 +23,71 @@ function sendHttpRequest()
     return xmlHttp.responseText;
 }
 
+function setCookie(username, token,id, expiresminutes) {
+  var d = new Date();
+  d.setTime(d.getTime() + (expiresminutes*1000));
+  var expires = "expires="+ d.toUTCString();
+  var cookiesString= "pariwarId=" + id.toString() + ", pariwarUsername=" + username + ", pariwarToken=" + token + ", " + expires + ", pariwarStatus=1";
+  document.cookie = cookiesString;
+}
+
+function resetCookie() {
+  var res = document.cookie;
+  var multiple = res.split(",");
+  for(var i = 0; i < multiple.length; i++) {
+      var key = multiple[i].split("=");
+      document.cookie = key[0]+" =; expires = Thu, 01 Jan 1970 00:00:00 UTC";
+      }
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(',');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+function showCookies()
+{
+    alert("got Cookies username : "+ getCookie("pariwarUsername"));
+    alert("got Cookies Token : "+ getCookie("pariwarToken"));
+    alert("got Cookies status : "+ getCookie("pariwarStatus"));
+    alert("got Cookies id : "+ getCookie("pariwarId"));
+
+}
+
+function checkIfAlreadyLoggedIn() {
+    var userName = getCookie("pariwarUsername");
+    var token = getCookie("pariwarToken");
+    var status = getCookie("pariwarStatus");
+    var id = getCookie("pariwarId");
+
+    if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
+        location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
+}
 
 function responseFromLoginCheck(details)
 {
-    alert("In responseFromLoginCheck");
-    alert(details);
+    var response = JSON.parse(details);
+    if(response.status==true) {
+        document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
+        setCookie(response.userName,response.authToken,response.id,5*60);
+        location.replace("http://localhost:8081/home")
+    }
+    else {
+        document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
+    }
 }
-
 
 //check the login credentials
 function check_login_user()
@@ -62,7 +128,7 @@ function check_login_user()
     };
 
     xhttp.open('POST', "http://localhost:8081/login/validate", true);
-    xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
+    //xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
     xhttp.setRequestHeader("Accept","application/json");
     xhttp.setRequestHeader("Content-Type","application/json");
     xhttp.send(JSON.stringify(requestJSON));

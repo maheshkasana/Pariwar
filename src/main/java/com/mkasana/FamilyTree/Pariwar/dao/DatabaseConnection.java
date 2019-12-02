@@ -4,12 +4,19 @@ import java.sql.ResultSet;
 
 public interface DatabaseConnection {
 
-    /**
-     * To Execute Query on database
-     * @param query
-     * @return
-     */
+    public boolean close() throws Exception;
+
+    public boolean commit() throws Exception;
+
+    public boolean getAutoCommit() throws Exception;
+
+    public void changeAutoCommit(boolean autoCommit) throws Exception;
+
+    public boolean rollback() throws Exception;
+
     public ResultSet executeQuery(String query) throws Exception;
+
+    public int executeUpdate(String query) throws Exception;
 
     public String executeScript(String path) throws Exception;
 }
