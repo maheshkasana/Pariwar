@@ -72,8 +72,8 @@ function checkIfAlreadyLoggedIn() {
     var status = getCookie("pariwarStatus");
     var id = getCookie("pariwarId");
 
-    if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
-        location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
+    //if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
+        //location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
 }
 
 function responseFromLoginCheck(details)
@@ -82,7 +82,7 @@ function responseFromLoginCheck(details)
     if(response.status==true) {
         document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
         setCookie(response.userName,response.authToken,response.id,5*60);
-        location.replace("http://localhost:8081/home")
+        location.replace("http://localhost:8081/home?username="+response.userName+"&token="+response.authToken+"&userId="+response.id);
     }
     else {
         document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
@@ -128,7 +128,7 @@ function check_login_user()
     };
 
     xhttp.open('POST', "http://localhost:8081/login/validate", true);
-    //xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
+    xhttp.setRequestHeader("tokenfortesting","TokenForTesting");
     xhttp.setRequestHeader("Accept","application/json");
     xhttp.setRequestHeader("Content-Type","application/json");
     xhttp.send(JSON.stringify(requestJSON));

@@ -19,16 +19,16 @@ public class login {
     private LoginValidation loginValidation;
 
     @RequestMapping(value = "/login/validate", method = RequestMethod.POST, headers="Accept=application/json")
-    private LoginResponse loginValidate(@RequestBody LoginRequestBody loginRequestBody, @RequestHeader HttpHeaders headers) {
+    private LoginResponse loginValidate(@RequestBody LoginRequestBody loginRequestBody, @RequestHeader HttpHeaders headers) throws Exception {
 
-        /*
+
         headers.forEach((key, value) -> {
            System.out.printf("Parameter : %s, Value %s\n",key, value);
         });
 
         System.out.printf("Body Passed : %s\n",loginRequestBody.toString());
-        */
 
-       return loginValidation.validateUser();
+
+       return loginValidation.validateUser(loginRequestBody);
     }
 }

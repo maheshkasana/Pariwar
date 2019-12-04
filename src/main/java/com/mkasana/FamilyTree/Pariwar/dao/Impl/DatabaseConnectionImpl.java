@@ -1,6 +1,7 @@
 package com.mkasana.FamilyTree.Pariwar.dao.Impl;
 
 import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
+import com.mkasana.FamilyTree.Pariwar.utility.PariwarException;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -14,10 +15,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 import java.nio.file.Files;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 @Component
@@ -32,7 +32,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * this is Constructor if dor initilizing all the required values
      * @throws Exception
      */
-    public DatabaseConnectionImpl() throws Exception
+    public DatabaseConnectionImpl() throws PariwarException
     {
         mysqlUrl = "jdbc:mysql://localhost/Pariwar";
         try {
@@ -42,7 +42,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
         catch(Exception e)
         {
             connection = null;
-            throw(new Exception("DatabaseConnectionImpl:DatabaseConnectionImpl() Failed to get connection object to the database"));
+            throw(new PariwarException("DatabaseConnectionImpl:DatabaseConnectionImpl() Failed to get connection object to the database"));
         }
     }
 
@@ -58,7 +58,21 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
             connection.close();
             return true;
         }
-        return false;
+       else
+           throw  new PariwarException("DatabaseConnectionImpl:close() : Connection is broken or Connection is null, failed to close connection");
+    }
+
+    /**
+     * this will return the status in any case
+     * @return
+     * @throws Exception
+     */
+    public boolean isClosed() throws Exception
+    {
+        if(connection!=null)
+            return connection.isClosed();
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:isClose() : Connection is broken or Connection is null, failed to get connection status");
     }
 
     /**
@@ -70,7 +84,8 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
     {
         if(connection!=null)
             return connection.getAutoCommit();
-        return false;
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:getAutoCommit() : Connection is broken or Connection is null, failed to AutoCommit status");
     }
 
     /**
@@ -84,6 +99,8 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
         {
             connection.setAutoCommit(autoCommit);
         }
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:changeAutoCommit() : Connection is broken or Connection is null, failed to change AutoCommit status");
     }
 
     /**
@@ -98,7 +115,8 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
             connection.commit();
             return true;
         }
-        return false;
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:commit() : Connection is broken or Connection is null, failed to Commit changes");
     }
 
 
@@ -114,7 +132,8 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
             connection.rollback();
             return true;
         }
-        return false;
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:rollback() : Connection is broken or Connection is null, failed to rollback changes");
     }
 
     /**
@@ -125,9 +144,13 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      */
     public ResultSet executeQuery(String query) throws Exception
     {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet=statement.executeQuery(query);
-        return resultSet;
+        if(connection!=null) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet;
+        }
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:executeQuery() : Connection is broken or Connection is null, failed to execute Query");
     }
 
     /**
@@ -138,9 +161,35 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      */
     public int executeUpdate(String query) throws Exception
     {
-        Statement statement = connection.createStatement();
-        int returned =statement.executeUpdate(query);
-        return returned;
+        if(connection!=null) {
+            Statement statement = connection.createStatement();
+            int returned = statement.executeUpdate(query);
+            return returned;
+        }
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:executeUpdate() : Connection is broken or Connection is null, failed to execute Update");
+    }
+
+
+    /**
+     * this function is to run the Stored Procedure with input as XML and Output as XML
+     * @param storedProcedureName
+     * @param inputXML
+     * @return Returns the SPs Output XML
+     * @throws SQLException
+     */
+    public String callStoredProcedure(String storedProcedureName, String inputXML) throws Exception {
+
+        if (connection != null) {
+
+            CallableStatement statement = connection.prepareCall("{call " + storedProcedureName + "(?,?)}");
+            statement.setString(1, inputXML);
+            statement.registerOutParameter(2, Types.VARCHAR);
+            statement.execute();
+            return statement.getString(2);
+        }
+        else
+            throw  new PariwarException("DatabaseConnectionImpl:callStoredProcedure() : Connection is broken or Connection is null, failed to execute callStoredProcedure");
     }
 
 
