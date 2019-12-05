@@ -61,23 +61,63 @@
     </div>
 </div>
 
-<div id="register" class="modal">
-    <div class="modal-content animate">
+<div id="register" class="modalRegister">
+    <div class="modal-content-register animate">
         <div class="imgcontainer">
             <span class="close" onclick="document.getElementById('register').style.display='none'" title="Close Modal">&times;</span>
-            <img style="width: 10%;" src="images/logo1.png" alt="Register" class="avatar">
+            <img style="width: 5%;" src="images/logo1.png" alt="Register" class="avatar">
         </div>
-        <div class="container" style="width:50%;">
-            <label><b>First Name</b></label>
-            <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  ><div id="valid_register_firstname"></div>
-            <label><b>Last Name</b></label>
-            <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
-            <label><b>Email Address</b></label>
-            <input type="text" placeholder="Email" id="register_email" name="register_email"  required  ><div id="valid_register_email"></div>
-            <label><b>Phone Number</b></label>
-            <input type="text" placeholder="Phone Number" id="register_phone" name="register_phone"  required  ><div id="valid_register_phone"></div>
-            <label><b>Username</b></label>
-            <input type="text" placeholder="Username" id="register_username" name="register_username"  required  ><div id="valid_register_username"></div>
+        <button type="button" onclick="ToppleTheRegisterDiv('1')" class="Registercollapsible"><div id="RegisterDevButtonIcon1"><i class="fa fa-minus" style="font-size:20px;color:white; vertical-align: middle;">      Personal Details</i></div></button>
+        <div class="RegistercontentDev1" id="RegisterDevId1">
+            <div style="column-count: 2; ">
+                <div>
+                    <label><b>Username</b></label>
+                    <input type="text" placeholder="Username / Email / Phone" id="register_username" name="register_username"  required  ><div id="valid_register_username"></div>
+                </div>
+                <div>
+                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="min-width: 160px; margin-top:28px; width:50%;">Check Availability</button>
+                </div>
+            </div>
+            <div style="column-count: 2; ">
+                <div>
+                    <label><b>First Name</b></label>
+                    <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  ><div id="valid_register_firstname"></div>
+                </div>
+                <div>
+                    <div>
+                        <label><b>Gender</b></label>
+                    </div>
+                    <div>
+                        <select id="register_gender" name="register_gender" class="button" style=" min-width: 160px; margin-top:6px; font-size:12px; vertical-align: middle; width:50%; height:34px; border-radius: 0px;">
+                            <option value="0">Select Gender :</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="column-count: 2; ">
+                <div>
+                    <label><b>Last Name</b></label>
+                    <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
+                </div>
+                <div>
+                    <div>
+                        <label><b>Date of Birth</b></label>
+                    </div>
+                    <div>
+                        <input type="date" id="register_dateOfBirth" value="1995-07-03" style=" min-width: 160px; margin-top:6px; font-size:16px; vertical-align: middle; width:50%; height:34px; border-radius: 0px;">
+                    </div>
+                </div>
+            </div>
+                <label><b>Email Address</b></label>
+                <input type="text" placeholder="Email" id="register_email" name="register_email"  required  ><div id="valid_register_email"></div>
+                <label><b>Phone Number</b></label>
+                <input type="text" placeholder="Phone Number" id="register_phone" name="register_phone"  required  ><div id="valid_register_phone"></div>
+
+        </div>
+        <button type="button" onclick="ToppleTheRegisterDiv('2')" class="Registercollapsible"><div id="RegisterDevButtonIcon2"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Personal Details</i></div></button>
+        <div class="Registercontent" id="RegisterDevId2">
             <label><b>State</b></label>
             <input type="text" placeholder="State" id="register_state" name="register_state"  required  ><div id="valid_register_state"></div>
             <label><b>District</b></label>
@@ -92,22 +132,22 @@
             <input type="text" placeholder="Cast" id="register_cast" name="register_cast"  required  ><div id="valid_register_cast"></div>
             <label><b>Sub Cast</b></label>
             <input type="text" placeholder="Sub Cast" id="register_subcast" name="register_subcast"  required  ><div id="valid_register_subcast"></div>
-
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" id="register_password"  required  name="register_password"><div id="valid_register_password"></div>
             <label><b>Re-Enter Password</b></label>
             <input type="password" placeholder="Re-Enter Password" id="register_verify_password"  required  name="register_verify_password"><div id="valid_register_verify_password"></div>
+        </div>
 
-            <button onclick="showCookies()">Register</button>
-            <div id="loading_register" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
+        <div class="Registercontainer">
+            <button onclick="showCookies()" style="font-size:20px;"><i class="fa fa-pencil-square-o" style="font-size:18px;"></i>  Register</button>
+            <div id="loading_register" style="z-index: 1;  width: 100%; height: 10%;"></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">
-            <button type="button"  class="cancelbtn">Cancel</button>
+            <button type="button" onclick="document.getElementById('register').style.display='none'"  class="cancelbtn">Cancel</button>
         </div>
     </div>
 </div>
 
-a
 
 <div id="search" class="modal">
     <div class="modal-content animate">
@@ -131,7 +171,6 @@ a
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -135,3 +135,19 @@ function check_login_user()
     //location.replace("http://localhost:8081/index")
     return this.responseText;
 }
+
+
+/**
+* This Function is to Toggle the State of the SubDiv in Registration form.
+*
+*/
+function ToppleTheRegisterDiv(divName) {
+   var div = document.getElementById("RegisterDevId"+divName);
+   if (div.style.display === "block") {
+         div.style.display = "none";
+         document.getElementById('RegisterDevButtonIcon'+divName).innerHTML='<i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle;">      Personal Details</i>'
+       } else {
+         div.style.display = "block";
+         document.getElementById('RegisterDevButtonIcon'+divName).innerHTML='<i class="fa fa-minus" style="font-size:20px;color:white;vertical-align: middle;">      Personal Details</i>'
+       }
+}
