@@ -11,7 +11,7 @@ BEGIN
 		SET passwords = ExtractValue(userDetails, '//userdetails[1]/passwords');
 		
         -- SELECT username, passwords;
-        SET ResponseXML = userDetails;
+		SET ResponseXML = userDetails;
         -- SET ResponseXML = '<loginResponse username="mahesh Kasana" status="1" AuthToken="123456mahesg" id="1">';
     
     

@@ -9,12 +9,12 @@ public class LoginResponse {
 
     @Override
     public String toString() {
-        return "LoginResponse{" +
-                "userName='" + userName + '\'' +
-                ", AuthToken='" + AuthToken + '\'' +
-                ", id=" + id + '\'' +
-                ", status=" + status +
-                '}';
+        return "<LoginResponse>" +
+                    "<userName>" + userName + "</userName>" +
+                    "<AuthToken>" + AuthToken + "</AuthToken>" +
+                    "<id>" + id + "</id>" +
+                    "<status>" + status + "</status>" +
+                "</LoginResponse>";
     }
 
     public LoginResponse() {

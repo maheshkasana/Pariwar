@@ -31,9 +31,9 @@ public class LoginRequestBody {
 
     @Override
     public String toString() {
-        return "LoginRequestBody{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "<LoginRequestBody>" +
+                    "<username>" + username + "</username>" +
+                    "<password>" + password + "</password>" +
+                "</LoginRequestBody>";
     }
 }
