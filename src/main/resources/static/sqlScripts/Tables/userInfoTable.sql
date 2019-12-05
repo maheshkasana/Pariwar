@@ -12,6 +12,8 @@ CREATE TABLE userInfo (
     DateOfBirth DATE NOT NULL,
     Gender INT,
     Passphrase VARCHAR(30),
+    ProfileImage VARCHAR(30),
+    UserAddressDetailsId INT,
     Flag INT,
     Created LONG,
     Updated LONG,
