@@ -12,8 +12,9 @@ CREATE TABLE userInfo (
     DateOfBirth DATE NOT NULL,
     Gender INT,
     Passphrase VARCHAR(30),
-    ProfileImage VARCHAR(30),
+    -- ProfileImage VARCHAR(30), profle image namw will be same same as ID.jpg (no need to store)
     UserAddressDetailsId INT,
+    SubcasteReligion INT,
     Flag INT,
     Created LONG,
     Updated LONG,

@@ -329,3 +329,104 @@ function RegisterSubmitButton() {
     body = JSON.stringify(detailObject);
     SendHttpRequestAndReturnResponse(url, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", true, file, responseFromRegisterRequest);
 }
+
+/**
+*
+* Validation of the Resister Form.
+*/
+
+function validatePasswordToReEntred() {
+
+    vpass = document.getElementById("register_verify_password");
+    pass = document.getElementById("register_password");
+    vset =  document.getElementById("valid_register_verify_password");
+
+    if(vpass.value === pass.value) {
+        vset.innerHTML = "<b>Re-Enter Password *</b>";
+        vpass.style.borderColor="green";
+        vpass.style.borderWidth="1px";
+    } else {
+        vset.innerHTML = "<b>Re-Enter Password *</b><b style='color:red;'> (Not Matched)</b>";
+        vpass.style.borderColor="red";
+        vpass.style.borderWidth="4px";
+    }
+}
+
+function validateRegisterDate() {
+    var d = document.getElementById("register_dateOfBirth").value;
+    var d1 = new Date(d).getTime();
+    var d2 = new Date().getTime();
+    var ele = document.getElementById("register_dateOfBirth");
+    vset =  document.getElementById("valid_register_dateOfBirth");
+    if(d1 > d2) {
+         ele.style.borderColor="red";
+         ele.style.borderWidth="4px";
+         vset.innerHTML = "<b>Date of Birth</b><b style='color:red;'> (Invalid)</b>";
+    }  else {
+       ele.style.borderColor="green";
+       ele.style.borderWidth="1px";
+       vset.innerHTML = "<b>Date of Birth</b>";
+    }
+}
+
+function validateRegisterGender() {
+     var d = document.getElementById("register_gender");
+      vset =  document.getElementById("valid_register_gender");
+     if(d.value == 0) {
+           d.style.borderColor="red";
+           d.style.borderWidth="4px";
+           vset.innerHTML = "<b>Gender</b><b style='color:red;'> (Invalid)</b>";
+     }
+     else {
+            d.style.borderColor="green";
+            d.style.borderWidth="1px";
+            vset.innerHTML = "<b>Gender</b>";
+     }
+}
+
+function validateRegisterUsername() {
+    var d = document.getElementById("register_username").value;
+    var val = document.getElementById("valid_register_username");
+    if(d.length < 5) {
+         val.innerHTML =  "<b>Username *</b><b style='color:red;'> (Username should more than 6 char)</b>";
+    } else {
+        val.innerHTML = "<b>Username *</b>";
+    }
+}
+
+function validateRegisterPassword() {
+    var d = document.getElementById("register_password").value;
+    var val = document.getElementById("valid_register_password");
+    if(d.length < 5) {
+         val.innerHTML =  "<b>Password *</b><b style='color:red;'> (Password should more than 6 char)</b>";
+    } else {
+        val.innerHTML = "<b>Password *</b>";
+    }
+}
+
+
+function validateRegisterEmail() {
+    var d = document.getElementById("register_email").value;
+    var val = document.getElementById("valid_register_email");
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if(d.match(mailformat)) {
+          val.innerHTML =  "<b>Email Address</b>";
+    } else {
+           val.innerHTML = "<b>Email Address</b><b style='color:red;'> (Invalid Email)</b>";
+    }
+}
+
+
+function validateRegisterPhone() {
+    var d = document.getElementById("register_phone").value;
+    var val = document.getElementById("valid_register_phone");
+
+    if(d.length == 10 ) {
+          val.innerHTML =  "<b>Phone Number</b>";
+    } else {
+           val.innerHTML = "<b>Phone Number</b><b style='color:red;'> (Invalid Phone Number)</b>";
+    }
+}
+
+
