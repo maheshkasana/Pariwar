@@ -41,7 +41,7 @@
 </div>
 
 <div id="login" class="modal">
-    <div class="modal-content animate">
+    <div class="modal-content-login animate" id="modal_content_login">
         <div class="imgcontainer">
             <span  class="close" onclick="document.getElementById('login').style.display='none'" title="Close Modal">&times;</span>
             <img style="width: 10%;" src="images/logo1.png" alt="User" class="avatar">
@@ -63,61 +63,92 @@
 
 <div id="register" class="modalRegister">
     <div class="modal-content-register animate">
-        <div class="imgcontainer">
+        <div class="imgcontainer" style="position:sticky;">
             <span class="close" onclick="document.getElementById('register').style.display='none'" title="Close Modal">&times;</span>
             <img style="width: 5%;" src="images/logo1.png" alt="Register" class="avatar">
         </div>
-        <button type="button" onclick="ToppleTheRegisterDiv('1')" class="Registercollapsible"><div id="RegisterDevButtonIcon1"><i class="fa fa-minus" style="font-size:20px;color:white; vertical-align: middle;">      Personal Details</i></div></button>
+        <button type="button" onclick="ToppleTheRegisterDiv('1', 'Personal Details')" class="Registercollapsible"><div id="RegisterDevButtonIcon1"><i class="fa fa-minus" style="font-size:20px;color:white; vertical-align: middle;">      Personal Details</i></div></button>
         <div class="RegistercontentDev1" id="RegisterDevId1">
-            <div style="column-count: 2; ">
+            <div style="left: 0; top: 0; width: 50%; float: left;">
                 <div>
                     <label><b>Username</b></label>
                     <input type="text" placeholder="Username / Email / Phone" id="register_username" name="register_username"  required  ><div id="valid_register_username"></div>
                 </div>
                 <div>
-                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="min-width: 160px; margin-top:28px; width:50%;">Check Availability</button>
+                    <label><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" id="register_password"  required  name="register_password"><div id="valid_register_password"></div>
                 </div>
-            </div>
-            <div style="column-count: 2; ">
                 <div>
                     <label><b>First Name</b></label>
                     <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  ><div id="valid_register_firstname"></div>
+                </div>
+                <div>
+                    <label><b>Last Name</b></label>
+                    <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
+                </div>
+            </div>
+            <div style="left: 50%; top: 0; width: 25%; float: left; padding: 0 18px 0 18px">
+                <div>
+                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="min-width: 100px; margin-top:28px; width:90%;">Check Availability</button>
+                </div>
+                <div>
+                    <div style="margin-top:5px;">
+                        <label><b>Re-Enter Password</b></label>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="Re-Enter Password" id="register_verify_password"  required style=" min-width: 100px; width:90%;"  name="register_verify_password"><div id="valid_register_verify_password"></div>
+                    </div>
                 </div>
                 <div>
                     <div>
                         <label><b>Gender</b></label>
                     </div>
                     <div>
-                        <select id="register_gender" name="register_gender" class="button" style=" min-width: 160px; margin-top:6px; font-size:12px; vertical-align: middle; width:50%; height:34px; border-radius: 0px;">
+                        <select id="register_gender" name="register_gender" class="button" style=" min-width: 100px; margin-top:6px; font-size:12px; vertical-align: middle; width:90%; height:38px; border-radius: 0px;">
                             <option value="0">Select Gender :</option>
                             <option value="1">Male</option>
                             <option value="2">Female</option>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div style="column-count: 2; ">
                 <div>
-                    <label><b>Last Name</b></label>
-                    <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
-                </div>
-                <div>
-                    <div>
+                    <div style="margin-top:12px;">
                         <label><b>Date of Birth</b></label>
                     </div>
                     <div>
-                        <input type="date" id="register_dateOfBirth" value="1995-07-03" style=" min-width: 160px; margin-top:6px; font-size:16px; vertical-align: middle; width:50%; height:34px; border-radius: 0px;">
+                        <input type="date" id="register_dateOfBirth" value="1995-07-03" style=" min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; width:90%; height:34px; border-radius: 0px;">
                     </div>
                 </div>
             </div>
-                <label><b>Email Address</b></label>
-                <input type="text" placeholder="Email" id="register_email" name="register_email"  required  ><div id="valid_register_email"></div>
-                <label><b>Phone Number</b></label>
-                <input type="text" placeholder="Phone Number" id="register_phone" name="register_phone"  required  ><div id="valid_register_phone"></div>
-
+            <div style="left: 75%; top: 0; width: 20%; float: left;  border-color: #666666; border-width:50px; color:red;">
+                <div style="margin-top:28px;">
+                    <img style="height:auto; width:94%; border-color: #666666; " border="5" src="images/Camera.jpg" alt="Cinque Terre" name="registerProflePic" id="registerProflePic">
+                    <!-- <input type="file" onchange="uploadAndShowImage(event,'registerProflePic')" accept="image/gif, image/jpeg, image/png" value="Upload Image" name="image" id="Profle"> -->
+                    <progress id="registerImageProgressBar" value="40" max="100" style="width:100%; display:none;"></progress>
+                    <button style="display:block;width:100%; font-size:12px;" onclick="document.getElementById('getProfleImage').click()">Upload Image</button>
+                    <input type="file" onchange="uploadAndShowImage(event,'registerProflePic')" accept="image/gif, image/jpeg, image/png" value="Upload Image" name="image" id="getProfleImage" style="display:none;">
+                </div>
+            </div>
         </div>
-        <button type="button" onclick="ToppleTheRegisterDiv('2')" class="Registercollapsible"><div id="RegisterDevButtonIcon2"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Personal Details</i></div></button>
+        <button type="button" onclick="ToppleTheRegisterDiv('2', 'Contact Details')" class="Registercollapsible"><div id="RegisterDevButtonIcon2"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Contact Details</i></div></button>
         <div class="Registercontent" id="RegisterDevId2">
+            <div style="column-count: 2; ">
+                <div>
+                    <label><b>Email Address</b></label>
+                    <input type="text" placeholder="Email" id="register_email" name="register_email"  required  ><div id="valid_register_email"></div>
+                </div>
+                <div>
+                    <div>
+                        <label><b>Phone Number</b></label>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Phone Number" id="register_phone" name="register_phone" style=" min-width: 160px; width:50%;" required><div id="valid_register_phone"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="ToppleTheRegisterDiv('3')" class="Registercollapsible"><div id="RegisterDevButtonIcon3"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Personal Details</i></div></button>
+        <div class="Registercontent" id="RegisterDevId3">
             <label><b>State</b></label>
             <input type="text" placeholder="State" id="register_state" name="register_state"  required  ><div id="valid_register_state"></div>
             <label><b>District</b></label>
@@ -132,15 +163,11 @@
             <input type="text" placeholder="Cast" id="register_cast" name="register_cast"  required  ><div id="valid_register_cast"></div>
             <label><b>Sub Cast</b></label>
             <input type="text" placeholder="Sub Cast" id="register_subcast" name="register_subcast"  required  ><div id="valid_register_subcast"></div>
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="register_password"  required  name="register_password"><div id="valid_register_password"></div>
-            <label><b>Re-Enter Password</b></label>
-            <input type="password" placeholder="Re-Enter Password" id="register_verify_password"  required  name="register_verify_password"><div id="valid_register_verify_password"></div>
-        </div>
+       </div>
 
         <div class="Registercontainer">
-            <button onclick="showCookies()" style="font-size:20px;"><i class="fa fa-pencil-square-o" style="font-size:18px;"></i>  Register</button>
-            <div id="loading_register" style="z-index: 1;  width: 100%; height: 10%;"></div>
+            <button onclick="RegisterSubmitButton()" style="font-size:20px;"><i class="fa fa-pencil-square-o" style="font-size:18px;"></i>  Register</button>
+            <div id="loading_register" style="z-index: 1;  width: 50%; height: 50%;"></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">
             <button type="button" onclick="document.getElementById('register').style.display='none'"  class="cancelbtn">Cancel</button>
@@ -163,7 +190,7 @@
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" id="adam_psw"  required  name="adam_psw">
 
-            <button onclick="resetCookie()">Login</button>
+            <button onclick="showCookies()">Login</button>
             <div id="loading_adam" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">
