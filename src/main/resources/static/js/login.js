@@ -1,3 +1,4 @@
+
 class LoginRequestBody {
     constructor(username, password) {
             this.username = username;
@@ -223,111 +224,266 @@ function ToppleTheRegisterDiv(divName, heading) {
 /**
 * This Function is for Uploading Image
 */
-function uploadAndShowImage(event,elementId) {
+function uploadAndShowImage(event,elementId, elementIdValue) {
     var image = document.getElementById(elementId);
 	image.src = URL.createObjectURL(event.target.files[0]);
-}
+	document.getElementById(elementIdValue).value = "True";
 
+}
 
 /**
 * these below function are used for Registration of User.
 */
 
+class contactDetails {
+    constructor() {
+
+         }
+
+    setEmailAddress(i_email) {
+        this.emailAddress = i_email;
+    }
+
+    setPhone(i_phone) {
+        this.phone = i_phone;
+    }
+
+}
+
+class religiousDetails {
+    constructor() {
+
+         }
+
+    setReligion(i_religion) {
+        this.religion = i_religion;
+    }
+
+    setCaste(i_caste) {
+        this.caste = i_caste;
+    }
+
+    setSubCaste(i_subCaste) {
+        this.subCaste = i_subCaste;
+    }
+}
+
+class AddressDetails {
+    constructor() {
+
+    }
+
+    setLocality(i_locality) {
+        this.locality = i_locality;
+    }
+
+    setVillage(i_village) {
+        this.village = i_village;
+    }
+
+    setDistrict(i_district) {
+        this.district = i_district;
+    }
+
+    setState(i_state) {
+        this.state = i_state;
+    }
+
+    setCountry(i_country) {
+        this.country = i_country;
+    }
+
+}
+
 class RegisterDetails {
     constructor() {
-        this._username = "";
-        this._password = "";
-        this._firstname = "";
-        this._lastname = "";
-        this._gender = 0;
-        this._dateofbirth = "";
-        this._profilepic = "";
+
     }
 
-    set username(username) {
-        this._username = username;
+    SetContactDetails() {
+        this.contact = new contactDetails();
     }
 
-    set password(password) {
-        this._password = password;
+    SetReligiousDetails() {
+         this.religious = new religiousDetails();
     }
 
-    set firstname(firstname) {
-        this._firstname = firstname;
+    SetAddressDetails() {
+         this.address = new AddressDetails();
     }
 
-    set lastname(lastname) {
-        this._lastname = lastname;
+    setEmailAddress(i_email) {
+        this.contact.emailAddress = i_email;
     }
 
-    set gender(gender) {
-        this._gender = gender;
+    setPhone(i_phone) {
+        this.contact.phone = i_phone;
     }
 
-    set dateofbirth(dateofbirth) {
-        this._dateofbirth = dateofbirth;
+ //----------
+
+    setReligion(i_religion) {
+        this.religious.religion = i_religion;
     }
 
-    set profilepic(profilepic) {
-        this._profilepic = profilepic;
+    setCaste(i_caste) {
+        this.religious.caste = i_caste;
     }
 
-    get username() {
-            return this._username;
+    setSubCaste(i_subCaste) {
+        this.religious.subCaste = i_subCaste;
     }
 
-    get password() {
-        return this._password;
+
+    //------
+
+    setLocality(i_locality) {
+        this.address.locality = i_locality;
     }
 
-    get firstname() {
-        return this._firstname;
+    setVillage(i_village) {
+        this.address.village = i_village;
     }
 
-    get lastname() {
-        return this._lastname;
+    setDistrict(i_district) {
+        this.address.district = i_district;
     }
 
-    get gender() {
-        return this._gender;
+    setState(i_state) {
+        this.address.state = i_state;
     }
 
-    get dateofbirth() {
-        return this._dateofbirth;
+    setCountry(i_country) {
+        this.address.country = i_country;
     }
 
-    get profilepic() {
-        return this._profilepic;
-        }
+ //-----------
+    setUsername(i_username) {
+        this.username = i_username;
+    }
 
+    setPassword(i_password) {
+        this.password = i_password;
+    }
+
+    setFirstname(i_firstname) {
+        this.firstname = i_firstname;
+    }
+
+    setLastname(i_lastname) {
+        this.lastname = i_lastname;
+    }
+
+    setGender(i_gender) {
+        this.gender = i_gender;
+    }
+
+    setDateofbirth(i_dateofbirth) {
+        this.dateofbirth = i_dateofbirth;
+    }
+
+    setProfilepic(i_profilepic) {
+        this.profilepic = i_profilepic;
+    }
 }
 
 function responseFromRegisterRequest(response) {
 
 }
 
+
 function RegisterSubmitButton() {
 
     detailObject = new RegisterDetails();
-    detailObject.userName = document.getElementById("register_username").value;
-    detailObject.password = document.getElementById("register_password").value;
-    detailObject.firstname = document.getElementById("register_firstname").value;
-    detailObject.lastname = document.getElementById("register_lastname").value;
-    detailObject.gender = document.getElementById("register_gender").value;
-    detailObject.dateofbirth = document.getElementById("register_dateOfBirth").value;
-    var file = document.getElementById("getProfleImage").files[0];
-    detailObject.profilepic = file.name;
 
+    var _username = document.getElementById("register_username").value;
+    var _password = document.getElementById("register_password").value;
+    var _fname = document.getElementById("register_firstname").value;
+    var _lname = document.getElementById("register_lastname").value;
+    var _gender = document.getElementById("register_gender").value;
+    var _dob = document.getElementById("register_dateOfBirth").value;
+    var _email = document.getElementById("register_email").value;
+    var _phone = document.getElementById("register_phone").value;
+    var _religion = document.getElementById("register_Religion").value;
+    var _locality = document.getElementById("register_Locality").value;
+    var _subcaste = document.getElementById("register_subcaste").value;
+    var _caste = document.getElementById("register_Caste").value;
+    var _village = document.getElementById("register_Village").value;
+    var _district = document.getElementById("register_District").value;
+    var _state = document.getElementById("register_State").value;
+    var _country = document.getElementById("register_Country").value;
+    var _isFile = false;
+
+    if(_username.length > 0)
+        detailObject.username = _username;
+    if(_password.length > 0)
+        detailObject.password = _password;
+    if(_fname.length > 0)
+        detailObject.firstname = _fname;
+    if(_lname.length > 0)
+        detailObject.lastname = _lname;
+    if(_gender.length > 0)
+        detailObject.gender = _gender;
+    if(_dob.length > 0)
+        detailObject.dateofbirth = _dob;
+
+    if(document.getElementById("getProfileImage").value.length > 0) {
+        _isFile = true;
+        var file = document.getElementById("getProfileImage").files[0];
+        detailObject.profilepic = file.name;
+    }
+
+    if((_email != null && _email.length > 0) || (_phone != null && _phone.length > 0)) {
+
+        detailObject.SetContactDetails();
+        if(_email.length > 0)
+            detailObject.setEmailAddress(_email);
+        if(_phone.length > 0)
+            detailObject.setPhone(_phone);
+    }
+
+    if((_religion !=null && _religion.length>0 ) || (_subcaste !=null && _subcaste.length>0 ) || (_caste !=null && _caste.length>0 )) {
+
+        detailObject.SetReligiousDetails();
+        if(_religion.length > 0)
+        detailObject.setReligion(_religion);
+        if(_caste.length > 0)
+        detailObject.setCaste(_caste);
+        if(_subcaste.length > 0)
+        detailObject.setSubCaste(_subcaste);
+    }
+
+    if(( _locality !=null && _locality.length > 0 ) || ( _village !=null && _village.length > 0 ) || ( _district !=null && _district.length > 0 ) || ( _state !=null && _state.length > 0 ) || ( _country !=null && _country.length > 0 )) {
+
+        detailObject.SetAddressDetails();
+
+        if(_locality.length > 0)
+            detailObject.setLocality(_locality);
+        if(_village.length > 0)
+            detailObject.setVillage(_village);
+        if(_district.length > 0)
+            detailObject.setDistrict(_district);
+        if(_state.length > 0)
+            detailObject.setState(_state);
+        if(_country.length > 0)
+            detailObject.setCountry(_country);
+    }
+
+    /*
     console.log("Here Mahesh Kasana");
     console.log(detailObject.profilepic);
     console.log(JSON.stringify(detailObject))
+    */
 
-
+    var urlFile = "http://localhost:8081/register/user/file";
     var url = "http://localhost:8081/register/user";
     var requestType = 'POST';
     var elementStatus = "loading_register";
     body = JSON.stringify(detailObject);
-    SendHttpRequestAndReturnResponse(url, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", true, file, responseFromRegisterRequest);
+    if(_isFile)
+        SendHttpRequestAndReturnResponse(urlFile, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", true, file, responseFromRegisterRequest);
+    else
+        SendHttpRequestAndReturnResponse(url, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
 }
 
 /**
@@ -422,11 +578,13 @@ function validateRegisterPhone() {
     var d = document.getElementById("register_phone").value;
     var val = document.getElementById("valid_register_phone");
 
-    if(d.length == 10 ) {
+    if(d.length == 10 && !isNaN(d)) {
           val.innerHTML =  "<b>Phone Number</b>";
     } else {
            val.innerHTML = "<b>Phone Number</b><b style='color:red;'> (Invalid Phone Number)</b>";
     }
 }
 
+
+/* Validation are finished here  */
 

@@ -125,8 +125,8 @@
                     <img style="height:auto; width:94%; border-color: #666666; " border="5" src="images/Camera.jpg" alt="Cinque Terre" name="registerProflePic" id="registerProflePic">
                     <!-- <input type="file" onchange="uploadAndShowImage(event,'registerProflePic')" accept="image/gif, image/jpeg, image/png" value="Upload Image" name="image" id="Profle"> -->
                     <progress id="registerImageProgressBar" value="40" max="100" style="width:100%; display:none;"></progress>
-                    <button style="display:block;width:100%; font-size:12px;" onclick="document.getElementById('getProfleImage').click()">Upload Image</button>
-                    <input type="file" onchange="uploadAndShowImage(event,'registerProflePic')" accept="image/gif, image/jpeg, image/png" value="Upload Image" name="image" id="getProfleImage" style="display:none;">
+                    <button style="display:block;width:100%; font-size:12px;" onclick="document.getElementById('getProfileImage').click()">Upload Image</button>
+                    <input type="file" onchange="uploadAndShowImage(event,'registerProflePic', 'getProfileImage')" accept="image/gif, image/jpeg, image/png" value="None" name="image" id="getProfileImage" style="display:none;">
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
         <div class="Registercontent" id="RegisterDevId2">
             <div style="column-count: 2; ">
                 <div>
-                    <label id="valid_register_email"><b>Email Address</b><b>Email Address</b></label>
+                    <label id="valid_register_email"><b>Email Address</b></label>
                     <input type="text" placeholder="Email" onchange="validateRegisterEmail()" id="register_email" name="register_email"  required  >
                 </div>
                 <div>
