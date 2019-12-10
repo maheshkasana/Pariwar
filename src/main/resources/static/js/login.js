@@ -588,3 +588,58 @@ function validateRegisterPhone() {
 
 /* Validation are finished here  */
 
+
+/** Search Tab Function() */
+
+function searchUser() {
+
+    var _state = document.getElementById("search_State").value;
+    var _district = document.getElementById("search_District").value;
+    var _village = document.getElementById("search_Village").value;
+    var _name = document.getElementById("search_Name").value;
+
+    if(_name.length <= 0 ) {
+        document.getElementById("valid_search_Name").innerHTML = "<b>Name *</b><b style='color:red;'> (Name required)</b>";
+        return;
+    } else {
+        document.getElementById("valid_search_Name").innerHTML = "<b>Name *</b>";
+    }
+}
+
+/*** Here we are going to write function for auto suggesations */
+
+
+function onchangeAutoSuggestCaste(AutoCasteElement, AutoReligionElement) {
+    //Todo ek baar niche ka suggent kar ke check kar liyo ki upar ka bhi fill kar de, tho upar wale bhi dekh liyo, kya pata auto fill kar ske
+    //Todo like back track karke fill karna, pich ke function ka call karna and wo aapne piche wale ko kar dega call
+}
+
+function onchangeAutoSuggestSubCaste(AutoSubCasteElement, AutoCasteElement) {
+
+}
+
+function onchangeAutoFillRegisterAddressDetails(callingFrom, addressElement) {
+
+}
+
+
+//** these auto suggesations function are for Search API */
+
+function onchangeAutoSuggestDistrict(AutoDistrictElement, AutoStateElement) {
+    var _state = document.getElementById(AutoStateElement).value;
+
+    alert(_state);
+}
+
+function onchangeAutoSuggestVillage(AutoVillageElement, AutoDistrictElement, AutoStateElement) {
+   var _state = document.getElementById(AutoStateElement).value;
+   var _district = document.getElementById(AutoDistrictElement).value;
+
+   alert(_state);
+   alert(_district);
+}
+
+function onchangeAutoSuggestUserName() {
+
+}
+

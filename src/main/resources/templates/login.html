@@ -202,8 +202,6 @@
     </div>
 </div>
 
-
-
 <div id="search" class="modal">
     <div class="modal-content animate">
         <div class="imgcontainer">
@@ -212,17 +210,27 @@
         </div>
 
         <div class="container">
-            <label><b>Search</b></label>
-            <input type="text" placeholder="Enter Station ID" id="adam_s_id" name="adam_s_id"  required  ><div id="valid_sid"></div>
-
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="adam_psw"  required  name="adam_psw">
-
-            <button onclick="showCookies()">Login</button>
-            <div id="loading_adam" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
+            <div class="container">
+                <div style="column-count: 3; ">
+                    <div>
+                        <label id="valid_search_State"><b>State</b></label>
+                        <input type="text" placeholder="State" id="search_State" name="search_State"  required  >
+                        <label id="valid_search_District" ><b>District</b></label>
+                        <input type="text" placeholder="District" id="search_District" name="search_District"  onchange="onchangeAutoSuggestDistrict('search_District', 'search_State')"  >
+                        <label id="valid_search_Village" ><b>Village/Town</b></label>
+                        <input type="text" placeholder="Village/Town" id="search_Village" name="search_Village"  onchange="onchangeAutoSuggestVillage('search_Village', 'search_District', 'search_State')"  >
+                    </div>
+                </div>
+                <div>
+                    <label id="valid_search_Name"><b>Name *</b></label>
+                    <input type="text" placeholder="Name" id="search_Name" name="search_Name"  style="float:center;"  >
+                </div>
+            </div>
+            <button onclick="searchUser()"><h3 style="font-size:14px;">Search User <i class="fa fa-search" style="font-size:14px;"></i></h3></button>
+            <div id="loading_search" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">
-            <button type="button"  class="cancelbtn">Cancel</button>
+            <button type="button" onclick="document.getElementById('search').style.display='none'" class="cancelbtn">Cancel</button>
         </div>
     </div>
 </div>

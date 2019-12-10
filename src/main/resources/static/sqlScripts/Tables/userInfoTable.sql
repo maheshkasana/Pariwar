@@ -5,7 +5,6 @@ CREATE TABLE userInfo (
     Id INT AUTO_INCREMENT,
     Username VARCHAR(30) NOT NULL UNIQUE,
     FirstName VARCHAR(30) NOT NULL,
-    LastName VARCHAR(30),
     NickName VARCHAR(30),
     Email VARCHAR(30),
     Phone VARCHAR(20),
