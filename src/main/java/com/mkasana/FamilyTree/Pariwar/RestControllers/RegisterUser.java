@@ -1,19 +1,14 @@
 package com.mkasana.FamilyTree.Pariwar.RestControllers;
 
-import com.mkasana.FamilyTree.Pariwar.login.LoginValidation;
-import com.mkasana.FamilyTree.Pariwar.model.LoginRequestBody;
-import com.mkasana.FamilyTree.Pariwar.model.LoginResponse;
+import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This Controller is for Register

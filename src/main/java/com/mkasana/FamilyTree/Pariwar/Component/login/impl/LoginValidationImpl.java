@@ -1,7 +1,7 @@
-package com.mkasana.FamilyTree.Pariwar.login.impl;
+package com.mkasana.FamilyTree.Pariwar.Component.login.impl;
 
 import com.mkasana.FamilyTree.Pariwar.dao.Impl.DatabaseConnectionImpl;
-import com.mkasana.FamilyTree.Pariwar.login.LoginValidation;
+import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
 import com.mkasana.FamilyTree.Pariwar.model.LoginRequestBody;
 import com.mkasana.FamilyTree.Pariwar.model.LoginResponse;
 import org.springframework.stereotype.Component;

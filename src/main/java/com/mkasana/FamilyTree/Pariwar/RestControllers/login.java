@@ -1,6 +1,6 @@
 package com.mkasana.FamilyTree.Pariwar.RestControllers;
 
-import com.mkasana.FamilyTree.Pariwar.login.LoginValidation;
+import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
 import com.mkasana.FamilyTree.Pariwar.model.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
