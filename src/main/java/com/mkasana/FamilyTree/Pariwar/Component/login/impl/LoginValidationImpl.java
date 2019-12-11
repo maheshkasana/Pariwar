@@ -13,9 +13,11 @@ public class LoginValidationImpl implements LoginValidation {
     public LoginResponse validateUser(LoginRequestBody loginRequestBody) throws Exception {
         System.out.println("in LoginValidationImpl and Login Request body : " + loginRequestBody.toString());
 
+        /*
         DatabaseConnectionImpl databaseConnection =  new DatabaseConnectionImpl();
         String SpResponse = databaseConnection.callStoredProcedure("ValidateLogin", loginRequestBody.toString());
         System.out.println("in LoginValidationImpl Response from SP "+SpResponse);
+        */
         LoginResponse login = new LoginResponse("MkasanaGurjar","asdasasd",101, Boolean.TRUE);
         return login;
     }

@@ -1,10 +1,11 @@
 package com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.Impl;
 
-import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserReligion;
-import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
+import com.mkasana.FamilyTree.Pariwar.Builder.Register.AutoSuggest.UserReligionBuilder;
+import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserReligionComponent;
 import com.mkasana.FamilyTree.Pariwar.model.Religion;
 import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -12,10 +13,11 @@ import java.sql.ResultSet;
 import java.util.List;
 
 @Component
-public class UserReligionImpl  implements UserReligion {
+@Configurable
+public class UserReligionComponentImpl  implements UserReligionComponent {
 
     @Autowired
-    DatabaseConnection databaseConnection;
+    public UserReligionBuilder userReligionBuilder;
 
     private Religion convertResultSetToReligion(@NotNull ResultSet resultSet) {
 
@@ -34,8 +36,13 @@ public class UserReligionImpl  implements UserReligion {
      * This function is to return the Religion by Id
      * @param id
      */
+    @Override
     public Religion getReligionById(int id) {
 
+        String function = "UserReligionComponentImpl:getReligionById";
+
+        return userReligionBuilder.getReligionById(id);
+        /*
         String query = "SELECT Id, ReligionName FROM UserReligion WHERE Id = " + id +";";
         try {
             ResultSet resultSet = databaseConnection.executeQuery(query);
@@ -46,6 +53,7 @@ public class UserReligionImpl  implements UserReligion {
             System.out.println("Failed to Execute Query ["+ query + "]");
             return new Religion(-1," ");
         }
+        */
     }
 
     /**
@@ -53,6 +61,7 @@ public class UserReligionImpl  implements UserReligion {
      * @param name
      * @return
      */
+    @Override
     public Religion getReligionByName(String name) {
 
         //Todo
@@ -64,6 +73,7 @@ public class UserReligionImpl  implements UserReligion {
      * this function is to return the all the Religions
      * @return
      */
+    @Override
     public List<Religion> getAllReligions() {
         //Todo
         return null;
@@ -75,6 +85,7 @@ public class UserReligionImpl  implements UserReligion {
      * @param religion
      * @return
      */
+    @Override
     public ReturnStatus addNewReligion(Religion religion) {
         //Todo
         return null;
@@ -85,6 +96,7 @@ public class UserReligionImpl  implements UserReligion {
      * @param religion
      * @return
      */
+    @Override
     public ReturnStatus deleteReligion(Religion religion) {
         //Todo
         return null;

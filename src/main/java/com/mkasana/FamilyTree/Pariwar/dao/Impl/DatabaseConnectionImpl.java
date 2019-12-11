@@ -3,6 +3,7 @@ package com.mkasana.FamilyTree.Pariwar.dao.Impl;
 import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
 import com.mkasana.FamilyTree.Pariwar.utility.PariwarException;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,6 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DatabaseConnectionImpl implements DatabaseConnection {
 
-    //private static DatabaseConnectionImpl databaseConnection = null;
     private String mysqlUrl;
     private Connection connection;
 
@@ -41,6 +41,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
         }
         catch(Exception e)
         {
+            System.out.println(e);
             connection = null;
             throw(new PariwarException("DatabaseConnectionImpl:DatabaseConnectionImpl() Failed to get connection object to the database"));
         }
@@ -51,6 +52,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean close() throws Exception
     {
         if(connection!=null)
@@ -67,6 +69,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean isClosed() throws Exception
     {
         if(connection!=null)
@@ -80,6 +83,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean getAutoCommit() throws Exception
     {
         if(connection!=null)
@@ -93,6 +97,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @param autoCommit
      * @throws Exception
      */
+    @Override
     public void changeAutoCommit(boolean autoCommit) throws Exception
     {
         if(connection!=null)
@@ -108,6 +113,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean commit() throws Exception
     {
         if(connection!=null)
@@ -125,6 +131,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean rollback() throws Exception
     {
         if(connection!=null)
@@ -142,8 +149,11 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public ResultSet executeQuery(String query) throws Exception
     {
+        String function = "DatabaseConnectionImpl:executeQuery";
+
         if(connection!=null) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -159,6 +169,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public int executeUpdate(String query) throws Exception
     {
         if(connection!=null) {
@@ -178,6 +189,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return Returns the SPs Output XML
      * @throws SQLException
      */
+    @Override
     public String callStoredProcedure(String storedProcedureName, String inputXML) throws Exception {
 
         if (connection != null) {
@@ -199,16 +211,18 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @return
      * @throws Exception
      */
+    @Override
     public String executeScript(String filename) throws Exception
     {
 
-        String filePath = "static/sqlScripts/"+filename;
-        ClassLoader classLoader = new DatabaseConnectionImpl().getClass().getClassLoader();
-        File file = new File(classLoader.getResource(filePath).getFile());
 
-        if(file.exists()) {
-            String content = new String(Files.readAllBytes(file.toPath()));
-            System.out.println(content);
+        String filePath = "static/sqlScripts/"+filename;
+        //ClassLoader classLoader = new DatabaseConnectionImpl().getClass().getClassLoader();
+        //File file = new File(classLoader.getResource(filePath).getFile());
+
+        //if(file.exists()) {
+            //String content = new String(Files.readAllBytes(file.toPath()));
+           // System.out.println(content);
             /*
             ScriptRunner sr = new ScriptRunner(connection);
             //Creating a reader object
@@ -217,10 +231,11 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
             System.out.printf("\nFile read as per Path : %s", ((BufferedReader) reader).readLine());
             sr.runScript(content);
             */
-        }
-        else {
-            throw new Exception("File ["+filePath+"] does not exists.");
-        }
+
+       // }
+        //else {
+          //  throw new Exception("File ["+filePath+"] does not exists.");
+       // }
 
         //Read File Content
 

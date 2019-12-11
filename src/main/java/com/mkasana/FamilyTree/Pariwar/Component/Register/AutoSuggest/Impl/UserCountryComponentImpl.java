@@ -1,6 +1,6 @@
 package com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.Impl;
 
-import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserCountrys;
+import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserCountryComponent;
 import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
 import com.mkasana.FamilyTree.Pariwar.model.Country;
 import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserCountrysImpl implements UserCountrys {
+public class UserCountryComponentImpl implements UserCountryComponent {
 
     @Autowired
     DatabaseConnection databaseConnection;

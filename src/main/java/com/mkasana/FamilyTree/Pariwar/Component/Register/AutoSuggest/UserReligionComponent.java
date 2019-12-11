@@ -6,7 +6,7 @@ import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import java.util.List;
 
 
-public interface UserReligion {
+public interface UserReligionComponent {
     /**
      * This function is to return the Religion by Id
      * @param id
