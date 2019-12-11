@@ -9,5 +9,13 @@ public interface UserReligionDao {
      * @param id
      * @return
      */
-    public ResultSet getUserReligionById(int id) throws Exception;
+    public ResultSet getUserReligionById(final int id) throws Exception;
+
+    /**
+     * this function is to return the Result set of the query ran on the UserReligionTable
+     *
+     * @return
+     */
+    public ResultSet getUserAllReligions() throws Exception;
+
 }

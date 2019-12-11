@@ -37,35 +37,11 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
      * @param id
      */
     @Override
-    public Religion getReligionById(int id) {
+    public Religion getReligionById(final int id) {
 
         String function = "UserReligionComponentImpl:getReligionById";
 
         return userReligionBuilder.getReligionById(id);
-        /*
-        String query = "SELECT Id, ReligionName FROM UserReligion WHERE Id = " + id +";";
-        try {
-            ResultSet resultSet = databaseConnection.executeQuery(query);
-            System.out.println("returend Result Set "  + resultSet.toString());
-            Religion religion = convertResultSetToReligion(resultSet);
-            return religion;
-        } catch (Exception e) {
-            System.out.println("Failed to Execute Query ["+ query + "]");
-            return new Religion(-1," ");
-        }
-        */
-    }
-
-    /**
-     * This String is to return the Religion by Name
-     * @param name
-     * @return
-     */
-    @Override
-    public Religion getReligionByName(String name) {
-
-        //Todo
-        return null;
     }
 
 
@@ -75,6 +51,20 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
      */
     @Override
     public List<Religion> getAllReligions() {
+        String function = "UserReligionComponentImpl:getAllReligions";
+
+        return userReligionBuilder.getAllReligions();
+    }
+
+
+    /**
+     * This String is to return the Religion by Name
+     * @param name
+     * @return
+     */
+    @Override
+    public Religion getReligionByName(String name) {
+
         //Todo
         return null;
     }

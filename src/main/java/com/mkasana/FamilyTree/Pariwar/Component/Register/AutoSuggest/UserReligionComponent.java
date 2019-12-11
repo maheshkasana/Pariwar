@@ -11,7 +11,7 @@ public interface UserReligionComponent {
      * This function is to return the Religion by Id
      * @param id
      */
-    public Religion getReligionById(int id);
+    public Religion getReligionById(final int id);
 
     /**
      * This String is to return the Religion by Name

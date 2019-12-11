@@ -29,20 +29,34 @@ public class UserReligionDaoImpl implements UserReligionDao {
     */
 
     @Override
-    public ResultSet getUserReligionById(int id) throws Exception {
+    public ResultSet getUserReligionById(final int id) throws Exception {
 
         String function = "UserReligionDaoImpl:getUserReligionById";
 
         String query = "SELECT * FROM UserReligion WHERE Id = " + id + ";";
 
         try {
-            databaseConnection.executeQuery(query);
+            return databaseConnection.executeQuery(query);
         } catch(Exception e) {
-            System.out.println(e);
-            String error = "[Error] UserReligionDaoImpl:getUserReligionById Exception while executing query ["+query+"]";
+            String error = "[Error] UserReligionDaoImpl:getUserReligionById Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);
             throw new Exception(error);
         }
-        return null;
+    }
+
+    @Override
+    public ResultSet getUserAllReligions() throws Exception {
+
+        String function = "UserReligionDaoImpl:getUserAllReligions";
+
+        String query = "SELECT * FROM UserReligion;";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserReligionDaoImpl:getUserAllReligions Exception while executing query [" + query + "]\n" +e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
     }
 }

@@ -18,7 +18,7 @@ public interface DatabaseConnection {
 
     public boolean rollback() throws Exception;
 
-    public ResultSet executeQuery(String query) throws Exception;
+    public ResultSet executeQuery(final String query) throws Exception;
 
     public int executeUpdate(String query) throws Exception;
 

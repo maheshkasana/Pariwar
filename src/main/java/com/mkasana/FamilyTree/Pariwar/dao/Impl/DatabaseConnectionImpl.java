@@ -98,7 +98,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @throws Exception
      */
     @Override
-    public void changeAutoCommit(boolean autoCommit) throws Exception
+    public void changeAutoCommit(final boolean autoCommit) throws Exception
     {
         if(connection!=null)
         {
@@ -150,7 +150,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @throws Exception
      */
     @Override
-    public ResultSet executeQuery(String query) throws Exception
+    public ResultSet executeQuery(final String query) throws Exception
     {
         String function = "DatabaseConnectionImpl:executeQuery";
 
@@ -170,7 +170,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @throws Exception
      */
     @Override
-    public int executeUpdate(String query) throws Exception
+    public int executeUpdate(final String query) throws Exception
     {
         if(connection!=null) {
             Statement statement = connection.createStatement();
@@ -190,7 +190,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection {
      * @throws SQLException
      */
     @Override
-    public String callStoredProcedure(String storedProcedureName, String inputXML) throws Exception {
+    public String callStoredProcedure(final String storedProcedureName, final String inputXML) throws Exception {
 
         if (connection != null) {
 

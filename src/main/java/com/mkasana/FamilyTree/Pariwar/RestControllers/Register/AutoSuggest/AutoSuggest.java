@@ -6,10 +6,7 @@ import com.mkasana.FamilyTree.Pariwar.model.Religion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,21 +21,47 @@ public class AutoSuggest {
     //Add the security for the APIs asap, like before validation of the user.
     @Autowired
     private UserReligionComponent userReligionComponent;
+
+
     /**
-     *
+     * this function is to return the religion details for the religion id
      * @param headers
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register/auto/religion", method = RequestMethod.GET, headers="Accept=application/json")
-    private Religion SuggestReligion(@RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/register/auto/religion/{religionId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private Religion SuggestReligion(@PathVariable("religionId") int religionId, @RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:SuggestReligion";
 
+        /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
         });
+        */
 
-        return userReligionComponent.getReligionById(13);
+        return userReligionComponent.getReligionById(religionId);
     }
+
+
+    /**
+     * this function is to return all the available religions
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/religions", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<Religion> SuggestAllReligions(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:SuggestAllReligions";
+
+        /*
+        headers.forEach((key, value) -> {
+            System.out.printf("Parameter : %s, Value %s\n",key, value);
+        });
+        */
+        return userReligionComponent.getAllReligions();
+    }
+
+
 }
