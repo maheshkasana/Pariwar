@@ -5,11 +5,27 @@ public class Caste {
     int Id;
     String UserCasteName;
     int UserReligionId;
+    String ReligionName;
 
     public Caste(int id, String userCasteName, int userReligionId) {
         Id = id;
         UserCasteName = userCasteName;
         UserReligionId = userReligionId;
+    }
+
+    public Caste(int id, String userCasteName, int userReligionId, String religionName) {
+        Id = id;
+        UserCasteName = userCasteName;
+        UserReligionId = userReligionId;
+        ReligionName = religionName;
+    }
+
+    public String getReligionName() {
+        return ReligionName;
+    }
+
+    public void setReligionName(String religionName) {
+        ReligionName = religionName;
     }
 
     public Caste() {
@@ -45,6 +61,7 @@ public class Caste {
                 "Id=" + Id +
                 ", UserCasteName='" + UserCasteName + '\'' +
                 ", UserReligionId=" + UserReligionId +
+                ", ReligionName='" + ReligionName + '\'' +
                 '}';
     }
 }

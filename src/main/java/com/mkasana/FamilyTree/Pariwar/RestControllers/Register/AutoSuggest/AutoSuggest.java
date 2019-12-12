@@ -1,5 +1,6 @@
 package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.AutoSuggest;
 
+import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserAddressComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserReligionComponent;
 import com.mkasana.FamilyTree.Pariwar.model.Caste;
 import com.mkasana.FamilyTree.Pariwar.model.Country;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -23,6 +26,9 @@ public class AutoSuggest {
     //Add the security for the APIs asap, like before validation of the user.
     @Autowired
     private UserReligionComponent userReligionComponent;
+
+    @Autowired
+    private UserAddressComponent userAddressComponent;
 
 
 
@@ -52,7 +58,6 @@ public class AutoSuggest {
         return userReligionComponent.getReligionById(religionId);
     }
 
-
     /**
      * this function is to return all the available religions
      * @param headers
@@ -77,7 +82,6 @@ public class AutoSuggest {
      * All the below Controllers are for Caste    *
      **********************************************/
 
-
     /**
      * this function is to return Caste based on passed Caste Id;
      * @param headers
@@ -92,8 +96,6 @@ public class AutoSuggest {
         return userReligionComponent.getCasteById(casteId);
     }
 
-
-
     /**
      * this function is to return All Caste;
      * @param headers
@@ -107,7 +109,6 @@ public class AutoSuggest {
 
         return userReligionComponent.getAllCaste();
     }
-
 
     /**
      * this function is to return All Caste of Religion;
@@ -162,5 +163,50 @@ public class AutoSuggest {
 
         return userReligionComponent.getAllSubCaste();
     }
+
+    /**
+     * this function is to Suggest Sub - Caste based on passed Caste Id or Religion Id;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/AllSubCaste/{casteId}/{religionId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<SubCaste> SuggestAllSubCasteByCasteIdOrReligionId(@PathVariable("casteId") int casteId, @PathVariable("religionId") int religionId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:SuggestAllSubCasteByCasteIdOrReligionId";
+
+        return userReligionComponent.getSuggestAllSubCasteByCasteIdOrReligionId(casteId, religionId);
+    }
+
+
+
+
+
+    /**********************************************
+     *  All the below Controllers are for Country *
+     **********************************************/
+    /**
+     * this function is to return Country based on passed Country Id;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/country/{countryId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private Country SuggestCountryById(@PathVariable("countryId") int countryId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:SuggestCountryById";
+
+        return userAddressComponent.getCountryById(countryId);
+    }
+
+
+    @RequestMapping(value = "/register/auto/allCountries", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<Country> SuggestAllCountries(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:SuggestAllCountries";
+
+        return userAddressComponent.getAllCountries();
+    }
+
 
 }

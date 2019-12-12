@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,18 @@ public class UserReligionBuilder {
      * All the below Builders are for Caste *
      *******************************************/
 
+    /**
+     * This function is to Convert resultSet to Caste
+     * @param
+     */
+    public Caste convertResultSetToCaste(@NotNull  ResultSet resultSet) throws Exception{
+        Caste caste = new Caste();
+        caste.setId(resultSet.getInt("Id"));
+        caste.setUserCasteName(resultSet.getString("UserCasteName"));
+        caste.setUserReligionId(resultSet.getInt("UserReligionId") );
+        caste.setReligionName(resultSet.getString("ReligionName"));
+        return caste;
+    }
 
     /**
      * This function is to return Caste for Caste Id
@@ -90,13 +103,11 @@ public class UserReligionBuilder {
         final String function = "UserReligionBuilder:getCasteById";
 
         ResultSet resultSet;
-        Caste caste = new Caste();
+        Caste caste = null;
         try {
             resultSet = userReligionDao.getUserCasteById(id);
             if(resultSet.next()) {
-                caste.setId(resultSet.getInt("Id"));
-                caste.setUserCasteName(resultSet.getString("UserCasteName"));
-                caste.setUserReligionId(resultSet.getInt("UserReligionId") );
+                caste = convertResultSetToCaste(resultSet);
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -118,11 +129,10 @@ public class UserReligionBuilder {
         try {
             resultSet = userReligionDao.getUserAllCaste();
             while(resultSet.next()) {
-                Caste caste = new Caste();
-                caste.setId(resultSet.getInt("Id"));
-                caste.setUserCasteName(resultSet.getString("UserCasteName"));
-                caste.setUserReligionId(resultSet.getInt("UserReligionId") );
-                castes.add(caste);
+                Caste caste;
+                caste = convertResultSetToCaste(resultSet);
+                if(caste != null)
+                    castes.add(caste);
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -143,11 +153,10 @@ public class UserReligionBuilder {
         try {
             resultSet = userReligionDao.getUserAllCasteOfReligion(religionId);
             while(resultSet.next()) {
-                Caste caste = new Caste();
-                caste.setId(resultSet.getInt("Id"));
-                caste.setUserCasteName(resultSet.getString("UserCasteName"));
-                caste.setUserReligionId(resultSet.getInt("UserReligionId") );
-                castes.add(caste);
+                Caste caste;
+                caste = convertResultSetToCaste(resultSet);
+                if(caste != null)
+                    castes.add(caste);
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -164,6 +173,21 @@ public class UserReligionBuilder {
      * All the below Builder are for Sub-caste *
      *********************************************/
 
+    /**
+     * This function is to Convert resultSet to SubCaste
+     * @param
+     */
+    public SubCaste convertResultSetToSubCaste(@NotNull  ResultSet resultSet) throws Exception{
+        SubCaste subCaste = new SubCaste();
+        subCaste.setId(resultSet.getInt("Id"));
+        subCaste.setUserSubCasteName(resultSet.getString("UserSubCasteName"));
+        subCaste.setUserCasteId(resultSet.getInt("UserCasteId") );
+        subCaste.setUserReligionId(resultSet.getInt("UserReligionId"));
+        subCaste.setUserCasteName(resultSet.getString("UserCasteName"));
+        subCaste.setReligionName(resultSet.getString("ReligionName"));
+        return subCaste;
+    }
+
 
     /**
      * This function is to return the Sub-Caste by Id
@@ -173,13 +197,11 @@ public class UserReligionBuilder {
         String function = "UserReligionBuilder:getSubCasteById";
 
         ResultSet resultSet;
-        SubCaste subCaste = new SubCaste();
+        SubCaste subCaste = null;
         try {
             resultSet = userReligionDao.getUserSubCasteById(id);
             if(resultSet.next()) {
-                subCaste.setId(resultSet.getInt("Id"));
-                subCaste.setUserSubCasteName(resultSet.getString("UserSubCasteName"));
-                subCaste.setUserCasteId(resultSet.getInt("UserCasteId") );
+                subCaste = convertResultSetToSubCaste(resultSet);
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -201,16 +223,43 @@ public class UserReligionBuilder {
         try {
             resultSet = userReligionDao.getUserAllSubCaste();
             while(resultSet.next()) {
-                SubCaste subCaste = new SubCaste();
-                subCaste.setId(resultSet.getInt("Id"));
-                subCaste.setUserCasteId(resultSet.getInt("UserCasteId"));
-                subCaste.setUserSubCasteName(resultSet.getString("UserSubCasteName"));
-                subCastes.add(subCaste);
+                SubCaste subCaste = null;
+                subCaste = convertResultSetToSubCaste(resultSet);
+                if(subCaste != null)
+                    subCastes.add(subCaste);
             }
         } catch(Exception e) {
             System.out.println(e);
         }
         return subCastes;
     }
+
+
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id or religion id.
+     * @param casteId, religionId
+
+     * @return
+     */
+    public List<SubCaste> getSuggestAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId) {
+
+        String function = "UserReligionBuilder:getAllSubCaste:getSuggestAllSubCasteByCasteIdOrReligionId";
+
+        ResultSet resultSet;
+        List<SubCaste> subCastes = new ArrayList<>();
+        try {
+            resultSet = userReligionDao.getAllSubCasteByCasteIdOrReligionId(casteId, religionId);
+            while(resultSet.next()) {
+                SubCaste subCaste = null;
+                subCaste = convertResultSetToSubCaste(resultSet);
+                if(subCaste != null)
+                    subCastes.add(subCaste);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return subCastes;
+    }
+
 
 }

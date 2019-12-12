@@ -93,8 +93,10 @@ public class UserReligionDaoImpl implements UserReligionDao {
 
         String function = "UserReligionDaoImpl:getUserCasteById";
 
-        String query = "SELECT * FROM UserCaste WHERE Id = " + id + ";";
-
+        String query = "SELECT UserCaste.Id, UserCaste.UserCasteName, UserCaste.UserReligionId, UR.ReligionName\n" +
+                        "FROM UserCaste\n" +
+                        "JOIN UserReligion AS UR ON UR.Id = UserCaste.UserReligionId\n" +
+                        "WHERE UserCaste.Id = " + id + ";";
         try {
             return databaseConnection.executeQuery(query);
         } catch(Exception e) {
@@ -116,7 +118,9 @@ public class UserReligionDaoImpl implements UserReligionDao {
 
         String function = "UserReligionDaoImpl:getUserAllCaste";
 
-        String query = "SELECT * FROM UserCaste;";
+        String query = "SELECT UserCaste.Id, UserCaste.UserCasteName, UserCaste.UserReligionId, UR.ReligionName\n" +
+                        "FROM UserCaste\n" +
+                        "JOIN UserReligion AS UR ON UR.Id = UserCaste.UserReligionId;";
 
         try {
             return databaseConnection.executeQuery(query);
@@ -136,7 +140,9 @@ public class UserReligionDaoImpl implements UserReligionDao {
     public ResultSet getUserAllCasteOfReligion(final int religionId) throws Exception {
         String function = "UserReligionDaoImpl:getUserAllCasteOfReligion";
 
-        String query = "SELECT * FROM UserCaste WHERE UserReligionId = " + religionId + ";";
+        String query = "SELECT UserCaste.Id, UserCaste.UserCasteName, UserCaste.UserReligionId, UR.ReligionName\n" +
+                "FROM UserCaste\n" +
+                "JOIN UserReligion AS UR ON UR.Id = UserCaste.UserReligionId AND UR.Id = "+ religionId +";";
 
         try {
             return databaseConnection.executeQuery(query);
@@ -164,7 +170,11 @@ public class UserReligionDaoImpl implements UserReligionDao {
      */
     public ResultSet getUserSubCasteById(final int id) throws Exception {
         String function = "UserReligionDaoImpl:getUserSubCasteById";
-        String query = "SELECT * FROM UserSubCaste WHERE  Id = " + id + ";";
+        String query = "SELECT UserSubCaste.Id, UserSubCaste.UserSubcasteName, UserSubCaste.UserCasteId, UC.UserReligionId, UC.UserCasteName, UR.ReligionName\n" +
+                        "FROM UserSubCaste\n" +
+                        "JOIN UserCaste AS UC ON UC.ID = UserSubCaste.UserCasteId\n" +
+                        "JOIN UserReligion AS UR ON UR.Id = UC.UserReligionId\n" +
+                        "WHERE UserSubCaste.Id = " + id + ";";
 
         try {
             return databaseConnection.executeQuery(query);
@@ -181,8 +191,10 @@ public class UserReligionDaoImpl implements UserReligionDao {
      */
     public ResultSet getUserAllSubCaste() throws Exception {
         String function = "UserReligionDaoImpl:getUserAllSubCaste";
-        String query = "SELECT * FROM UserSubCaste;";
-
+        String query = "SELECT UserSubCaste.Id, UserSubCaste.UserSubcasteName, UserSubCaste.UserCasteId, UC.UserReligionId, UC.UserCasteName, UR.ReligionName\n" +
+                       "FROM UserSubCaste\n" +
+                       "JOIN UserCaste AS UC ON UC.ID = UserSubCaste.UserCasteId\n" +
+                       "JOIN UserReligion AS UR ON UR.Id = UC.UserReligionId;";
         try {
             return databaseConnection.executeQuery(query);
         } catch(Exception e) {
@@ -191,5 +203,41 @@ public class UserReligionDaoImpl implements UserReligionDao {
             throw new Exception(error);
         }
     }
+
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id or religion id.
+     * @param casteId, religionId
+
+     * @return
+     */
+    public ResultSet getAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId) throws Exception {
+
+        String function = "UserReligionDaoImpl:getAllSubCasteByCasteIdOrReligionId";
+        String query = "SELECT UserSubCaste.Id, UserSubCaste.UserSubcasteName, UserSubCaste.UserCasteId, UC.UserReligionId, UC.UserCasteName, UR.ReligionName\n" +
+                "FROM UserSubCaste\n";
+
+        String caste = "JOIN UserCaste AS UC ON UC.ID = UserSubCaste.UserCasteId ";
+        if(0 < casteId)
+            caste += " AND UC.Id = " + casteId + "\n";
+        else
+            caste += "\n";
+
+        String religion = "JOIN UserReligion AS UR ON UR.Id = UC.UserReligionId ";
+        if(0 < religionId)
+            religion += "AND UR.Id = " + religionId;
+
+        query += caste + religion + ";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserReligionDaoImpl:getAllSubCasteByCasteIdOrReligionId Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
+
 
 }

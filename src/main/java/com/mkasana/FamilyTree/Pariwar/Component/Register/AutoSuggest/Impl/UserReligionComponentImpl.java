@@ -211,5 +211,23 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
         return null;
     }
 
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id or religion id.
+     * @param casteId, religionId
+
+     * @return
+     */
+    public List<SubCaste> getSuggestAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId) {
+
+        String function = "[UserReligionComponentImpl:getSuggestAllSubCasteByCasteIdOrReligionId]";
+
+        if(0 >= casteId && 0 >= religionId) {
+            System.out.println(function + "Invalid Caste Id [" + casteId + "] & Religion Id ["+ religionId +"] Passed");
+            return getAllSubCaste();
+        }
+
+        System.out.println(function + "Caste Id [" + casteId + "] & Religion Id ["+ religionId +"] Passed");
+        return userReligionBuilder.getSuggestAllSubCasteByCasteIdOrReligionId(casteId, religionId);
+    }
 
 }

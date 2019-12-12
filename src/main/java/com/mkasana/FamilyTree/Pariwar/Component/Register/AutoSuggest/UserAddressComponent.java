@@ -5,12 +5,12 @@ import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 
 import java.util.List;
 
-public interface UserCountryComponent {
+public interface UserAddressComponent {
     /**
      * This function is to return the Country by Id
      * @param id
      */
-    public Country getCountryById(int id);
+    public Country getCountryById(final int id);
 
     /**
      * This String is to return the Country by Name

@@ -11,6 +11,9 @@ public class Country {
         CountryCode = countryCode;
     }
 
+    public Country() {
+    }
+
     public Country(int id, String countryName) {
         Id = id;
         CountryName = countryName;

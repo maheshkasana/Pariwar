@@ -5,12 +5,16 @@ public class SubCaste {
     String UserSubCasteName;
     int UserCasteId;
     int UserReligionId;
+    String UserCasteName;
+    String ReligionName;
 
-    public SubCaste(int id, String userSubcasteName, int userCasteId, int userReligionId) {
+    public SubCaste(int id, String userSubcasteName, int userCasteId, int userReligionId, String userCasteName, String religionName) {
         Id = id;
         UserSubCasteName = userSubcasteName;
         UserCasteId = userCasteId;
         UserReligionId = userReligionId;
+        UserCasteName = userCasteName;
+        ReligionName = religionName;
     }
 
     public SubCaste() {
@@ -48,13 +52,29 @@ public class SubCaste {
         UserReligionId = userReligionId;
     }
 
+    public String getUserCasteName() {
+        return UserCasteName;
+    }
+
+    public void setUserCasteName(String userCasteName) {
+        UserCasteName = userCasteName;
+    }
+
+    public String getReligionName() { return ReligionName; }
+
+    public void setReligionName(String religionName) {
+        ReligionName = religionName;
+    }
+
     @Override
     public String toString() {
         return "SubCaste{" +
                 "Id=" + Id +
                 ", UserSubCasteName='" + UserSubCasteName + '\'' +
-                ", UserCasteId='" + UserCasteId + '\'' +
+                ", UserCasteId=" + UserCasteId +
                 ", UserReligionId=" + UserReligionId +
+                ", UserCasteName='" + UserCasteName + '\'' +
+                ", ReligionName='" + ReligionName + '\'' +
                 '}';
     }
 }

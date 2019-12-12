@@ -14,7 +14,6 @@ public interface UserReligionComponent {
      * All the below Component are for Religion *
      ********************************************/
 
-
     /**
      * This function is to return the Religion by Id
      * @param id
@@ -28,13 +27,11 @@ public interface UserReligionComponent {
      */
     public Religion getReligionByName(String name);
 
-
     /**
      * this function is to return the all the Religions
      * @return
      */
     public List<Religion> getAllReligions();
-
 
     /**
      * this is to add new Religion.
@@ -72,13 +69,11 @@ public interface UserReligionComponent {
      */
     public Caste getCasteByName(String name);
 
-
     /**
      * this function is to return the all the Caste
      * @return
      */
     public List<Caste> getAllCaste();
-
 
     /**
      * this is to add new Caste.
@@ -94,7 +89,6 @@ public interface UserReligionComponent {
      */
     public ReturnStatus deleteCaste(Caste caste);
 
-
     /**
      * this is to return all the caste belongs to the passed religion id.
      * @param religionId
@@ -109,7 +103,6 @@ public interface UserReligionComponent {
     /*********************************************
      * All the below Component are for Sub-caste *
      *********************************************/
-
 
     /**
      * This function is to return the Sub-Caste by Id
@@ -146,14 +139,13 @@ public interface UserReligionComponent {
      */
     public ReturnStatus deleteSubCaste(SubCaste subCaste);
 
-
     /**
-     * this is to return all the Sub-caste belongs to the passed religion id.
-     * @param religionId
+     * this is to return all the Sub-caste belongs to the passed Caste Id or religion id.
+     * @param casteId, religionId
 
      * @return
      */
-    //public List<Caste> getAllCasteOfReligion(final int religionId);
+    public List<SubCaste> getSuggestAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId);
 
 
 }
