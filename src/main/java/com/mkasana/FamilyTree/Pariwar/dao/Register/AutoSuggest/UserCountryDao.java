@@ -1,5 +1,8 @@
 package com.mkasana.FamilyTree.Pariwar.dao.Register.AutoSuggest;
 
+import com.mkasana.FamilyTree.Pariwar.model.*;
+
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 
 public interface UserCountryDao {
@@ -17,4 +20,12 @@ public interface UserCountryDao {
     public ResultSet getUserCountryById(final int id) throws Exception;
 
     public ResultSet getUserAllCountries() throws Exception;
+
+    public void createNewState(@NotNull final State state) throws Exception;
+
+    public void createNewDistrict(final District district) throws Exception;
+
+    public void createNewVillageTown(final VillageTown villageTown) throws Exception;
+
+    public void createNewCountry(final Country country) throws Exception;
 }

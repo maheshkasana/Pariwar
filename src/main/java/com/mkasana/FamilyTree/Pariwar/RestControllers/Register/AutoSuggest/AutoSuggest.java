@@ -2,10 +2,7 @@ package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.AutoSuggest;
 
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserAddressComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserReligionComponent;
-import com.mkasana.FamilyTree.Pariwar.model.Caste;
-import com.mkasana.FamilyTree.Pariwar.model.Country;
-import com.mkasana.FamilyTree.Pariwar.model.Religion;
-import com.mkasana.FamilyTree.Pariwar.model.SubCaste;
+import com.mkasana.FamilyTree.Pariwar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -37,6 +34,20 @@ public class AutoSuggest {
     /**********************************************
      * All the below Controllers are for Religion *
      **********************************************/
+
+    /**
+     * this function is to Create new Religion
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/create/religion", method = RequestMethod.GET, headers="Accept=application/json")
+    private ReturnStatus createNewReligion(@RequestBody Religion religion, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewReligion";
+
+        return userReligionComponent.createNewReligion(religion);
+    }
 
     /**
      * this function is to return the religion details for the religion id
@@ -81,6 +92,21 @@ public class AutoSuggest {
     /**********************************************
      * All the below Controllers are for Caste    *
      **********************************************/
+
+    /**
+     * this function is to Create new Caste
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/create/caste", method = RequestMethod.GET, headers="Accept=application/json")
+    private ReturnStatus createNewCaste(@RequestBody Caste caste, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewCaste";
+
+        return userReligionComponent.createNewCaste(caste);
+    }
+
 
     /**
      * this function is to return Caste based on passed Caste Id;
@@ -136,7 +162,24 @@ public class AutoSuggest {
     /**************************************************
      * All the below Controllers are for Sub-Caste    *
      **************************************************/
+
     /**
+     * this function is to return the religion details for the religion id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/create/subCaste", method = RequestMethod.GET, headers="Accept=application/json")
+    private ReturnStatus createNewSubCaste(@RequestBody SubCaste subCaste, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewSubCaste";
+
+        return userReligionComponent.createNewSubCaste(subCaste);
+    }
+
+
+    /**
+     *
      * this function is to return Sub - Caste based on passed sub-Caste Id;
      * @param headers
      * @return
@@ -208,5 +251,41 @@ public class AutoSuggest {
         return userAddressComponent.getAllCountries();
     }
 
+//Testing is remaining.
+
+    @RequestMapping(value = "/register/create/country", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus createNewCountry(@RequestBody Country country,@RequestHeader HttpHeaders headers) throws Exception {
+
+    String function = "AutoSuggestController:CreateNewCountry";
+
+    return userAddressComponent.createNewCountry(country);
+    }
+
+
+    @RequestMapping(value = "/register/create/state", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus CreateNewState(@RequestBody State state,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:CreateNewState";
+
+        return userAddressComponent.CreateNewState(state);
+    }
+
+
+    @RequestMapping(value = "/register/create/district", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus CreateNewDistrict(@RequestBody District district,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:CreateNewDistrict";
+
+        return userAddressComponent.createNewDistrict(district);
+    }
+
+
+    @RequestMapping(value = "/register/create/villageTown", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus createNewVillageTown(@RequestBody VillageTown villageTown,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewVillageTown";
+
+        return userAddressComponent.createNewVillageTown(villageTown);
+    }
 
 }

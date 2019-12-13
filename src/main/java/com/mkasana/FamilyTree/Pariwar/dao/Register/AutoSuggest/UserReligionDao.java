@@ -1,6 +1,8 @@
 package com.mkasana.FamilyTree.Pariwar.dao.Register.AutoSuggest;
 
 import com.mkasana.FamilyTree.Pariwar.model.Caste;
+import com.mkasana.FamilyTree.Pariwar.model.Religion;
+import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import com.mkasana.FamilyTree.Pariwar.model.SubCaste;
 
 import java.sql.ResultSet;
@@ -12,6 +14,11 @@ public interface UserReligionDao {
      * All the below Dao are for Religion *
      *******************************************/
 
+    /**
+     * This function is to Create new Religion
+     * @param
+     */
+    public void createNewReligion(final Religion religion) throws Exception;
 
     /**
      * this function is to return the Result set of the query ran on the UserReligionTable
@@ -35,6 +42,13 @@ public interface UserReligionDao {
     /********************************************
      * All the below Dao are for Caste *
      *******************************************/
+
+    /**
+     * this function is to create new Caste
+     * @param caste
+     * @return
+     */
+    public void createNewCaste(final Caste caste) throws Exception;
 
 
     /**
@@ -67,6 +81,11 @@ public interface UserReligionDao {
      * All the below Builder are for Sub-caste *
      *********************************************/
 
+    /**
+     * This function is to Create new SubCaste
+     * @param subCaste
+     */
+    public void createNewSubCaste(final SubCaste subCaste) throws Exception;
 
     /**
      * This function is to return the Sub-Caste by Id

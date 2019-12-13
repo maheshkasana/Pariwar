@@ -1,7 +1,6 @@
 package com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest;
 
-import com.mkasana.FamilyTree.Pariwar.model.Country;
-import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
+import com.mkasana.FamilyTree.Pariwar.model.*;
 
 import java.util.List;
 
@@ -40,5 +39,37 @@ public interface UserAddressComponent {
      * @return
      */
     public ReturnStatus deleteCountry(Country country);
+
+
+    /**
+     * this is to Create New Country in Address
+     * @param country
+     * @return
+     */
+    public ReturnStatus createNewCountry(final Country country);
+
+    /**
+     * this is to Create New State in Address
+     * @param state
+     * @return
+     */
+    public ReturnStatus CreateNewState(final State state);
+
+
+    /**
+     * this is to Create New District in Address
+     * @param district
+     * @return
+     */
+    public ReturnStatus createNewDistrict(final District district);
+
+
+    /**
+     * this is to Create New Village Town in Address
+     * @param villageTown
+     * @return
+     */
+    public ReturnStatus createNewVillageTown(final VillageTown villageTown);
+
 
 }

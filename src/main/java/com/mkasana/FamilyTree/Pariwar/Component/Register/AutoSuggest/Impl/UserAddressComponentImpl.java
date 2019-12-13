@@ -2,10 +2,10 @@ package com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.Impl;
 
 import com.mkasana.FamilyTree.Pariwar.Builder.Register.AutoSuggest.UserAddressBuilder;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserAddressComponent;
-import com.mkasana.FamilyTree.Pariwar.model.Country;
-import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
+import com.mkasana.FamilyTree.Pariwar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -74,5 +74,54 @@ public class UserAddressComponentImpl implements UserAddressComponent {
     public ReturnStatus deleteCountry(Country country) {
         return null;
     }
+
+
+    /**
+     * This function is to Create new Country
+     * @param
+     */
+    @Override
+    public ReturnStatus createNewCountry(final Country country) {
+        String Function = "UserAddressComponentImpl:createNewCountry";
+
+        return userAddressBuilder.createNewCountry(country);
+    }
+
+
+    /**
+     * This function is to Create new State
+     * @param
+     */
+    @Override
+    public ReturnStatus CreateNewState(final State state) {
+        String Function = "UserAddressComponentImpl:CreateNewState";
+
+        return userAddressBuilder.createNewState(state);
+    }
+
+    /**
+     * this is to Create New District in Address
+     * @param district
+     * @return
+     */
+    @Override
+    public ReturnStatus createNewDistrict(final District district) {
+        String Function = "UserAddressComponentImpl:createNewDistrict";
+
+        return userAddressBuilder.createNewDistrict(district);
+    }
+
+    /**
+     * this is to Create New District in Address
+     * @param villageTown
+     * @return
+     */
+    @Override
+    public ReturnStatus createNewVillageTown(final VillageTown villageTown) {
+        String Function = "UserAddressComponentImpl:createNewVillageTown";
+
+        return userAddressBuilder.createNewVillageTown(villageTown);
+    }
+
 
 }

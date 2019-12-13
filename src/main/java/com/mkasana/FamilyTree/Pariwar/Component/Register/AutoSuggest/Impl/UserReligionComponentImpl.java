@@ -27,6 +27,17 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
      *******************************************/
 
     /**
+     * This function is to Create new Religion
+     * @param
+     */
+    @Override
+    public ReturnStatus createNewReligion(final Religion religion) {
+        String function = "UserReligionComponentImpl:createNewReligion";
+
+        return userReligionBuilder.createNewReligion(religion);
+    }
+
+    /**
      * This function is to return the Religion by Id
      * @param id
      */
@@ -92,6 +103,15 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
      * All the below Component are for caste *
      *****************************************/
 
+    /**
+     * This function is to Create new Caste
+     * @param caste
+     */
+    public ReturnStatus createNewCaste(final Caste caste) {
+        String function = "UserReligionComponentImpl:createNewCaste";
+
+        return userReligionBuilder.createNewCaste(caste);
+    }
 
     /**
      * This function is to return the Caste by Id
@@ -160,6 +180,16 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
     /*********************************************
      * All the below Component are for Sub-caste *
      *********************************************/
+
+    /**
+     * This function is to Create new SubCaste
+     * @param subCaste
+     */
+    public ReturnStatus createNewSubCaste(final SubCaste subCaste) {
+        String function = "UserReligionComponentImpl:createNewSubCaste";
+
+        return userReligionBuilder.createNewSubCaste(subCaste);
+    }
 
 
     /**

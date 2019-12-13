@@ -9,6 +9,10 @@ public class ReturnStatus {
         this.statusCode = statusCode;
     }
 
+    public ReturnStatus() {
+
+    }
+
     public ReturnStatus(String errorMessage, String errorCode) {
         this.errorMessage = errorMessage;
         this.errorCode = errorCode;

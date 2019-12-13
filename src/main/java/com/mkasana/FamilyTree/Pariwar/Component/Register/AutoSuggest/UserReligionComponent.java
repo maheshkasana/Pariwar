@@ -4,6 +4,7 @@ import com.mkasana.FamilyTree.Pariwar.model.Caste;
 import com.mkasana.FamilyTree.Pariwar.model.Religion;
 import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import com.mkasana.FamilyTree.Pariwar.model.SubCaste;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -13,6 +14,12 @@ public interface UserReligionComponent {
     /********************************************
      * All the below Component are for Religion *
      ********************************************/
+
+    /**
+     * This function is to Create new Religion
+     * @param religion
+     */
+    public ReturnStatus createNewReligion(final Religion religion);
 
     /**
      * This function is to return the Religion by Id
@@ -54,6 +61,12 @@ public interface UserReligionComponent {
     /*****************************************
      * All the below Component are for caste *
      *****************************************/
+
+    /**
+     * This function is to Create new Caste
+     * @param caste
+     */
+    public ReturnStatus createNewCaste(final Caste caste);
 
 
     /**
@@ -103,6 +116,14 @@ public interface UserReligionComponent {
     /*********************************************
      * All the below Component are for Sub-caste *
      *********************************************/
+
+    /**
+     * This function is to Create new SubCaste
+     * @param subCaste
+     */
+    public ReturnStatus createNewSubCaste(final SubCaste subCaste);
+
+
 
     /**
      * This function is to return the Sub-Caste by Id

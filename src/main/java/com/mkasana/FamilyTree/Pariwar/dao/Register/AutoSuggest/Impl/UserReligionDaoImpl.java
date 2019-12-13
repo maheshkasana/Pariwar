@@ -4,6 +4,8 @@ import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
 import com.mkasana.FamilyTree.Pariwar.dao.Impl.DatabaseConnectionImpl;
 import com.mkasana.FamilyTree.Pariwar.dao.Register.AutoSuggest.UserReligionDao;
 import com.mkasana.FamilyTree.Pariwar.model.Caste;
+import com.mkasana.FamilyTree.Pariwar.model.Religion;
+import com.mkasana.FamilyTree.Pariwar.model.SubCaste;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,25 @@ public class UserReligionDaoImpl implements UserReligionDao {
     /********************************************
      * All the below Dao are for Religion *
      *******************************************/
+
+    /**
+     * This function is to Create new Religion
+     * @param
+     */
+    @Override
+    public void createNewReligion(final Religion religion) throws Exception {
+        String Function = "UserReligionDaoImpl:createNewReligion";
+
+        String query = "INSERT INTO UserReligion(ReligionName, FLag) VALUES \n"
+                + "(" + religion.getReligionName() + "," + 1 + ");";
+        try {
+            databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserCountryDaoImpl:createNewReligion Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
 
 
     @Override
@@ -80,6 +101,27 @@ public class UserReligionDaoImpl implements UserReligionDao {
     /********************************************
      * All the below Dao are for Caste    *
      *******************************************/
+
+    /**
+     * this function is to create new Caste
+     * @param caste
+     * @return
+     */
+    @Override
+    public void createNewCaste(final Caste caste) throws Exception {
+        String Function = "UserReligionDaoImpl:createNewCaste";
+
+        String query = "INSERT INTO UserCaste(UserCasteName,UserReligionId, FLag) VALUES \n"
+                + "(" + caste.getUserCasteName() + "," + caste.getUserReligionId() + ", " + 1 + ");";
+        try {
+            databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserCountryDaoImpl:createNewCaste Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
 
 
     /**
@@ -163,6 +205,23 @@ public class UserReligionDaoImpl implements UserReligionDao {
      *********************************************/
 
 
+    /**
+     * This function is to Create new SubCaste
+     * @param subCaste
+     */
+    public void createNewSubCaste(final SubCaste subCaste) throws Exception {
+        String Function = "UserReligionDaoImpl:createNewSubCaste";
+
+        String query = "INSERT INTO UserSubCaste(UserSubcasteName, UserCasteId, Flag) VALUES \n"
+                + "(" + subCaste.getUserSubCasteName() + "," + subCaste.getUserCasteId() + ", " + 1 + ");";
+        try {
+            databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserCountryDaoImpl:createNewSubCaste Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
 
     /**
      * This function is to return the Sub-Caste by Id

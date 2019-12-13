@@ -4,6 +4,7 @@ import com.mkasana.FamilyTree.Pariwar.dao.Register.AutoSuggest.Impl.UserReligion
 import com.mkasana.FamilyTree.Pariwar.dao.Register.AutoSuggest.UserReligionDao;
 import com.mkasana.FamilyTree.Pariwar.model.Caste;
 import com.mkasana.FamilyTree.Pariwar.model.Religion;
+import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import com.mkasana.FamilyTree.Pariwar.model.SubCaste;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -25,6 +26,27 @@ public class UserReligionBuilder {
     /********************************************
      * All the below Builders are for Religion *
      *******************************************/
+
+    /**
+     * This function is to Create new Religion
+     * @param
+     */
+    public ReturnStatus createNewReligion(final Religion religion) {
+        final String function = "UserReligionBuilder:createNewReligion";
+
+        ReturnStatus returnStatus = new ReturnStatus();
+
+        try {
+            userReligionDao.createNewReligion(religion);
+            returnStatus.setErrorCode("");
+            returnStatus.setStatusCode(0);
+        } catch(Exception e) {
+            returnStatus.setErrorCode("Failed to create the new Religion");
+            returnStatus.setStatusCode(-1);
+            System.out.println(function + " Error : "+ e);
+        }
+        return returnStatus;
+    }
 
 
     /**
@@ -80,6 +102,29 @@ public class UserReligionBuilder {
     /********************************************
      * All the below Builders are for Caste *
      *******************************************/
+
+
+    /**
+     * This function is to Create new Caste
+     * @param
+     */
+    public ReturnStatus createNewCaste(final Caste caste) {
+        final String function = "UserReligionBuilder:createNewCaste";
+
+        ReturnStatus returnStatus = new ReturnStatus();
+
+        try {
+            userReligionDao.createNewCaste(caste);
+            returnStatus.setErrorCode("");
+            returnStatus.setStatusCode(0);
+        } catch(Exception e) {
+            returnStatus.setErrorCode("Failed to create the new Caste");
+            returnStatus.setStatusCode(-1);
+            System.out.println(function + " Error : "+ e);
+        }
+        return returnStatus;
+    }
+
 
     /**
      * This function is to Convert resultSet to Caste
@@ -188,6 +233,27 @@ public class UserReligionBuilder {
         return subCaste;
     }
 
+
+    /**
+     * This function is to Create new SubCaste
+     * @param subCaste
+     */
+    public ReturnStatus createNewSubCaste(final SubCaste subCaste) {
+        final String function = "UserReligionBuilder:createNewSubCaste";
+
+        ReturnStatus returnStatus = new ReturnStatus();
+
+        try {
+            userReligionDao.createNewSubCaste(subCaste);
+            returnStatus.setErrorCode("");
+            returnStatus.setStatusCode(0);
+        } catch(Exception e) {
+            returnStatus.setErrorCode("Failed to create the new SubCaste");
+            returnStatus.setStatusCode(-1);
+            System.out.println(function + " Error : "+ e);
+        }
+        return returnStatus;
+    }
 
     /**
      * This function is to return the Sub-Caste by Id
