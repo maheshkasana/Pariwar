@@ -98,7 +98,7 @@ public class UserAddressBuilder {
      */
     public ReturnStatus createNewState(final State state) {
 
-        final String function = "UserAddressBuilder:CreateNewState";
+        final String function = "UserAddressBuilder:createNewState";
         ReturnStatus returnStatus = new ReturnStatus();
 
         try {

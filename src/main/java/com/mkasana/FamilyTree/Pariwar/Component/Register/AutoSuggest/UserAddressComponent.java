@@ -53,7 +53,7 @@ public interface UserAddressComponent {
      * @param state
      * @return
      */
-    public ReturnStatus CreateNewState(final State state);
+    public ReturnStatus createNewState(final State state);
 
 
     /**

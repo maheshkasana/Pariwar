@@ -57,6 +57,12 @@ public class UserCountryDaoImpl implements UserCountryDao {
     }
 
 
+    /**
+     * this is to Create New Country in Address
+     * @param country
+     * @return
+     */
+    @Override
     public void createNewCountry(final Country country) throws Exception {
         String Function = "UserCountryDaoImpl:createNewCountry";
 
@@ -71,8 +77,15 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
+
+    /**
+     * this is to Create New State in Address
+     * @param state
+     * @return
+     */
+    @Override
     public void createNewState(@NotNull final State state) throws Exception {
-        String Function = "UserCountryDaoImpl:CreateNewState";
+        String Function = "UserCountryDaoImpl:createNewState";
 
         String query = "INSERT INTO StateDetails(CountryId, StateName, Flag) VALUES \n"
                         + "(" + state.getCountryId() + "," + state.getStateName() + "," + 1 + ");";
@@ -85,6 +98,12 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
+
+    /**
+     * this is to Create New District in Address
+     * @param district
+     * @return
+     */
     public void createNewDistrict(final District district) throws Exception {
         String Function = "UserCountryDaoImpl:createNewDistrict";
 
@@ -99,7 +118,11 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
-
+    /**
+     * this is to Create New VillageTown in Address
+     * @param villageTown
+     * @return
+     */
     public void createNewVillageTown(final VillageTown villageTown) throws Exception {
         String Function = "UserCountryDaoImpl:createNewVillageTown";
 

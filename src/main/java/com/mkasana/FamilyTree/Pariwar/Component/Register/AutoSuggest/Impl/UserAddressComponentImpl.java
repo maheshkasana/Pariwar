@@ -93,8 +93,8 @@ public class UserAddressComponentImpl implements UserAddressComponent {
      * @param
      */
     @Override
-    public ReturnStatus CreateNewState(final State state) {
-        String Function = "UserAddressComponentImpl:CreateNewState";
+    public ReturnStatus createNewState(final State state) {
+        String Function = "UserAddressComponentImpl:createNewState";
 
         return userAddressBuilder.createNewState(state);
     }

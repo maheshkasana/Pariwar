@@ -21,11 +21,31 @@ public interface UserCountryDao {
 
     public ResultSet getUserAllCountries() throws Exception;
 
+    /**
+     * this is to Create New state in Address
+     * @param state
+     * @return
+     */
     public void createNewState(@NotNull final State state) throws Exception;
 
+    /**
+     * this is to Create New district in Address
+     * @param district
+     * @return
+     */
     public void createNewDistrict(final District district) throws Exception;
 
+    /**
+     * this is to Create New villageTown in Address
+     * @param villageTown
+     * @return
+     */
     public void createNewVillageTown(final VillageTown villageTown) throws Exception;
 
+    /**
+     * this is to Create New Country in Address
+     * @param country
+     * @return
+     */
     public void createNewCountry(final Country country) throws Exception;
 }

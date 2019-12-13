@@ -164,7 +164,7 @@ public class AutoSuggest {
      **************************************************/
 
     /**
-     * this function is to return the religion details for the religion id
+     * this function is to Create new SubCaste
      * @param headers
      * @return
      * @throws Exception
@@ -253,6 +253,12 @@ public class AutoSuggest {
 
 //Testing is remaining.
 
+    /**
+     * this function is to Create New Country
+     * @param headers
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/register/create/country", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewCountry(@RequestBody Country country,@RequestHeader HttpHeaders headers) throws Exception {
 
@@ -261,25 +267,40 @@ public class AutoSuggest {
     return userAddressComponent.createNewCountry(country);
     }
 
-
+    /**
+     * this function is to Create New state
+     * @param headers
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/register/create/state", method = RequestMethod.POST, headers="Accept=application/json")
-    private ReturnStatus CreateNewState(@RequestBody State state,@RequestHeader HttpHeaders headers) throws Exception {
+    private ReturnStatus createNewState(@RequestBody State state,@RequestHeader HttpHeaders headers) throws Exception {
 
-        String function = "AutoSuggestController:CreateNewState";
+        String function = "AutoSuggestController:createNewState";
 
-        return userAddressComponent.CreateNewState(state);
+        return userAddressComponent.createNewState(state);
     }
 
-
+    /**
+     * this function is to Create New district
+     * @param headers
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/register/create/district", method = RequestMethod.POST, headers="Accept=application/json")
-    private ReturnStatus CreateNewDistrict(@RequestBody District district,@RequestHeader HttpHeaders headers) throws Exception {
+    private ReturnStatus createNewDistrict(@RequestBody District district,@RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:CreateNewDistrict";
 
         return userAddressComponent.createNewDistrict(district);
     }
 
-
+    /**
+     * this function is to Create New villageTown
+     * @param headers
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/register/create/villageTown", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewVillageTown(@RequestBody VillageTown villageTown,@RequestHeader HttpHeaders headers) throws Exception {
 

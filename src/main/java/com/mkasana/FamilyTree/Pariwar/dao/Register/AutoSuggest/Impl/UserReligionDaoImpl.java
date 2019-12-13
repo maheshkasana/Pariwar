@@ -209,6 +209,7 @@ public class UserReligionDaoImpl implements UserReligionDao {
      * This function is to Create new SubCaste
      * @param subCaste
      */
+    @Override
     public void createNewSubCaste(final SubCaste subCaste) throws Exception {
         String Function = "UserReligionDaoImpl:createNewSubCaste";
 
