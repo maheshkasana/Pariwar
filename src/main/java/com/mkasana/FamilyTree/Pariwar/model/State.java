@@ -4,18 +4,28 @@ public class State {
     int Id;
     int CountryId;
     int StateCode;
-    int StateName;
+    String StateName;
+    Country country;
 
-    public State(int id, int countryId, int stateName, int stateCode) {
+
+    public State(int id, int countryId, String stateName, int stateCode, Country countryIn) {
         Id = id;
         CountryId = countryId;
         StateName = stateName;
         StateCode = stateCode;
+        country = countryIn;
     }
 
     public State() {
     }
 
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public int getId() {
         return Id;
@@ -41,11 +51,11 @@ public class State {
         StateCode = stateCode;
     }
 
-    public int getStateName() {
+    public String getStateName() {
         return StateName;
     }
 
-    public void setStateName(int stateName) {
+    public void setStateName(String stateName) {
         StateName = stateName;
     }
 
@@ -55,7 +65,8 @@ public class State {
                 "Id=" + Id +
                 ", CountryId=" + CountryId +
                 ", StateCode=" + StateCode +
-                ", StateName=" + StateName +
+                ", StateName='" + StateName + '\'' +
+                ", country=" + country +
                 '}';
     }
 }

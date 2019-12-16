@@ -120,7 +120,10 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
     public Caste getCasteById(final int id) {
         String function = "UserReligionComponentImpl:getCasteById";
 
-        return userReligionBuilder.getCasteById(id);
+        Caste caste = userReligionBuilder.getCasteById(id);
+        Religion religion = getReligionById(caste.getUserReligionId());
+        caste.setReligion(religion);
+        return caste;
     }
 
     /**

@@ -123,5 +123,97 @@ public class UserAddressComponentImpl implements UserAddressComponent {
         return userAddressBuilder.createNewVillageTown(villageTown);
     }
 
+    /**
+     * this is to Update Village Town PinCode in Address
+     * @param villageTown
+     * @return
+     */
+    @Override
+    public ReturnStatus updateVillageTownPinCode(final VillageTown villageTown) {
+        String Function = "UserAddressComponentImpl:updateVillageTownPinCode";
+
+        return userAddressBuilder.updateVillageTownPinCode(villageTown);
+    }
+
+
+    /**
+     * this function is to return State by passed Id
+     * @param stateId
+     * @return
+     */
+    public State getStateById(final int stateId) {
+        String Function = "UserAddressComponentImpl:getStateById";
+        Country country;
+        State state = userAddressBuilder.getStateById(stateId);
+        country = userAddressBuilder.getCountryById(state.getCountryId());
+        state.setCountry(country);
+        return state;
+    }
+
+
+    /**
+     * this function is to return All States
+     * @param
+     * @return
+     */
+    public List<State> getAllState() {
+        String Function = "UserAddressComponentImpl:getAllState";
+
+        return userAddressBuilder.getAllState();
+    }
+
+    /**
+     * this function is to return District by Id
+     * @param
+     * @return
+     */
+    public District getDistrictById(final int districtId) {
+        String Function = "UserAddressComponentImpl:getDistrictById";
+        District district =  userAddressBuilder.getDistrictById(districtId);
+        State state;
+        state = getStateById(district.getStateId());
+        district.setState(state);
+
+        return district;
+    }
+
+    /**
+     * this function is to return All District
+     * @param
+     * @return
+     */
+    public List<District> getAllDistrict() {
+        String Function = "UserAddressComponentImpl:getAllDistrict";
+
+        return userAddressBuilder.getAllDistrict();
+    }
+
+
+    /**
+     * this function is to return VillageTown by Id
+     * @param
+     * @return
+     */
+    public VillageTown getVillageTownById(final int villageTownId) {
+        String Function = "UserAddressComponentImpl:getVillageTownById";
+        VillageTown villageTown = userAddressBuilder.getVillageTownById(villageTownId);
+        District district = getDistrictById(villageTown.getDistrictId());
+        villageTown.setDistrict(district);
+        return villageTown;
+    }
+
+    /**
+     * this function is to return All VillageTown
+     * @param
+     * @return
+     */
+    public List<VillageTown> getAllVillageTown() {
+        String Function = "UserAddressComponentImpl:getAllVillageTown";
+
+        return userAddressBuilder.getAllVillageTown();
+    }
+
+
 
 }
+

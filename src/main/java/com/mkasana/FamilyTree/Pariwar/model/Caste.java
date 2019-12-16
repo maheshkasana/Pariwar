@@ -6,11 +6,13 @@ public class Caste {
     String UserCasteName;
     int UserReligionId;
     String ReligionName;
+    Religion religion;
 
-    public Caste(int id, String userCasteName, int userReligionId) {
+    public Caste(int id, String userCasteName, int userReligionId, Religion religionIn) {
         Id = id;
         UserCasteName = userCasteName;
         UserReligionId = userReligionId;
+        religion = religionIn;
     }
 
     public Caste(int id, String userCasteName, int userReligionId, String religionName) {
@@ -18,6 +20,14 @@ public class Caste {
         UserCasteName = userCasteName;
         UserReligionId = userReligionId;
         ReligionName = religionName;
+    }
+
+    public Religion getReligion() {
+        return religion;
+    }
+
+    public void setReligion(Religion religion) {
+        this.religion = religion;
     }
 
     public String getReligionName() {

@@ -49,9 +49,10 @@ public class UserReligionDaoImpl implements UserReligionDao {
         String Function = "UserReligionDaoImpl:createNewReligion";
 
         String query = "INSERT INTO UserReligion(ReligionName, FLag) VALUES \n"
-                + "(" + religion.getReligionName() + "," + 1 + ");";
+                + "('" + religion.getReligionName() + "'," + 1 + ");";
         try {
-            databaseConnection.executeQuery(query);
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
         } catch(Exception e) {
             String error = "[Error] UserCountryDaoImpl:createNewReligion Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);
@@ -112,9 +113,10 @@ public class UserReligionDaoImpl implements UserReligionDao {
         String Function = "UserReligionDaoImpl:createNewCaste";
 
         String query = "INSERT INTO UserCaste(UserCasteName,UserReligionId, FLag) VALUES \n"
-                + "(" + caste.getUserCasteName() + "," + caste.getUserReligionId() + ", " + 1 + ");";
+                + "('" + caste.getUserCasteName() + "'," + caste.getUserReligionId() + ", " + 1 + ");";
         try {
-            databaseConnection.executeQuery(query);
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
         } catch(Exception e) {
             String error = "[Error] UserCountryDaoImpl:createNewCaste Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);
@@ -214,9 +216,10 @@ public class UserReligionDaoImpl implements UserReligionDao {
         String Function = "UserReligionDaoImpl:createNewSubCaste";
 
         String query = "INSERT INTO UserSubCaste(UserSubcasteName, UserCasteId, Flag) VALUES \n"
-                + "(" + subCaste.getUserSubCasteName() + "," + subCaste.getUserCasteId() + ", " + 1 + ");";
+                + "('" + subCaste.getUserSubCasteName() + "'," + subCaste.getUserCasteId() + ", " + 1 + ");";
         try {
-            databaseConnection.executeQuery(query);
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
         } catch(Exception e) {
             String error = "[Error] UserCountryDaoImpl:createNewSubCaste Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);

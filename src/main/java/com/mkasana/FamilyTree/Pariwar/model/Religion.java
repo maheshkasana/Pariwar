@@ -9,6 +9,10 @@ public class Religion {
         ReligionName = religionName;
     }
 
+    public Religion(String religionName) {
+        ReligionName = religionName;
+    }
+
     public Religion() {
     }
 

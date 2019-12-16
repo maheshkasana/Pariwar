@@ -6,13 +6,24 @@ public class VillageTown {
     String VillageTownLocalAreaName;
     int PinCode;
     int Flag;
+    District district;
 
-    public VillageTown(int id, int districtId, String villageTownLocalAreaName, int pinCode, int flag) {
+
+    public VillageTown(int id, int districtId, String villageTownLocalAreaName, int pinCode, int flag, District districtIn) {
         Id = id;
         DistrictId = districtId;
         VillageTownLocalAreaName = villageTownLocalAreaName;
         PinCode = pinCode;
         Flag = flag;
+        district = districtIn;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
     }
 
     public VillageTown() {

@@ -643,3 +643,71 @@ function onchangeAutoSuggestUserName() {
 
 }
 
+
+function SendHttpRequestAndReturnResponseEtrace(url, requestType, formdata, callback,)
+{
+    alert("In Send Etrace");
+    alert(url);
+    alert(requestType);
+    alert(formdata);
+    alert(callback);
+
+    var xhttp = new XMLHttpRequest();
+
+
+    xhttp.onreadystatechange = function()
+    {
+  	    if(this.readyState<4)
+  	    {
+
+     	}
+        else if(this.readyState==4)
+            {
+        	    if (this.status == 200)
+    		    {
+      		        if(this.responseText!=null)
+                    {
+                        alert(this.responseText);
+                        callback(this.responseText);
+                    }
+                    else
+                    {
+                        alert(this.responseText);
+                        callback(this.responseText);
+                    }
+		   	    }
+		   	    else {
+		   	        alert("Failed");
+		   	    }
+		    }
+    };
+
+    xhttp.open(requestType, url, false);
+
+    xhttp.setRequestHeader("Accept","application/json");
+    xhttp.setRequestHeader("Content-Type","multipart/form-data");
+    xhttp.send(formdata);
+
+    //location.replace("http://localhost:8081/index")
+    //return this.responseText;
+}
+
+function processAllStates(states) {
+    alert("Here in process states");
+    alerts(states);
+}
+
+//Get data from etrace
+function getStateFromEtrace() {
+        alert("in getStateFromEtrace");
+        var base_url = "https://etrace.in/pincode/";
+        var base_urll = "https://etrace.in/pincodes/data.php";
+        var url = "https://etrace.in/pincodes/data";
+        var requestType = 'POST';
+        var formData = new FormData();
+        formData.append("get", "state");
+
+        //Passing  responseFromLoginCheck as Callback function so as per the response this will get called and will take further action required
+        SendHttpRequestAndReturnResponseEtrace(base_urll, requestType, false, formData,  processAllStates);
+}
+

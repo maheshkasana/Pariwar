@@ -1,6 +1,11 @@
 package com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest;
 
 import com.mkasana.FamilyTree.Pariwar.model.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -70,6 +75,60 @@ public interface UserAddressComponent {
      * @return
      */
     public ReturnStatus createNewVillageTown(final VillageTown villageTown);
+
+
+    /**
+     * this is to Update Village Town PinCode in Address
+     * @param villageTown
+     * @return
+     */
+    public ReturnStatus updateVillageTownPinCode(final VillageTown villageTown);
+
+
+
+    /**
+     * this function is to return State by passed Id
+     * @param stateId
+     * @return
+     */
+    public State getStateById(final int stateId);
+
+
+    /**
+     * this function is to return All States
+     * @param
+     * @return
+     */
+    public List<State> getAllState();
+
+    /**
+     * this function is to return District by Id
+     * @param
+     * @return
+     */
+    public District getDistrictById(final int districtId);
+
+    /**
+     * this function is to return All District
+     * @param
+     * @return
+     */
+    public List<District> getAllDistrict();
+
+
+    /**
+     * this function is to return VillageTown by Id
+     * @param
+     * @return
+     */
+    public VillageTown getVillageTownById(final int districtId);
+
+    /**
+     * this function is to return All VillageTown
+     * @param
+     * @return
+     */
+    public List<VillageTown> getAllVillageTown();
 
 
 }

@@ -41,7 +41,7 @@ public class AutoSuggest {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register/create/religion", method = RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/register/create/religion", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewReligion(@RequestBody Religion religion, @RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:createNewReligion";
@@ -99,7 +99,7 @@ public class AutoSuggest {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register/create/caste", method = RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/register/create/caste", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewCaste(@RequestBody Caste caste, @RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:createNewCaste";
@@ -169,7 +169,7 @@ public class AutoSuggest {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register/create/subCaste", method = RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/register/create/subCaste", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewSubCaste(@RequestBody SubCaste subCaste, @RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:createNewSubCaste";
@@ -235,7 +235,7 @@ public class AutoSuggest {
      * @throws Exception
      */
     @RequestMapping(value = "/register/auto/country/{countryId}", method = RequestMethod.GET, headers="Accept=application/json")
-    private Country SuggestCountryById(@PathVariable("countryId") int countryId, @RequestHeader HttpHeaders headers) throws Exception {
+    private Country suggestCountryById(@PathVariable("countryId") int countryId, @RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:SuggestCountryById";
 
@@ -243,15 +243,20 @@ public class AutoSuggest {
     }
 
 
+    /**
+     * this function is to return All Country;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/register/auto/allCountries", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<Country> SuggestAllCountries(@RequestHeader HttpHeaders headers) throws Exception {
+    private List<Country> suggestAllCountries(@RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:SuggestAllCountries";
 
         return userAddressComponent.getAllCountries();
     }
 
-//Testing is remaining.
 
     /**
      * this function is to Create New Country
@@ -308,5 +313,122 @@ public class AutoSuggest {
 
         return userAddressComponent.createNewVillageTown(villageTown);
     }
+
+
+    /**
+     * this function is to Update the PinCode villageTown
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/update/villageTown/pincode", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus updateVillageTownPinCode(@RequestBody VillageTown villageTown,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:updateVillageTownPinCode";
+
+        return userAddressComponent.updateVillageTownPinCode(villageTown);
+    }
+
+
+    /**********************************************
+     *  All the below Controllers are for State   *
+     **********************************************/
+
+    /**
+     * this function is to return State by Id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/state/{stateId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private State suggestStateById(@PathVariable("stateId") int stateId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestStateById";
+
+        return userAddressComponent.getStateById(stateId);
+    }
+
+
+    /**
+     * this function is to return All State;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allStates", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<State> suggestAllStates(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllStates";
+
+        return userAddressComponent.getAllState();
+    }
+
+    /**********************************************
+     *  All the below Controllers are for District   *
+     **********************************************/
+
+    /**
+     * this function is to return District by Id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/district/{districtId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private District suggestDistrictById(@PathVariable("districtId") int districtId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestDistrictById";
+
+        return userAddressComponent.getDistrictById(districtId);
+    }
+
+
+    /**
+     * this function is to return All District;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allDistrict", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<District> suggestAllDistrict(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllDistrict";
+
+        return userAddressComponent.getAllDistrict();
+    }
+
+
+    /****************************************************
+     *  All the below Controllers are for VillageTown   *
+     ****************************************************/
+
+    /**
+     * this function is to return District by Id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/villageTown/{villageTownId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private VillageTown suggestVillageTownById(@PathVariable("villageTownId") int villageTownId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestVillageTownById";
+
+        return userAddressComponent.getVillageTownById(villageTownId);
+    }
+
+
+    /**
+     * this function is to return All District;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allVillageTown", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<VillageTown> suggestAllVillageTown(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllVillageTown";
+
+        return userAddressComponent.getAllVillageTown();
+    }
+
 
 }
