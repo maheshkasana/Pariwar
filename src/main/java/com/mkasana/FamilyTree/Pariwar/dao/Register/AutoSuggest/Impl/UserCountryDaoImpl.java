@@ -74,7 +74,7 @@ public class UserCountryDaoImpl implements UserCountryDao {
         String Function = "UserCountryDaoImpl:createNewCountry";
 
         String query = "INSERT INTO CountryDetails(CountryName, CountryCode, Flag) VALUES \n"
-                + "('" + country.getCountryName() + "','" + country.getCountryCode() + "'," + 1 + ");";
+                + "('" + country.getCountryName() + "','" + country.getCountryCode() + "'," + 0 + ");";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();
@@ -95,8 +95,8 @@ public class UserCountryDaoImpl implements UserCountryDao {
     public void createNewState(@NotNull final State state) throws Exception {
         String Function = "UserCountryDaoImpl:createNewState";
 
-        String query = "INSERT INTO StateDetails(CountryId, StateName, Flag) VALUES \n"
-                        + "(" + state.getCountryId() + ",'" + state.getStateName() + "'," + 1 + ");";
+        String query = "INSERT INTO StateDetails(CountryId, StateName, StateCode, Flag) VALUES \n"
+                        + "(" + state.getCountryId() + ",'" + state.getStateName() + "','" + state.getStateCode()  + "'," + 0 + ");";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();
@@ -116,8 +116,8 @@ public class UserCountryDaoImpl implements UserCountryDao {
     public void createNewDistrict(final District district) throws Exception {
         String Function = "UserCountryDaoImpl:createNewDistrict";
 
-        String query = "INSERT INTO DistrictDetails(StateId,DistrictName,Flag) VALUES \n"
-                + "(" + district.getStateId() + ",'" + district.getDistrictName() + "'," + 1 + ");";
+        String query = "INSERT INTO DistrictDetails(StateId,DistrictName,DistrictCode,Flag) VALUES \n"
+                + "(" + district.getStateId() + ",'" + district.getDistrictName() + "','" + district.getDistrictCode() + "'," + 0 + ");";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();
@@ -136,8 +136,8 @@ public class UserCountryDaoImpl implements UserCountryDao {
     public void createNewVillageTown(final VillageTown villageTown) throws Exception {
         String Function = "UserCountryDaoImpl:createNewVillageTown";
 
-        String query = "INSERT INTO VillageTownLocalAreaDetails(DistrictId, VillageTownLocalAreaName, PinCode, Flag) VALUES \n"
-                + "(" + villageTown.getDistrictId() + ",'" + villageTown.getVillageTownLocalAreaName() + "'," + villageTown.getPinCode() + "," + 1 + ");";
+        String query = "INSERT INTO VillageTownLocalAreaDetails(DistrictId, VillageTownLocalAreaName, VillageTownLocalAreaCode, PinCode, Flag) VALUES \n"
+                + "(" + villageTown.getDistrictId() + ",'" + villageTown.getVillageTownLocalAreaName() + "','" + villageTown.getVillageTownLocalAreaCode() + "'," + villageTown.getPinCode() + "," + 0 + ");";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();

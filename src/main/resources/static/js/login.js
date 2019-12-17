@@ -644,13 +644,8 @@ function onchangeAutoSuggestUserName() {
 }
 
 
-function SendHttpRequestAndReturnResponseEtrace(url, requestType, formdata, callback,)
+function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData, formData, callback, para1)
 {
-    alert("In Send Etrace");
-    alert(url);
-    alert(requestType);
-    alert(formdata);
-    alert(callback);
 
     var xhttp = new XMLHttpRequest();
 
@@ -668,12 +663,13 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, formdata, call
       		        if(this.responseText!=null)
                     {
                         alert(this.responseText);
-                        callback(this.responseText);
+                        callback(para1, this.responseText);
                     }
                     else
                     {
+
                         alert(this.responseText);
-                        callback(this.responseText);
+                        callback(para1, this.responseText);
                     }
 		   	    }
 		   	    else {
@@ -682,19 +678,28 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, formdata, call
 		    }
     };
 
+    alert("Yes tryung to send");
+
     xhttp.open(requestType, url, false);
-
+    xhttp.withCredentials = true;
     xhttp.setRequestHeader("Accept","application/json");
-    xhttp.setRequestHeader("Content-Type","multipart/form-data");
-    xhttp.send(formdata);
+    if(toSendFormData)
+        xhttp.setRequestHeader("Content-Type","multipart/form-data");
+    else
+       xhttp.setRequestHeader("Content-Type","application/json");
 
+    if(toSendFormData)
+        xhttp.send(formData);
+    else
+        xhttp.send();
     //location.replace("http://localhost:8081/index")
-    //return this.responseText;
+    alert(this.responseText);
 }
 
-function processAllStates(states) {
-    alert("Here in process states");
-    alerts(states);
+function processAllStatesAndGetDistrictAndAddThemTotables(para1, Districts) {
+    alert("Here in process to all districts");
+    alert(Districts);
+    alerts(para1);
 }
 
 //Get data from etrace
@@ -708,6 +713,36 @@ function getStateFromEtrace() {
         formData.append("get", "state");
 
         //Passing  responseFromLoginCheck as Callback function so as per the response this will get called and will take further action required
-        SendHttpRequestAndReturnResponseEtrace(base_urll, requestType, false, formData,  processAllStates);
+        //SendHttpRequestAndReturnResponseEtrace(base_urll, requestType, true, formData,  processAllStates);
 }
 
+
+
+function getDistrictForStatefromEtrace(para1, data) {
+    alert("In Process State");
+    var states = JSON.parse(data);
+    for(i in states) {
+        var stateId = states[i].id;
+        var stateCode = states[i].stateCode;
+        var stateName = states[i].stateName;
+        alert(stateId + stateCode + stateName);
+        var base_url = "https://etrace.in/pincode/";
+        var base_urll = "https://etrace.in/pincodes/data.php";
+        var url = "https://etrace.in/pincodes/data";
+        var requestType = 'POST';
+        var formData = new FormData();
+        formData.append("get", "district");
+        formData.append("state", "rajasthan");
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, true, formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
+       }
+
+}
+
+function makeHttpRequestToGetAllStates() {
+        alert("In make Http Request")
+        var url = "http://localhost:8081/register/auto/allStates";
+        var requestType = 'GET';
+        var formData = new FormData();
+        //Passing  responseFromLoginCheck as Callback function so as per the response this will get called and will take further action required
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, formData, getDistrictForStatefromEtrace, 0);
+}

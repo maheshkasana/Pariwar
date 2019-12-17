@@ -5,18 +5,20 @@ public class District {
     int StateId;
     State state;
     String DistrictName;
+    String DistrictCode;
     int Flag;
 
     public int getId() {
         return Id;
     }
 
-    public District(int id, int stateId, String districtName, int flag, State stateIn) {
+    public District(int id, int stateId, String districtName, int flag, State stateIn, String DistrictCodeIn) {
         Id = id;
         StateId = stateId;
         DistrictName = districtName;
         Flag = flag;
         state = stateIn;
+        DistrictCode = DistrictCodeIn;
     }
 
 
@@ -27,8 +29,17 @@ public class District {
                 ", StateId=" + StateId +
                 ", state=" + state +
                 ", DistrictName='" + DistrictName + '\'' +
+                ", DistrictCode='" + DistrictCode + '\'' +
                 ", Flag=" + Flag +
                 '}';
+    }
+
+    public String getDistrictCode() {
+        return DistrictCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        DistrictCode = districtCode;
     }
 
     public State getState() {

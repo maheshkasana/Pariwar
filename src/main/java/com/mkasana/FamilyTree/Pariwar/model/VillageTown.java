@@ -4,18 +4,28 @@ public class VillageTown {
     int Id;
     int DistrictId;
     String VillageTownLocalAreaName;
+    String VillageTownLocalAreaCode;
     int PinCode;
     int Flag;
     District district;
 
 
-    public VillageTown(int id, int districtId, String villageTownLocalAreaName, int pinCode, int flag, District districtIn) {
+    public VillageTown(int id, int districtId, String villageTownLocalAreaName, int pinCode, int flag, District districtIn, String VillageTownLocalAreaCodeIn) {
         Id = id;
         DistrictId = districtId;
         VillageTownLocalAreaName = villageTownLocalAreaName;
         PinCode = pinCode;
         Flag = flag;
         district = districtIn;
+        VillageTownLocalAreaCode = VillageTownLocalAreaCodeIn;
+    }
+
+    public String getVillageTownLocalAreaCode() {
+        return VillageTownLocalAreaCode;
+    }
+
+    public void setVillageTownLocalAreaCode(String villageTownLocalAreaCode) {
+        VillageTownLocalAreaCode = villageTownLocalAreaCode;
     }
 
     public District getDistrict() {
@@ -75,8 +85,10 @@ public class VillageTown {
                 "Id=" + Id +
                 ", DistrictId=" + DistrictId +
                 ", VillageTownLocalAreaName='" + VillageTownLocalAreaName + '\'' +
+                ", VillageTownLocalAreaCode='" + VillageTownLocalAreaCode + '\'' +
                 ", PinCode=" + PinCode +
                 ", Flag=" + Flag +
+                ", district=" + district +
                 '}';
     }
 }

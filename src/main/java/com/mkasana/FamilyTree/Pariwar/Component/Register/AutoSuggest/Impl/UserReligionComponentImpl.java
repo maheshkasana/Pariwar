@@ -201,8 +201,11 @@ public class UserReligionComponentImpl  implements UserReligionComponent {
      */
     public SubCaste getSubCasteById(final int id) {
         String function = "UserReligionComponentImpl:getSubCasteById";
+        SubCaste subCaste = userReligionBuilder.getSubCasteById(id);
+        Caste caste = getCasteById(subCaste.getUserCasteId());
+        subCaste.setCaste(caste);
 
-        return userReligionBuilder.getSubCasteById(id);
+        return subCaste;
     }
 
     /**

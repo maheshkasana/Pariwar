@@ -198,6 +198,7 @@ public class UserAddressBuilder {
                 state.setId(resultSet.getInt("Id"));
                 state.setCountryId(resultSet.getInt("CountryId"));
                 state.setStateName(resultSet.getString("StateName"));
+                state.setStateCode(resultSet.getString("StateCode"));
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -223,6 +224,7 @@ public class UserAddressBuilder {
                 state.setId(resultSet.getInt("Id"));
                 state.setCountryId(resultSet.getInt("CountryId"));
                 state.setStateName(resultSet.getString("StateName"));
+                state.setStateCode(resultSet.getString("StateCode"));
                 states.add(state);
             }
         } catch(Exception e) {
@@ -247,6 +249,7 @@ public class UserAddressBuilder {
                 district.setId(resultSet.getInt("Id"));
                 district.setStateId(resultSet.getInt("StateId"));
                 district.setDistrictName(resultSet.getString("DistrictName"));
+                district.setDistrictCode(resultSet.getString("DistrictCode"));
             }
         } catch(Exception e) {
             System.out.println(e);
@@ -271,6 +274,7 @@ public class UserAddressBuilder {
                 district.setId(resultSet.getInt("Id"));
                 district.setStateId(resultSet.getInt("StateId"));
                 district.setDistrictName(resultSet.getString("DistrictName"));
+                district.setDistrictCode(resultSet.getString("DistrictCode"));
                 districts.add(district);
             }
         } catch(Exception e) {
@@ -295,6 +299,7 @@ public class UserAddressBuilder {
                 villageTown.setId(resultSet.getInt("Id"));
                 villageTown.setDistrictId(resultSet.getInt("DistrictId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
+                villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));
             }
         } catch(Exception e) {
@@ -320,6 +325,7 @@ public class UserAddressBuilder {
                 villageTown.setId(resultSet.getInt("Id"));
                 villageTown.setDistrictId(resultSet.getInt("DistrictId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
+                villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));
                 villageTowns.add(villageTown);
             }
@@ -347,6 +353,7 @@ public class UserAddressBuilder {
                 villageTown.setId(resultSet.getInt("Id"));
                 villageTown.setDistrictId(resultSet.getInt("DistrictId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
+                villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));
                 villageTowns.add(villageTown);
             }

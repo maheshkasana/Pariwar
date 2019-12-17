@@ -3,12 +3,12 @@ package com.mkasana.FamilyTree.Pariwar.model;
 public class State {
     int Id;
     int CountryId;
-    int StateCode;
+    String StateCode;
     String StateName;
     Country country;
 
 
-    public State(int id, int countryId, String stateName, int stateCode, Country countryIn) {
+    public State(int id, int countryId, String stateName, String stateCode, Country countryIn) {
         Id = id;
         CountryId = countryId;
         StateName = stateName;
@@ -43,11 +43,11 @@ public class State {
         CountryId = countryId;
     }
 
-    public int getStateCode() {
+    public String getStateCode() {
         return StateCode;
     }
 
-    public void setStateCode(int stateCode) {
+    public void setStateCode(String stateCode) {
         StateCode = stateCode;
     }
 

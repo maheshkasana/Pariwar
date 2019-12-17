@@ -402,7 +402,7 @@ public class AutoSuggest {
      ****************************************************/
 
     /**
-     * this function is to return District by Id
+     * this function is to return VillageTown by Id
      * @param headers
      * @return
      * @throws Exception
@@ -417,7 +417,7 @@ public class AutoSuggest {
 
 
     /**
-     * this function is to return All District;
+     * this function is to return All VillageTown;
      * @param headers
      * @return
      * @throws Exception
