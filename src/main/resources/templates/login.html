@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="static/css/login.css" th:href="@{css/login.css}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="js/login.js"></script>
+<script src="js/test.js"></script>
 <script src="js/Etrace.js"></script>
 <style>
         body {
@@ -52,7 +53,7 @@
             <input type="text" placeholder="Enter Username or Phone number" id="login_username" name="login_username" required><div id="login_username_valid"></div>
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" id="login_password" name="login_password" required><div id="login_password_valid"></div>
-            <button onclick="makeHttpRequestToGetAllStates()">Login</button>
+            <button onclick="getTehsilForDistrictOfStatesFromEtrace()">Login</button>
             <div id="login_loading" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">

@@ -301,6 +301,20 @@ public class AutoSuggest {
     }
 
     /**
+     * this function is to Create New Tehsil
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/create/tehsil", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus createNewTehsil(@RequestBody Tehsil tehsil,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewTehsil";
+
+        return userAddressComponent.createNewTehsil(tehsil);
+    }
+
+    /**
      * this function is to Create New villageTown
      * @param headers
      * @return
@@ -381,6 +395,19 @@ public class AutoSuggest {
         return userAddressComponent.getDistrictById(districtId);
     }
 
+    /**
+     * this function is to return District by State Id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/districtByStateId/{stateId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<District> suggestDistrictByStateId(@PathVariable("stateId") int stateId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestDistrictByStateId";
+
+        return userAddressComponent.suggestDistrictByStateId(stateId);
+    }
 
     /**
      * this function is to return All District;
@@ -395,6 +422,54 @@ public class AutoSuggest {
 
         return userAddressComponent.getAllDistrict();
     }
+
+    /****************************************************
+     *  All the below Controllers are for Teshil   *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/tehsil/{tehsilId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private Tehsil suggestTehsilById(@PathVariable("tehsilId") int tehsilId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestTehsilById";
+
+        return userAddressComponent.getTehsilById(tehsilId);
+    }
+
+
+    /**
+     * this function is to return All Tehsil;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allTehsil", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<Tehsil> suggestAllTehsil(@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllTehsil";
+
+        return userAddressComponent.getAllTehsil();
+    }
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allTehsilByDistrictId/{districtId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<Tehsil> suggestAllTehsilByDistrictId(@PathVariable("districtId") int districtId,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllTehsilByDistrictId";
+
+        return userAddressComponent.getAllTehsilByDistrictId(districtId);
+    }
+
 
 
     /****************************************************
@@ -430,5 +505,19 @@ public class AutoSuggest {
         return userAddressComponent.getAllVillageTown();
     }
 
+
+    /**
+     * this function is to return All VillageTown by Tehsil Id;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/allVillageTownByTehsilId/{tehsilId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<VillageTown> suggestAllVillageTownByTehSilId(@PathVariable("tehsilId") int tehsilId,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:suggestAllVillageTownByTehSilId";
+
+        return userAddressComponent.getAllVillageTownByTehsilId(tehsilId);
+    }
 
 }

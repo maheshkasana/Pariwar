@@ -2,21 +2,21 @@ package com.mkasana.FamilyTree.Pariwar.model;
 
 public class VillageTown {
     int Id;
-    int DistrictId;
+    int TehsilId;
     String VillageTownLocalAreaName;
     String VillageTownLocalAreaCode;
     int PinCode;
     int Flag;
-    District district;
+    Tehsil tehsil;
 
 
-    public VillageTown(int id, int districtId, String villageTownLocalAreaName, int pinCode, int flag, District districtIn, String VillageTownLocalAreaCodeIn) {
+    public VillageTown(int id, int tehsilId, String villageTownLocalAreaName, int pinCode, int flag, Tehsil tehsilIn, String VillageTownLocalAreaCodeIn) {
         Id = id;
-        DistrictId = districtId;
+        TehsilId = tehsilId;
         VillageTownLocalAreaName = villageTownLocalAreaName;
         PinCode = pinCode;
         Flag = flag;
-        district = districtIn;
+        tehsil = tehsilIn;
         VillageTownLocalAreaCode = VillageTownLocalAreaCodeIn;
     }
 
@@ -28,13 +28,6 @@ public class VillageTown {
         VillageTownLocalAreaCode = villageTownLocalAreaCode;
     }
 
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
 
     public VillageTown() {
     }
@@ -43,17 +36,26 @@ public class VillageTown {
         return Id;
     }
 
+    public int getTehsilId() {
+        return TehsilId;
+    }
+
+    public void setTehsilId(int tehsilId) {
+        TehsilId = tehsilId;
+    }
+
+    public Tehsil getTehsil() {
+        return tehsil;
+    }
+
+    public void setTehsil(Tehsil tehsil) {
+        this.tehsil = tehsil;
+    }
+
     public void setId(int id) {
         Id = id;
     }
 
-    public int getDistrictId() {
-        return DistrictId;
-    }
-
-    public void setDistrictId(int districtId) {
-        DistrictId = districtId;
-    }
 
     public String getVillageTownLocalAreaName() {
         return VillageTownLocalAreaName;
@@ -83,12 +85,12 @@ public class VillageTown {
     public String toString() {
         return "VillageTown{" +
                 "Id=" + Id +
-                ", DistrictId=" + DistrictId +
+                ", TehsilId=" + TehsilId +
                 ", VillageTownLocalAreaName='" + VillageTownLocalAreaName + '\'' +
                 ", VillageTownLocalAreaCode='" + VillageTownLocalAreaCode + '\'' +
                 ", PinCode=" + PinCode +
                 ", Flag=" + Flag +
-                ", district=" + district +
+                ", tehsil=" + tehsil +
                 '}';
     }
 }

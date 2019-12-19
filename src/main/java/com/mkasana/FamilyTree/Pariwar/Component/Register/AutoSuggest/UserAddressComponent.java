@@ -68,6 +68,12 @@ public interface UserAddressComponent {
      */
     public ReturnStatus createNewDistrict(final District district);
 
+    /**
+     * this is to Create New Teshil in Address
+     * @param tehsil
+     * @return
+     */
+    public ReturnStatus createNewTehsil(final Tehsil tehsil);
 
     /**
      * this is to Create New Village Town in Address
@@ -115,6 +121,39 @@ public interface UserAddressComponent {
      */
     public List<District> getAllDistrict();
 
+    /**
+     * this function is to return All District by state id
+     * @param
+     * @return
+     */
+    public List<District> suggestDistrictByStateId(final int stateId);
+
+
+    /****************************************************
+     *  All the below Controllers are for Teshil   *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param tehsilId
+     * @return
+     */
+    public Tehsil getTehsilById(final int tehsilId);
+
+    /**
+     * this function is to return All Tehsil;
+     * @param
+     * @return
+     */
+    public List<Tehsil> getAllTehsil();
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param districtId
+     * @return
+     */
+    public List<Tehsil> getAllTehsilByDistrictId(final int districtId);
+
 
     /**
      * this function is to return VillageTown by Id
@@ -130,5 +169,11 @@ public interface UserAddressComponent {
      */
     public List<VillageTown> getAllVillageTown();
 
+    /**
+     * this function is to return All VillageTown by TehSil Id
+     * @param
+     * @return
+     */
+    public List<VillageTown> getAllVillageTownByTehsilId(final int tehsilId);
 
 }

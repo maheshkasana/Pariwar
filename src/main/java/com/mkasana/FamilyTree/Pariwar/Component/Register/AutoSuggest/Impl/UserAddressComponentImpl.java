@@ -112,6 +112,18 @@ public class UserAddressComponentImpl implements UserAddressComponent {
     }
 
     /**
+     * this is to Create New Teshil in Address
+     * @param tehsil
+     * @return
+     */
+    @Override
+    public ReturnStatus createNewTehsil(final Tehsil tehsil) {
+        String Function = "UserAddressComponentImpl:createNewTehsil";
+
+        return userAddressBuilder.createNewTehsil(tehsil);
+    }
+
+    /**
      * this is to Create New District in Address
      * @param villageTown
      * @return
@@ -170,8 +182,7 @@ public class UserAddressComponentImpl implements UserAddressComponent {
     public District getDistrictById(final int districtId) {
         String Function = "UserAddressComponentImpl:getDistrictById";
         District district =  userAddressBuilder.getDistrictById(districtId);
-        State state;
-        state = getStateById(district.getStateId());
+        State state = getStateById(district.getStateId());
         district.setState(state);
 
         return district;
@@ -188,6 +199,57 @@ public class UserAddressComponentImpl implements UserAddressComponent {
         return userAddressBuilder.getAllDistrict();
     }
 
+    /**
+     * this function is to return All District by state id
+     * @param
+     * @return
+     */
+    public List<District> suggestDistrictByStateId(final int stateId) {
+        String Function = "UserAddressComponentImpl:suggestDistrictByStateId";
+
+        return userAddressBuilder.suggestDistrictByStateId(stateId);
+    }
+
+    /****************************************************
+     *  All the below Controllers are for Teshil   *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param tehsilId
+     * @return
+     */
+    public Tehsil getTehsilById(final int tehsilId) {
+        String Function = "UserAddressComponentImpl:getTehsilById";
+        Tehsil tehsil = userAddressBuilder.getTehsilById(tehsilId);
+        District district = getDistrictById(tehsil.getDistrictId());
+        tehsil.setDistrict(district);
+        return tehsil;
+    }
+
+    /**
+     * this function is to return All Tehsil;
+     * @param
+     * @return
+     */
+    public List<Tehsil> getAllTehsil() {
+        String Function = "UserAddressComponentImpl:getAllTehsil";
+
+        return userAddressBuilder.getAllTehsil();
+    }
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param districtId
+     * @return
+     */
+    public List<Tehsil> getAllTehsilByDistrictId(final int districtId) {
+        String Function = "UserAddressComponentImpl:getAllTehsilByDistrictId";
+
+        return userAddressBuilder.getAllTehsilByDistrictId(districtId);
+    }
+
+
 
     /**
      * this function is to return VillageTown by Id
@@ -197,8 +259,8 @@ public class UserAddressComponentImpl implements UserAddressComponent {
     public VillageTown getVillageTownById(final int villageTownId) {
         String Function = "UserAddressComponentImpl:getVillageTownById";
         VillageTown villageTown = userAddressBuilder.getVillageTownById(villageTownId);
-        District district = getDistrictById(villageTown.getDistrictId());
-        villageTown.setDistrict(district);
+        Tehsil tehsil = getTehsilById(villageTown.getTehsilId());
+        villageTown.setTehsil(tehsil);
         return villageTown;
     }
 
@@ -213,6 +275,16 @@ public class UserAddressComponentImpl implements UserAddressComponent {
         return userAddressBuilder.getAllVillageTown();
     }
 
+    /**
+     * this function is to return All VillageTown by TehSil Id
+     * @param
+     * @return
+     */
+    public List<VillageTown> getAllVillageTownByTehsilId(final int tehsilId)  {
+        String Function = "UserAddressComponentImpl:getAllVillageTownByTehsilId";
+
+        return userAddressBuilder.getAllVillageTownByTehsilId(tehsilId);
+    }
 
 
 }

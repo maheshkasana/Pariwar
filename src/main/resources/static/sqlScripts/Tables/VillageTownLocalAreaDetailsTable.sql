@@ -3,11 +3,12 @@ DROP TABLE IF EXISTS VillageTownLocalAreaDetails;
 
 CREATE TABLE VillageTownLocalAreaDetails (
 	  Id INT AUTO_INCREMENT,
-    DistrictId INT NOT NULL,
+    TehsilId INT NOT NULL,
     VillageTownLocalAreaName VARCHAR(100) NOT NULL,
+    VillageTownLocalAreaCode VARCHAR(100) NOT NULL,
     PinCode INT,
 	  Flag INT,
     About VARCHAR(256),
-    CONSTRAINT fk_DistrictId_DistrictDetails_Id FOREIGN KEY (DistrictId) REFERENCES DistrictDetails(Id),
+    CONSTRAINT fk_TehsilId_TehsilDetails_Id FOREIGN KEY (TehsilId) REFERENCES TehsilDetails(Id),
     PRIMARY KEY(Id)
 );

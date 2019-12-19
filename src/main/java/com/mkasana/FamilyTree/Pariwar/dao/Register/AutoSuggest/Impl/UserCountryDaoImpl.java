@@ -129,6 +129,27 @@ public class UserCountryDaoImpl implements UserCountryDao {
     }
 
     /**
+     * this is to Create New Teshil in Address
+     * @param tehsil
+     * @return
+     */
+    public void createNewTehsil(final Tehsil tehsil) throws Exception {
+        String Function = "UserCountryDaoImpl:createNewTehsil";
+
+        String query = "INSERT INTO TehsilDetails(DistrictId,TehsilName,TehsilCode,Flag) VALUES \n"
+                + "(" + tehsil.getDistrictId() + ",'" + tehsil.getTehsilName() + "','" + tehsil.getTehsilCode() + "'," + 0 + ");";
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] UserCountryDaoImpl:createNewTehsil Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
+    /**
      * this is to Create New VillageTown in Address
      * @param villageTown
      * @return
@@ -136,8 +157,8 @@ public class UserCountryDaoImpl implements UserCountryDao {
     public void createNewVillageTown(final VillageTown villageTown) throws Exception {
         String Function = "UserCountryDaoImpl:createNewVillageTown";
 
-        String query = "INSERT INTO VillageTownLocalAreaDetails(DistrictId, VillageTownLocalAreaName, VillageTownLocalAreaCode, PinCode, Flag) VALUES \n"
-                + "(" + villageTown.getDistrictId() + ",'" + villageTown.getVillageTownLocalAreaName() + "','" + villageTown.getVillageTownLocalAreaCode() + "'," + villageTown.getPinCode() + "," + 0 + ");";
+        String query = "INSERT INTO VillageTownLocalAreaDetails(TehsilId, VillageTownLocalAreaName, VillageTownLocalAreaCode, PinCode, Flag) VALUES \n"
+                + "(" + villageTown.getTehsilId() + ",'" + villageTown.getVillageTownLocalAreaName() + "','" + villageTown.getVillageTownLocalAreaCode() + "'," + villageTown.getPinCode() + "," + 0 + ");";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();
@@ -244,6 +265,83 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
+
+    /**
+     * this function is to return All District by state id
+     * @param
+     * @return
+     */
+    public ResultSet suggestDistrictByStateId(final int stateId)  throws Exception{
+        String Function = "UserCountryDaoImpl:suggestDistrictByStateId";
+        String query = "SELECT * FROM DistrictDetails WHERE StateId = " + stateId + ";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:getAllState Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    /****************************************************
+     *  All the below Controllers are for Teshil        *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param tehsilId
+     * @return
+     */
+    public ResultSet getTehsilById(final int tehsilId) throws Exception {
+        String Function = "UserCountryDaoImpl:getTehsilById";
+        String query = "SELECT * FROM TehsilDetails WHERE Id = " + tehsilId + ";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:getTehsilById Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    /**
+     * this function is to return All Tehsil;
+     * @param
+     * @return
+     */
+    public ResultSet getAllTehsil() throws Exception {
+        String Function = "UserCountryDaoImpl:getAllTehsil";
+        String query = "SELECT * FROM TehsilDetails;";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:getAllTehsil Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param districtId
+     * @return
+     */
+    public ResultSet getAllTehsilByDistrictId(final int districtId) throws Exception {
+        String Function = "UserCountryDaoImpl:getAllTehsilByDistrictId";
+        String query = "SELECT * FROM TehsilDetails WHERE DistrictId ="+districtId+";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:getAllTehsilByDistrictId Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
     /**
      * this function is to return VillageTown by Id
      * @param
@@ -277,6 +375,25 @@ public class UserCountryDaoImpl implements UserCountryDao {
             return databaseConnection.executeQuery(query);
         } catch (Exception e) {
             String error = "[Error] UserCountryDaoImpl:getAllVillageTown Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    /**
+     * this function is to return All VillageTown by Tehsil Id
+     * @param
+     * @return
+     */
+    public ResultSet getAllVillageTownByTehsilId(final int tehsilId) throws Exception {
+        String Function = "UserCountryDaoImpl:getAllVillageTownByTehsilId";
+
+        String query = "SELECT * FROM VillageTownLocalAreaDetails WHERE TehsilId = " + tehsilId + ";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:getAllVillageTownByTehsilId Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);
             throw new Exception(error);
         }

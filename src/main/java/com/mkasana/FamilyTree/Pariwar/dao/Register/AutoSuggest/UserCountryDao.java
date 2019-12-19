@@ -4,6 +4,7 @@ import com.mkasana.FamilyTree.Pariwar.model.*;
 
 import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserCountryDao {
@@ -40,6 +41,13 @@ public interface UserCountryDao {
      * @return
      */
     public void createNewDistrict(final District district) throws Exception;
+
+    /**
+     * this is to Create New Teshil in Address
+     * @param tehsil
+     * @return
+     */
+    public void createNewTehsil(final Tehsil tehsil) throws Exception;
 
     /**
      * this is to Create New villageTown in Address
@@ -92,6 +100,39 @@ public interface UserCountryDao {
      */
     public ResultSet getAllDistrict() throws Exception;
 
+    /**
+     * this function is to return All District by state id
+     * @param
+     * @return
+     */
+    public ResultSet suggestDistrictByStateId(final int stateId) throws Exception;
+
+
+
+    /****************************************************
+     *  All the below Controllers are for Teshil        *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param tehsilId
+     * @return
+     */
+    public ResultSet getTehsilById(final int tehsilId) throws Exception;
+
+    /**
+     * this function is to return All Tehsil;
+     * @param
+     * @return
+     */
+    public ResultSet getAllTehsil() throws Exception;
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param districtId
+     * @return
+     */
+    public ResultSet getAllTehsilByDistrictId(final int districtId) throws Exception;
 
     /**
      * this function is to return VillageTown by Id
@@ -106,5 +147,12 @@ public interface UserCountryDao {
      * @return
      */
     public ResultSet getAllVillageTown() throws Exception;
+
+    /**
+     * this function is to return All VillageTown by Tehsil Id
+     * @param
+     * @return
+     */
+    public ResultSet getAllVillageTownByTehsilId(final int tehsilId) throws Exception;
 
 }

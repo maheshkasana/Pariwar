@@ -139,6 +139,27 @@ public class UserAddressBuilder {
     }
 
     /**
+     * this is to Create New Teshil in Address
+     * @param tehsil
+     * @return
+     */
+    public ReturnStatus createNewTehsil(final Tehsil tehsil) {
+        final String function = "UserAddressBuilder:createNewTehsil";
+        ReturnStatus returnStatus = new ReturnStatus();
+
+        try {
+            userCountryDao.createNewTehsil(tehsil);
+            returnStatus.setErrorCode("");
+            returnStatus.setStatusCode(0);
+        } catch(Exception e) {
+            returnStatus.setErrorCode("Failed to create the new Tehsil");
+            returnStatus.setStatusCode(-1);
+            System.out.println(function + " Error : "+ e);
+        }
+        return returnStatus;
+    }
+
+    /**
      * This function is to Create new Village Town
      * @param
      */
@@ -284,6 +305,114 @@ public class UserAddressBuilder {
     }
 
     /**
+     * this function is to return All District by state id
+     * @param
+     * @return
+     */
+    public List<District> suggestDistrictByStateId(final int stateId) {
+        final String function = "UserAddressBuilder:suggestDistrictByStateId";
+
+        ResultSet resultSet;
+        List<District> districts = new ArrayList<>();
+        try {
+            resultSet = userCountryDao.suggestDistrictByStateId(stateId);
+            while(resultSet.next()) {
+                District district = new District();
+                district.setId(resultSet.getInt("Id"));
+                district.setStateId(resultSet.getInt("StateId"));
+                district.setDistrictName(resultSet.getString("DistrictName"));
+                district.setDistrictCode(resultSet.getString("DistrictCode"));
+                districts.add(district);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return districts;
+    }
+
+
+    /****************************************************
+     *  All the below Controllers are for Teshil   *
+     ****************************************************/
+
+    /**
+     * this function is to return tehsilId by Id
+     * @param tehsilId
+     * @return
+     */
+    public Tehsil getTehsilById(final int tehsilId) {
+        final String function = "UserAddressBuilder:getTehsilById";
+
+        ResultSet resultSet;
+        Tehsil tehsil = new Tehsil();
+        try {
+            resultSet = userCountryDao.getTehsilById(tehsilId);
+            if(resultSet.next()) {
+                tehsil.setId(resultSet.getInt("Id"));
+                tehsil.setDistrictId(resultSet.getInt("DistrictId"));
+                tehsil.setTehsilName(resultSet.getString("TehsilName"));
+                tehsil.setTehsilCode(resultSet.getString("TehsilCode"));
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return tehsil;
+    }
+
+    /**
+     * this function is to return All Tehsil;
+     * @param
+     * @return
+     */
+    public List<Tehsil> getAllTehsil() {
+        final String function = "UserAddressBuilder:getAllTehsil";
+
+        ResultSet resultSet;
+        List<Tehsil> tehsils = new ArrayList<>();
+        try {
+            resultSet = userCountryDao.getAllTehsil();
+            while(resultSet.next()) {
+                Tehsil tehsil = new Tehsil();
+                tehsil.setId(resultSet.getInt("Id"));
+                tehsil.setDistrictId(resultSet.getInt("DistrictId"));
+                tehsil.setTehsilName(resultSet.getString("TehsilName"));
+                tehsil.setTehsilCode(resultSet.getString("TehsilCode"));
+                tehsils.add(tehsil);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return tehsils;
+    }
+
+    /**
+     * this function is to return All Tehsil by District Id;
+     * @param districtId
+     * @return
+     */
+    public List<Tehsil> getAllTehsilByDistrictId(final int districtId) {
+        final String function = "UserAddressBuilder:getAllTehsilByDistrictId";
+
+        ResultSet resultSet;
+        List<Tehsil> tehsils = new ArrayList<>();
+        try {
+            resultSet = userCountryDao.getAllTehsilByDistrictId(districtId);
+            while(resultSet.next()) {
+                Tehsil tehsil = new Tehsil();
+                tehsil.setId(resultSet.getInt("Id"));
+                tehsil.setDistrictId(resultSet.getInt("DistrictId"));
+                tehsil.setTehsilName(resultSet.getString("TehsilName"));
+                tehsil.setTehsilCode(resultSet.getString("TehsilCode"));
+                tehsils.add(tehsil);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return tehsils;
+    }
+
+
+    /**
      * this function is to return VillageTown by Id
      * @param
      * @return
@@ -297,7 +426,7 @@ public class UserAddressBuilder {
             resultSet = userCountryDao.getVillageTownById(villageTownId);
             if(resultSet.next()) {
                 villageTown.setId(resultSet.getInt("Id"));
-                villageTown.setDistrictId(resultSet.getInt("DistrictId"));
+                villageTown.setTehsilId(resultSet.getInt("TehsilId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
                 villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));
@@ -323,7 +452,7 @@ public class UserAddressBuilder {
             while(resultSet.next()) {
                 VillageTown villageTown = new VillageTown();
                 villageTown.setId(resultSet.getInt("Id"));
-                villageTown.setDistrictId(resultSet.getInt("DistrictId"));
+                villageTown.setTehsilId(resultSet.getInt("TehsilId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
                 villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));
@@ -335,6 +464,32 @@ public class UserAddressBuilder {
         return villageTowns;
     }
 
+    /**
+     * this function is to return All VillageTown by TehSil Id
+     * @param
+     * @return
+     */
+    public List<VillageTown> getAllVillageTownByTehsilId(final int tehsilId)  {
+        final String function = "UserAddressBuilder:getAllVillageTownByTehsilId";
+
+        ResultSet resultSet;
+        List<VillageTown> villageTowns = new ArrayList<>();
+        try {
+            resultSet = userCountryDao.getAllVillageTownByTehsilId(tehsilId);
+            while(resultSet.next()) {
+                VillageTown villageTown = new VillageTown();
+                villageTown.setId(resultSet.getInt("Id"));
+                villageTown.setTehsilId(resultSet.getInt("TehsilId"));
+                villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
+                villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
+                villageTown.setPinCode(resultSet.getInt("PinCode"));
+                villageTowns.add(villageTown);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return villageTowns;
+    }
 
     /**
      * this function is to return All VillageTown based on the CountryId, District Id, or StateId
@@ -351,7 +506,7 @@ public class UserAddressBuilder {
             while(resultSet.next()) {
                 VillageTown villageTown = new VillageTown();
                 villageTown.setId(resultSet.getInt("Id"));
-                villageTown.setDistrictId(resultSet.getInt("DistrictId"));
+                villageTown.setTehsilId(resultSet.getInt("TehsilId"));
                 villageTown.setVillageTownLocalAreaName(resultSet.getString("VillageTownLocalAreaName"));
                 villageTown.setVillageTownLocalAreaCode(resultSet.getString("VillageTownLocalAreaCode"));
                 villageTown.setPinCode(resultSet.getInt("PinCode"));

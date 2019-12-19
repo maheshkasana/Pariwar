@@ -644,6 +644,8 @@ function onchangeAutoSuggestUserName() {
 }
 
 
+/////////************///////////**********/////////************///////////**********/////////************///////////**********/////////************///////////**********
+
 function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData, formData, callback, para1)
 {
 
@@ -662,13 +664,13 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData
     		    {
       		        if(this.responseText!=null)
                     {
-                        alert(this.responseText);
+                        //alert(this.responseText);
                         callback(para1, this.responseText);
                     }
                     else
                     {
 
-                        alert(this.responseText);
+                        //alert(this.responseText);
                         callback(para1, this.responseText);
                     }
 		   	    }
@@ -678,10 +680,8 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData
 		    }
     };
 
-    alert("Yes tryung to send");
-
     xhttp.open(requestType, url, false);
-    xhttp.withCredentials = true;
+    xhttp.withCredentials = false;
     xhttp.setRequestHeader("Accept","application/json");
     if(toSendFormData)
         xhttp.setRequestHeader("Content-Type","multipart/form-data");
@@ -693,56 +693,154 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData
     else
         xhttp.send();
     //location.replace("http://localhost:8081/index")
-    alert(this.responseText);
+    //alert(this.responseText);
 }
 
-function processAllStatesAndGetDistrictAndAddThemTotables(para1, Districts) {
-    alert("Here in process to all districts");
-    alert(Districts);
-    alerts(para1);
+
+class DistrictCreateBody {
+    constructor(name, code, stateId) {
+        this.districtName = name;
+        this.districtCode = code;
+        this.stateId = stateId;
+    }
 }
 
-//Get data from etrace
-function getStateFromEtrace() {
-        alert("in getStateFromEtrace");
-        var base_url = "https://etrace.in/pincode/";
-        var base_urll = "https://etrace.in/pincodes/data.php";
-        var url = "https://etrace.in/pincodes/data";
-        var requestType = 'POST';
-        var formData = new FormData();
-        formData.append("get", "state");
 
-        //Passing  responseFromLoginCheck as Callback function so as per the response this will get called and will take further action required
-        //SendHttpRequestAndReturnResponseEtrace(base_urll, requestType, true, formData,  processAllStates);
+function responseFromCreating(data) {
+    alert("Got Response");
+    alert(data);
+}
+
+function processAllStatesAndGetDistrictAndAddThemTotables(para1, data) {
+    var Districts = JSON.parse(data);
+    for(i in Districts) {
+        var districtCode = Districts[i].name;
+        var districtName = Districts[i].slug;
+        requestJSON = new DistrictCreateBody(districtName,districtCode,para1);
+        body = JSON.stringify(requestJSON);
+        SendHttpRequestAndReturnResponse('http://localhost:8081/register/create/district', 'POST', false, body, "", "", false, null, responseFromCreating);
+        //var formData = new FormData();
+        //formData.append("get", "district");
+        //formData.append("state", stateCode);
+    }
+}
+
+// Create the XHR object.
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, false);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
+}
+
+// Make the actual CORS request.
+function makeCorsRequest(data, callback, para1) {
+  // This is a sample server that supports CORS.
+  var url = 'https://etrace.in/pincodes/data';
+  var xhr = createCORSRequest('POST', url);
+  if (!xhr) {
+    alert('CORS not supported');
+    return;
+  }
+
+  // Response handlers.
+  xhr.onload = function() {
+    var text = xhr.responseText;
+    //alert(text);
+    alert('Response from CORS request to ' + url + ': ' + title);
+  };
+
+  xhr.onerror = function() {
+    alert('Woops, there was an error making the request.');
+    //alert(xhr.responseText);
+  };
+
+   xhr.onreadystatechange = function()
+   {
+        if(xhr.readyState<4)
+    	{
+       	}
+          else if(xhr.readyState==4)
+              {
+          	    if (xhr.status == 200)
+      		    {
+        		      if(xhr.responseText!=null)
+                      {
+                          //alert(xhr.responseText);
+                          callback(para1, this.responseText);
+                      }
+                      else
+                      {
+                          //alert(xhr.responseText);
+                          callback(para1, this.responseText);
+                      }
+  		   	    }
+  		   	    else {
+  		   	        alert("Failed");
+  		   	    }
+  		    }
+      };
+
+  xhr.send(data);
 }
 
 
 
 function getDistrictForStatefromEtrace(para1, data) {
-    alert("In Process State");
     var states = JSON.parse(data);
     for(i in states) {
         var stateId = states[i].id;
         var stateCode = states[i].stateCode;
         var stateName = states[i].stateName;
-        alert(stateId + stateCode + stateName);
-        var base_url = "https://etrace.in/pincode/";
-        var base_urll = "https://etrace.in/pincodes/data.php";
-        var url = "https://etrace.in/pincodes/data";
-        var requestType = 'POST';
+        //alert(stateId+stateCode+stateName);
+
         var formData = new FormData();
         formData.append("get", "district");
-        formData.append("state", "rajasthan");
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, true, formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
-       }
+        formData.append("state", stateCode);
+
+        /*
+                var data = new FormData();
+                data.append("get", "city");
+                data.append("state", "haryana");
+                data.append("district", "karnal");
+        */
+        makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
+
+    }
 
 }
 
+//Getting called from HTML
 function makeHttpRequestToGetAllStates() {
-        alert("In make Http Request")
         var url = "http://localhost:8081/register/auto/allStates";
         var requestType = 'GET';
-        var formData = new FormData();
-        //Passing  responseFromLoginCheck as Callback function so as per the response this will get called and will take further action required
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, formData, getDistrictForStatefromEtrace, 0);
+
+        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromEtrace, 0);
+
+}
+
+
+function tempCallback(para1, data) {
+    alert("in CallBack");
+    alert(para1);
+    alert(data);
+
+}
+
+function getTehsilForDistrictOfStatesFromEtrace() {
+
+            var url = "http://localhost:8081/register/auto/allStates";
+            var requestType = 'GET';
+
+            var response = SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, tempCallback, 0);
+
 }
