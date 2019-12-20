@@ -84,6 +84,14 @@ public interface UserAddressComponent {
 
 
     /**
+     * this is to Create New Village Town in Address in batch
+     * @param villageTowns
+     * @return
+     */
+    public ReturnStatus createNewVillageTownInBatch(final List<VillageTown> villageTowns);
+
+
+    /**
      * this is to Update Village Town PinCode in Address
      * @param villageTown
      * @return

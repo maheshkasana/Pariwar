@@ -328,6 +328,21 @@ public class AutoSuggest {
         return userAddressComponent.createNewVillageTown(villageTown);
     }
 
+    /**
+     * this function is to Create New villageTown in batch
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/create/villageTown/inBatch", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus createNewVillageTownInBatch(@RequestBody List<VillageTown> villageTowns,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:createNewVillageTownInBatch";
+
+        return userAddressComponent.createNewVillageTownInBatch(villageTowns);
+    }
+
+
 
     /**
      * this function is to Update the PinCode villageTown

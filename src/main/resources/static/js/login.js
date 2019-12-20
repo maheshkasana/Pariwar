@@ -912,7 +912,18 @@ function responseFromCreatingVillage(data) {
     //alert(data);
 }
 
+function processAllVillageForTehsilGotFromEtraceInBatch(data, teshilId) {
+    var villages = JSON.parse(data);
 
+    var villagesBatch = [];
+    for(i in villages) {
+        var villName = villages[i].name;
+        var villCode = villages[i].slug;
+        villagesBatch.push(new VillageCreateBody(villName,villCode,teshilId));
+    }
+    body = JSON.stringify(villagesBatch);
+    SendHttpRequestAndReturnResponse('/register/create/villageTown/inBatch', 'POST', false, body, null, null, false, null, responseFromCreatingVillage);
+}
 
 function processAllVillageForTehsilGotFromEtrace(data, teshilId) {
     var villages = JSON.parse(data);
@@ -934,10 +945,10 @@ function VillageGetTehsilForDistrictForStatefromLocalDatabase(data, formdata) {
         var tehsilCode = tehsils[i].tehsilCode;
         var teshilId = tehsils[i].id;
 
-        if(teshilId > 453) {
+        if(teshilId > 3191) {
             formdata.append("city", tehsilCode);
             //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
-            makeCorsRequest(formdata, processAllVillageForTehsilGotFromEtrace, teshilId);
+            makeCorsRequest(formdata, processAllVillageForTehsilGotFromEtraceInBatch, teshilId);
         }
 
     }
@@ -998,5 +1009,5 @@ function makeHttpRequestToGetAllStates() {
 
         //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromEtrace, 0);
         //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getStatefromLocalDatabase, 0);
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetStatefromLocalDatabase, 0);
+        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetStatefromLocalDatabase, 0);
 }
