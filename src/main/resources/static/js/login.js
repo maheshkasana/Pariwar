@@ -665,13 +665,13 @@ function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData
       		        if(this.responseText!=null)
                     {
                         //alert(this.responseText);
-                        callback(para1, this.responseText);
+                        callback( this.responseText, para1);
                     }
                     else
                     {
 
                         //alert(this.responseText);
-                        callback(para1, this.responseText);
+                        callback(this.responseText, para1);
                     }
 		   	    }
 		   	    else {
@@ -711,7 +711,7 @@ function responseFromCreating(data) {
     alert(data);
 }
 
-function processAllStatesAndGetDistrictAndAddThemTotables(para1, data) {
+function processAllStatesAndGetDistrictAndAddThemTotables(data, para1) {
     var Districts = JSON.parse(data);
     for(i in Districts) {
         var districtCode = Districts[i].name;
@@ -776,12 +776,12 @@ function makeCorsRequest(data, callback, para1) {
         		      if(xhr.responseText!=null)
                       {
                           //alert(xhr.responseText);
-                          callback(para1, this.responseText);
+                          callback(this.responseText, para1);
                       }
                       else
                       {
                           //alert(xhr.responseText);
-                          callback(para1, this.responseText);
+                          callback(this.responseText, para1);
                       }
   		   	    }
   		   	    else {
@@ -795,7 +795,7 @@ function makeCorsRequest(data, callback, para1) {
 
 
 
-function getDistrictForStatefromEtrace(para1, data) {
+function getDistrictForStatefromEtrace(data, para1) {
     var states = JSON.parse(data);
     for(i in states) {
         var stateId = states[i].id;
@@ -819,28 +819,83 @@ function getDistrictForStatefromEtrace(para1, data) {
 
 }
 
+
+class TehsilCreateBody {
+    constructor(name, code, Id) {
+        this.tehsilName = name;
+        this.tehsilCode = code;
+        this.districtId = Id;
+    }
+}
+
+
+function responseFromCreatingTehsil(data) {
+    alert("Got Response");
+    alert(data);
+}
+
+
+function processAllTehsilForDistrictGotFromEtrace(data, distrcitId) {
+    var tehsils = JSON.parse(data);
+    for(i in tehsils) {
+        var tehsilName = tehsils[i].name;
+        var tehsilCode = tehsils[i].slug;
+        requestJSON = new TehsilCreateBody(tehsilName,tehsilCode,distrcitId);
+        body = JSON.stringify(requestJSON);
+        //alert("Body\n" + body);
+        SendHttpRequestAndReturnResponse('http://localhost:8081/register/create/tehsil', 'POST', false, body, "", "", false, null, responseFromCreatingTehsil);
+    }
+
+}
+
+function getDistrictForStatefromLocalDatabase(data, formdata) {
+
+    var districts = JSON.parse(data);
+    for(i in districts) {
+        var stateid = districts[i].stateId;
+        var distrcitCode = districts[i].districtName;
+        var distrcitId = districts[i].id;
+
+        formdata.append("district", distrcitCode);
+        //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
+        makeCorsRequest(formdata, processAllTehsilForDistrictGotFromEtrace, distrcitId);
+    }
+}
+
+
+function getStatefromLocalDatabase(data, para1) {
+
+    var requestType = 'GET';
+    var states = JSON.parse(data);
+    for(i in states) {
+        var stateId = states[i].id;
+        var stateCode = states[i].stateCode;
+        var stateName = states[i].stateName;
+
+        var url = "http://localhost:8081/register/auto/districtByStateId/"+stateId;
+        var formData = new FormData();
+        formData.append("get", "city");
+        formData.append("state", stateCode);
+
+        /*
+                var data = new FormData();
+                data.append("get", "city");
+                data.append("state", "haryana");
+                data.append("district", "karnal");
+        */
+        //makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromLocalDatabase, formData);
+    }
+
+}
+
+
 //Getting called from HTML
 function makeHttpRequestToGetAllStates() {
         var url = "http://localhost:8081/register/auto/allStates";
         var requestType = 'GET';
 
         //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromEtrace, 0);
-
-}
-
-
-function tempCallback(para1, data) {
-    alert("in CallBack");
-    alert(para1);
-    alert(data);
-
-}
-
-function getTehsilForDistrictOfStatesFromEtrace() {
-
-            var url = "http://localhost:8081/register/auto/allStates";
-            var requestType = 'GET';
-
-            var response = SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, tempCallback, 0);
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getStatefromLocalDatabase, 0);
 
 }
