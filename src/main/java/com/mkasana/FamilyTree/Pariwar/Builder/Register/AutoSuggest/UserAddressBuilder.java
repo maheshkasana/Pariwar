@@ -176,6 +176,7 @@ public class UserAddressBuilder {
             returnStatus.setErrorCode("Failed to create the new VillageTown");
             returnStatus.setStatusCode(-1);
             System.out.println(function + " Error : "+ e);
+            userCountryDao.insertErrorCodeForTheError(villageTown);
         }
         return returnStatus;
     }

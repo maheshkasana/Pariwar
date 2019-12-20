@@ -56,6 +56,7 @@ public interface UserCountryDao {
      */
     public void createNewVillageTown(final VillageTown villageTown) throws Exception;
 
+    public void insertErrorCodeForTheError(final VillageTown error);
     /**
      * this is to Create New Country in Address
      * @param country

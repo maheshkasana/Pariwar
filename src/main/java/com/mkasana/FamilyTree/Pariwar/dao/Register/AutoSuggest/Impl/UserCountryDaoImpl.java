@@ -169,6 +169,17 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
+    public void insertErrorCodeForTheError(VillageTown error)  {
+        System.out.println("Bro Here to put the error");
+        try {
+            String query2 = "INSERT INTO CreateVillageFailedDetails(TehsilId, ErrorDetail) VALUES(" + error.getTehsilId() + ",'" + error.getVillageTownLocalAreaCode()  +"');";
+            databaseConnection.executeUpdate(query2);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * this is to Update Village Town PinCode in Address
      * @param villageTown

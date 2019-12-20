@@ -143,7 +143,9 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
     {
   	    if(this.readyState<4)
   	    {
-     	   	document.getElementById(elementStatus).innerHTML="<img src='images/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
+  	        if(elementStatus != null) {
+     	   	    document.getElementById(elementStatus).innerHTML="<img src='images/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
+     	   	}
   	    }
         else if(this.readyState==4)
             {
@@ -151,18 +153,24 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
     		    {
       		        if(this.responseText!=null)
                     {
-                        document.getElementById(elementStatus).innerHTML="<p style='color: green;'><b>successful</b></p>";
+                        if(elementStatus != null) {
+                            document.getElementById(elementStatus).innerHTML="<p style='color: green;'><b>successful</b></p>";
+                        }
                         callback(this.responseText);
                     }
                     else
                     {
-                        document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>" ;
+                        if(elementStatus != null) {
+                            document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>" ;
+                        }
                         callback(this.responseText);
                     }
 		   	    }
      		    else
      		    {
-     		        document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>";
+     		        if(elementStatus != null) {
+     		            document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>";
+     		        }
     		    }
 		    }
     };
@@ -756,7 +764,7 @@ function makeCorsRequest(data, callback, para1) {
   xhr.onload = function() {
     var text = xhr.responseText;
     //alert(text);
-    alert('Response from CORS request to ' + url + ': ' + title);
+    //alert('Response from CORS request to ' + url + ': ' + title);
   };
 
   xhr.onerror = function() {
@@ -858,7 +866,7 @@ function getDistrictForStatefromLocalDatabase(data, formdata) {
 
         formdata.append("district", distrcitCode);
         //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
-        makeCorsRequest(formdata, processAllTehsilForDistrictGotFromEtrace, distrcitId);
+        //makeCorsRequest(formdata, processAllTehsilForDistrictGotFromEtrace, distrcitId);
     }
 }
 
@@ -889,6 +897,99 @@ function getStatefromLocalDatabase(data, para1) {
 
 }
 
+class VillageCreateBody {
+    constructor(name, code, Id) {
+        this.villageTownLocalAreaName = name;
+        this.villageTownLocalAreaCode = code;
+        this.tehsilId = Id;
+        this.PinCode = 0;
+    }
+}
+
+
+function responseFromCreatingVillage(data) {
+    //alert("Got Response");
+    //alert(data);
+}
+
+
+
+function processAllVillageForTehsilGotFromEtrace(data, teshilId) {
+    var villages = JSON.parse(data);
+    for(i in villages) {
+        var villName = villages[i].name;
+        var villCode = villages[i].slug;
+        requestJSON = new VillageCreateBody(villName,villCode,teshilId);
+        body = JSON.stringify(requestJSON);
+        SendHttpRequestAndReturnResponse('/register/create/villageTown', 'POST', false, body, null, null, false, null, responseFromCreatingVillage);
+    }
+
+}
+
+
+function VillageGetTehsilForDistrictForStatefromLocalDatabase(data, formdata) {
+
+    var tehsils = JSON.parse(data);
+    for(i in tehsils) {
+        var tehsilCode = tehsils[i].tehsilCode;
+        var teshilId = tehsils[i].id;
+
+        if(teshilId > 453) {
+            formdata.append("city", tehsilCode);
+            //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
+            makeCorsRequest(formdata, processAllVillageForTehsilGotFromEtrace, teshilId);
+        }
+
+    }
+}
+
+
+
+
+function VillageGetDistrictForStatefromLocalDatabase(data, formdata) {
+
+     var requestType = 'GET';
+    var districts = JSON.parse(data);
+    for(i in districts) {
+        var distrcitCode = districts[i].districtName;
+        var distrcitId = districts[i].id;
+        var url = "http://localhost:8081/register/auto/allTehsilByDistrictId/"+distrcitId;
+
+        formdata.append("district", distrcitCode);
+        //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetTehsilForDistrictForStatefromLocalDatabase, formdata);
+
+    }
+}
+
+
+
+function VillageGetStatefromLocalDatabase(data, para1) {
+
+    var requestType = 'GET';
+    var states = JSON.parse(data);
+    for(i in states) {
+        var stateId = states[i].id;
+        var stateCode = states[i].stateCode;
+        var stateName = states[i].stateName;
+
+        var url = "http://localhost:8081/register/auto/districtByStateId/"+stateId;
+        var formData = new FormData();
+        formData.append("get", "loc");
+        formData.append("state", stateCode);
+
+        /*
+                var data = new FormData();
+                data.append("get", "city");
+                data.append("state", "haryana");
+                data.append("district", "karnal");
+        */
+        //makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetDistrictForStatefromLocalDatabase, formData);
+    }
+
+}
+
 
 //Getting called from HTML
 function makeHttpRequestToGetAllStates() {
@@ -896,6 +997,6 @@ function makeHttpRequestToGetAllStates() {
         var requestType = 'GET';
 
         //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromEtrace, 0);
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getStatefromLocalDatabase, 0);
-
+        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getStatefromLocalDatabase, 0);
+        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetStatefromLocalDatabase, 0);
 }
