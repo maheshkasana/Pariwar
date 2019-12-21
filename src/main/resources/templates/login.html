@@ -53,7 +53,7 @@
             <input type="text" placeholder="Enter Username or Phone number" id="login_username" name="login_username" required><div id="login_username_valid"></div>
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" id="login_password" name="login_password" required><div id="login_password_valid"></div>
-            <button onclick="makeHttpRequestToGetAllStates()">Login</button>
+            <button onclick="check_login_user()">Login</button>
             <div id="login_loading" style="z-index: 1000;  width: 30%; height: 10%; margin-left: 45%; "></div>
         </div>
         <div class="container" style="background-color:#f1f1f1">
@@ -154,11 +154,11 @@
             <div style="column-count: 3; ">
                 <div>
                     <label><b>Religion</b></label>
-                    <input type="text" placeholder="Religion" id="register_Religion" name="register_Religion"  required  ><div id="valid_register_Religion"></div>
+                    <input type="text" onmousedown="autoSuggestRegisterReligion()" onchange="autoSuggestRegisterReligion()" placeholder="Religion" id="register_Religion" name="0" required  ><div id="valid_register_Religion"></div>
                 </div>
                 <div>
                     <label><b>Caste</b></label>
-                    <input type="text" placeholder="Caste" id="register_Caste" name="register_Caste"  required  ><div id="valid_register_Caste"></div>
+                    <input type="text" onmousedown="autoSuggestRegisterCaste()" onchange="autoSuggestRegisterCaste()" placeholder="Caste" id="register_Caste" name="register_Caste"  required  ><div id="valid_register_Caste"></div>
                 </div>
                 <div>
                     <label><b>Sub Caste</b></label>
@@ -178,18 +178,18 @@
                 </div>
                 <div style="left: 32%; top: 0; width: 32%; float: left; padding: 0 18px 0 ">
                     <div>
-                        <label><b>Village/Town</b></label>
-                        <input type="text" placeholder="Village/Town" id="register_Village" name="register_Village"  required  ><div id="valid_register_Village"></div>
+                        <label><b>State</b></label>
+                        <input type="text" placeholder="State" id="register_State" name="register_State"  required  ><div id="valid_register_State"></div>
                         <label><b>District</b></label>
                         <input type="text" placeholder="District" id="register_District" name="register_District"  required  ><div id="valid_register_District"></div>
                     </div>
                 </div>
                 <div style="left: 65%; top: 0; width: 31%; float: left;">
                     <div>
-                        <label><b>State</b></label>
-                        <input type="text" placeholder="State" id="register_State" name="register_State"  required  ><div id="valid_register_State"></div>
-                        <label><b>Country</b></label>
-                        <input type="text" placeholder="Country" id="register_Country" name="register_Country"  required  ><div id="valid_register_Country"></div>
+                        <label><b>SubDistrict/Tehsil/City</b></label>
+                        <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="register_Tehsil"  required  ><div id="valid_register_Tehsil"></div>
+                        <label><b>Village/Town</b></label>
+                        <input type="text" placeholder="Village/Town" id="register_Village" name="register_Village"  required  ><div id="valid_register_Village"></div>
                     </div>
                 </div>
             </div>

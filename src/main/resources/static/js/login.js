@@ -297,8 +297,8 @@ class AddressDetails {
         this.state = i_state;
     }
 
-    setCountry(i_country) {
-        this.country = i_country;
+    setTehsil(i_tehsil) {
+        this.tehsil = i_tehsil;
     }
 
 }
@@ -361,8 +361,8 @@ class RegisterDetails {
         this.address.state = i_state;
     }
 
-    setCountry(i_country) {
-        this.address.country = i_country;
+    setTehsil(i_tehsil) {
+        this.tehsil = i_tehsil;
     }
 
  //-----------
@@ -419,7 +419,7 @@ function RegisterSubmitButton() {
     var _village = document.getElementById("register_Village").value;
     var _district = document.getElementById("register_District").value;
     var _state = document.getElementById("register_State").value;
-    var _country = document.getElementById("register_Country").value;
+    var _tehsil = document.getElementById("register_Tehsil").value;
     var _isFile = false;
 
     if(_username.length > 0)
@@ -461,7 +461,7 @@ function RegisterSubmitButton() {
         detailObject.setSubCaste(_subcaste);
     }
 
-    if(( _locality !=null && _locality.length > 0 ) || ( _village !=null && _village.length > 0 ) || ( _district !=null && _district.length > 0 ) || ( _state !=null && _state.length > 0 ) || ( _country !=null && _country.length > 0 )) {
+    if(( _locality !=null && _locality.length > 0 ) || ( _village !=null && _village.length > 0 ) || ( _district !=null && _district.length > 0 ) || ( _state !=null && _state.length > 0 ) || ( _tehsil !=null && _tehsil.length > 0 )) {
 
         detailObject.SetAddressDetails();
 
@@ -473,8 +473,8 @@ function RegisterSubmitButton() {
             detailObject.setDistrict(_district);
         if(_state.length > 0)
             detailObject.setState(_state);
-        if(_country.length > 0)
-            detailObject.setCountry(_country);
+        if(_tehsil.length > 0)
+            detailObject.setTehsil(_tehsil);
     }
 
     /*
@@ -593,10 +593,6 @@ function validateRegisterPhone() {
     }
 }
 
-
-/* Validation are finished here  */
-
-
 /** Search Tab Function() */
 
 function searchUser() {
@@ -614,400 +610,201 @@ function searchUser() {
     }
 }
 
-/*** Here we are going to write function for auto suggesations */
 
-
-function onchangeAutoSuggestCaste(AutoCasteElement, AutoReligionElement) {
-    //Todo ek baar niche ka suggent kar ke check kar liyo ki upar ka bhi fill kar de, tho upar wale bhi dekh liyo, kya pata auto fill kar ske
-    //Todo like back track karke fill karna, pich ke function ka call karna and wo aapne piche wale ko kar dega call
-}
-
-function onchangeAutoSuggestSubCaste(AutoSubCasteElement, AutoCasteElement) {
-
-}
-
-function onchangeAutoFillRegisterAddressDetails(callingFrom, addressElement) {
-
-}
-
-
-//** these auto suggesations function are for Search API */
-
-function onchangeAutoSuggestDistrict(AutoDistrictElement, AutoStateElement) {
-    var _state = document.getElementById(AutoStateElement).value;
-
-    alert(_state);
-}
-
-function onchangeAutoSuggestVillage(AutoVillageElement, AutoDistrictElement, AutoStateElement) {
-   var _state = document.getElementById(AutoStateElement).value;
-   var _district = document.getElementById(AutoDistrictElement).value;
-
-   alert(_state);
-   alert(_district);
-}
-
-function onchangeAutoSuggestUserName() {
-
-}
-
-
-/////////************///////////**********/////////************///////////**********/////////************///////////**********/////////************///////////**********
-
-function SendHttpRequestAndReturnResponseEtrace(url, requestType, toSendFormData, formData, callback, para1)
-{
-
-    var xhttp = new XMLHttpRequest();
-
-
-    xhttp.onreadystatechange = function()
-    {
-  	    if(this.readyState<4)
-  	    {
-
-     	}
-        else if(this.readyState==4)
-            {
-        	    if (this.status == 200)
-    		    {
-      		        if(this.responseText!=null)
-                    {
-                        //alert(this.responseText);
-                        callback( this.responseText, para1);
-                    }
-                    else
-                    {
-
-                        //alert(this.responseText);
-                        callback(this.responseText, para1);
-                    }
-		   	    }
-		   	    else {
-		   	        alert("Failed");
-		   	    }
-		    }
-    };
-
-    xhttp.open(requestType, url, false);
-    xhttp.withCredentials = false;
-    xhttp.setRequestHeader("Accept","application/json");
-    if(toSendFormData)
-        xhttp.setRequestHeader("Content-Type","multipart/form-data");
-    else
-       xhttp.setRequestHeader("Content-Type","application/json");
-
-    if(toSendFormData)
-        xhttp.send(formData);
-    else
-        xhttp.send();
-    //location.replace("http://localhost:8081/index")
-    //alert(this.responseText);
-}
-
-
-class DistrictCreateBody {
-    constructor(name, code, stateId) {
-        this.districtName = name;
-        this.districtCode = code;
-        this.stateId = stateId;
+class DivPositionOnScreen {
+    constructor(left_i,top_i,right_i, bottom_i) {
+        this.left = left_i;
+        this.top = top_i;
+        this.right = right_i;
+        this.bottom = bottom_i;
     }
 }
 
-
-function responseFromCreating(data) {
-    alert("Got Response");
-    alert(data);
-}
-
-function processAllStatesAndGetDistrictAndAddThemTotables(data, para1) {
-    var Districts = JSON.parse(data);
-    for(i in Districts) {
-        var districtCode = Districts[i].name;
-        var districtName = Districts[i].slug;
-        requestJSON = new DistrictCreateBody(districtName,districtCode,para1);
-        body = JSON.stringify(requestJSON);
-        SendHttpRequestAndReturnResponse('http://localhost:8081/register/create/district', 'POST', false, body, "", "", false, null, responseFromCreating);
-        //var formData = new FormData();
-        //formData.append("get", "district");
-        //formData.append("state", stateCode);
+class arrClassInout {
+    constructor(name_i, value_i) {
+    this.name = name_i;
+    this.value = value_i;
     }
 }
 
-// Create the XHR object.
-function createCORSRequest(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // XHR for Chrome/Firefox/Opera/Safari.
-    xhr.open(method, url, false);
-  } else if (typeof XDomainRequest != "undefined") {
-    // XDomainRequest for IE.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-  } else {
-    // CORS not supported.
-    xhr = null;
-  }
-  return xhr;
-}
+function getPositionOfDivInScreen(element) {
+    var element = document.getElementById(element); //replace elementId with your element's Id.
+    var rect = element.getBoundingClientRect();
+    var elementLeft,elementTop,elementRight,elementBottom; //x and y
+    var scrollTop = document.documentElement.scrollTop?
+                document.documentElement.scrollTop:document.body.scrollTop;
+    var scrollLeft = document.documentElement.scrollLeft?
+                 document.documentElement.scrollLeft:document.body.scrollLeft;
 
-// Make the actual CORS request.
-function makeCorsRequest(data, callback, para1) {
-  // This is a sample server that supports CORS.
-  var url = 'https://etrace.in/pincodes/data';
-  var xhr = createCORSRequest('POST', url);
-  if (!xhr) {
-    alert('CORS not supported');
-    return;
-  }
+    elementTop = rect.top+scrollTop;
+    elementLeft = rect.left+scrollLeft;
+    elementRight =  rect.right;
+    elementBottom =  rect.bottom;
 
-  // Response handlers.
-  xhr.onload = function() {
-    var text = xhr.responseText;
-    //alert(text);
-    //alert('Response from CORS request to ' + url + ': ' + title);
-  };
-
-  xhr.onerror = function() {
-    alert('Woops, there was an error making the request.');
-    //alert(xhr.responseText);
-  };
-
-   xhr.onreadystatechange = function()
-   {
-        if(xhr.readyState<4)
-    	{
-       	}
-          else if(xhr.readyState==4)
-              {
-          	    if (xhr.status == 200)
-      		    {
-        		      if(xhr.responseText!=null)
-                      {
-                          //alert(xhr.responseText);
-                          callback(this.responseText, para1);
-                      }
-                      else
-                      {
-                          //alert(xhr.responseText);
-                          callback(this.responseText, para1);
-                      }
-  		   	    }
-  		   	    else {
-  		   	        alert("Failed");
-  		   	    }
-  		    }
-      };
-
-  xhr.send(data);
+    return new DivPositionOnScreen(elementLeft, elementTop, elementRight, elementBottom);
 }
 
 
 
-function getDistrictForStatefromEtrace(data, para1) {
-    var states = JSON.parse(data);
-    for(i in states) {
-        var stateId = states[i].id;
-        var stateCode = states[i].stateCode;
-        var stateName = states[i].stateName;
-        //alert(stateId+stateCode+stateName);
 
-        var formData = new FormData();
-        formData.append("get", "district");
-        formData.append("state", stateCode);
+/********//////////***********///////////********//////////***********///////////***************//////////***********///////////***************//////////***********///////////*******/
+/*--------Start----------*/
+/* This Function is to generate list as per the user type, drop down and we can see the selected and Id in name of the Input*/
+function registerAutoCompleteGenericFunction(inp, arr, pos) {
 
-        /*
-                var data = new FormData();
-                data.append("get", "city");
-                data.append("state", "haryana");
-                data.append("district", "karnal");
-        */
-        makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      a.setAttribute("z-index","5");
+      a.style.position = "absolute";
+      a.style.left = pos.left+'px';
+      a.style.top = pos.bottom+'px';
+      a.style.width = inp.offsetWidth+'px';
+      a.style.maxHeight = inp.offsetWidth+'px';
+      a.style.overflow = 'auto';
 
-    }
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
 
-}
-
-
-class TehsilCreateBody {
-    constructor(name, code, Id) {
-        this.tehsilName = name;
-        this.tehsilCode = code;
-        this.districtId = Id;
-    }
-}
-
-
-function responseFromCreatingTehsil(data) {
-    alert("Got Response");
-    alert(data);
-}
-
-
-function processAllTehsilForDistrictGotFromEtrace(data, distrcitId) {
-    var tehsils = JSON.parse(data);
-    for(i in tehsils) {
-        var tehsilName = tehsils[i].name;
-        var tehsilCode = tehsils[i].slug;
-        requestJSON = new TehsilCreateBody(tehsilName,tehsilCode,distrcitId);
-        body = JSON.stringify(requestJSON);
-        //alert("Body\n" + body);
-        SendHttpRequestAndReturnResponse('http://localhost:8081/register/create/tehsil', 'POST', false, body, "", "", false, null, responseFromCreatingTehsil);
-    }
-
-}
-
-function getDistrictForStatefromLocalDatabase(data, formdata) {
-
-    var districts = JSON.parse(data);
-    for(i in districts) {
-        var stateid = districts[i].stateId;
-        var distrcitCode = districts[i].districtName;
-        var distrcitId = districts[i].id;
-
-        formdata.append("district", distrcitCode);
-        //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
-        //makeCorsRequest(formdata, processAllTehsilForDistrictGotFromEtrace, distrcitId);
-    }
-}
-
-
-function getStatefromLocalDatabase(data, para1) {
-
-    var requestType = 'GET';
-    var states = JSON.parse(data);
-    for(i in states) {
-        var stateId = states[i].id;
-        var stateCode = states[i].stateCode;
-        var stateName = states[i].stateName;
-
-        var url = "http://localhost:8081/register/auto/districtByStateId/"+stateId;
-        var formData = new FormData();
-        formData.append("get", "city");
-        formData.append("state", stateCode);
-
-        /*
-                var data = new FormData();
-                data.append("get", "city");
-                data.append("state", "haryana");
-                data.append("district", "karnal");
-        */
-        //makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromLocalDatabase, formData);
-    }
-
-}
-
-class VillageCreateBody {
-    constructor(name, code, Id) {
-        this.villageTownLocalAreaName = name;
-        this.villageTownLocalAreaCode = code;
-        this.tehsilId = Id;
-        this.PinCode = 0;
-    }
-}
-
-
-function responseFromCreatingVillage(data) {
-    //alert("Got Response");
-    //alert(data);
-}
-
-function processAllVillageForTehsilGotFromEtraceInBatch(data, teshilId) {
-    var villages = JSON.parse(data);
-
-    var villagesBatch = [];
-    for(i in villages) {
-        var villName = villages[i].name;
-        var villCode = villages[i].slug;
-        villagesBatch.push(new VillageCreateBody(villName,villCode,teshilId));
-    }
-    body = JSON.stringify(villagesBatch);
-    SendHttpRequestAndReturnResponse('/register/create/villageTown/inBatch', 'POST', false, body, null, null, false, null, responseFromCreatingVillage);
-}
-
-function processAllVillageForTehsilGotFromEtrace(data, teshilId) {
-    var villages = JSON.parse(data);
-    for(i in villages) {
-        var villName = villages[i].name;
-        var villCode = villages[i].slug;
-        requestJSON = new VillageCreateBody(villName,villCode,teshilId);
-        body = JSON.stringify(requestJSON);
-        SendHttpRequestAndReturnResponse('/register/create/villageTown', 'POST', false, body, null, null, false, null, responseFromCreatingVillage);
-    }
-
-}
-
-
-function VillageGetTehsilForDistrictForStatefromLocalDatabase(data, formdata) {
-
-    var tehsils = JSON.parse(data);
-    for(i in tehsils) {
-        var tehsilCode = tehsils[i].tehsilCode;
-        var teshilId = tehsils[i].id;
-
-        if(teshilId > 3191) {
-            formdata.append("city", tehsilCode);
-            //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
-            makeCorsRequest(formdata, processAllVillageForTehsilGotFromEtraceInBatch, teshilId);
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].name.substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              inp.name = this.getElementsByTagName("input")[0].name;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
         }
-
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
     }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
 }
 
 
+/*--------End----------*/
 
 
-function VillageGetDistrictForStatefromLocalDatabase(data, formdata) {
 
+
+
+function autoSuggestRegisterReligion() {
+
+     var url = "http://localhost:8081/register/auto/allStates";
      var requestType = 'GET';
-    var districts = JSON.parse(data);
-    for(i in districts) {
-        var distrcitCode = districts[i].districtName;
-        var distrcitId = districts[i].id;
-        var url = "http://localhost:8081/register/auto/allTehsilByDistrictId/"+distrcitId;
+     var countries = [];
 
-        formdata.append("district", distrcitCode);
-        //alert(stateid + ", " + distrcitCode + ", " + distrcitId);
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetTehsilForDistrictForStatefromLocalDatabase, formdata);
+    countries.push(new arrClassInout("Afghanistan", 1));
+    countries.push(new arrClassInout("Albania", 2));
+    countries.push(new arrClassInout("Algeria", 3));
+    countries.push(new arrClassInout("Andorra", 4));
+    countries.push(new arrClassInout("Angola", 5));
+    countries.push(new arrClassInout("Anguilla", 6));
+    countries.push(new arrClassInout("Afghanistan", 1));
+    countries.push(new arrClassInout("Albania", 2));
+    countries.push(new arrClassInout("Algeria", 3));
+    countries.push(new arrClassInout("Andorra", 4));
+    countries.push(new arrClassInout("Angola", 5));
+    countries.push(new arrClassInout("Anguilla", 6));
+    countries.push(new arrClassInout("Antigua & Barbuda", 7));
 
-    }
-}
 
-
-
-function VillageGetStatefromLocalDatabase(data, para1) {
-
-    var requestType = 'GET';
-    var states = JSON.parse(data);
-    for(i in states) {
-        var stateId = states[i].id;
-        var stateCode = states[i].stateCode;
-        var stateName = states[i].stateName;
-
-        var url = "http://localhost:8081/register/auto/districtByStateId/"+stateId;
-        var formData = new FormData();
-        formData.append("get", "loc");
-        formData.append("state", stateCode);
-
-        /*
-                var data = new FormData();
-                data.append("get", "city");
-                data.append("state", "haryana");
-                data.append("district", "karnal");
-        */
-        //makeCorsRequest(formData, processAllStatesAndGetDistrictAndAddThemTotables, stateId);
-        SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetDistrictForStatefromLocalDatabase, formData);
-    }
+     pos = getPositionOfDivInScreen("register_Religion");
+     registerAutoCompleteGenericFunction(document.getElementById("register_Religion"), countries, pos);
+     //SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
 
 }
 
+function autoSuggestRegisterCaste() {
 
-//Getting called from HTML
-function makeHttpRequestToGetAllStates() {
-        var url = "http://localhost:8081/register/auto/allStates";
-        var requestType = 'GET';
+     var url = "http://localhost:8081/register/auto/allStates";
+     var requestType = 'GET';
+     var countries = ["Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"];
 
-        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getDistrictForStatefromEtrace, 0);
-        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, getStatefromLocalDatabase, 0);
-        //SendHttpRequestAndReturnResponseEtrace(url, requestType, false, null, VillageGetStatefromLocalDatabase, 0);
+     pos = getPositionOfDivInScreen("register_Caste");
+     registerAutoCompleteGenericFunction(document.getElementById("register_Caste"), countries, pos);
+     //SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
+
+}
+
+function showTheValueOfTheReligion()
+{
+    alert(document.getElementById("register_Religion").name);
 }
