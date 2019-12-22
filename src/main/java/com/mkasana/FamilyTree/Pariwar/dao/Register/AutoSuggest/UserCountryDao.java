@@ -156,4 +156,11 @@ public interface UserCountryDao {
      */
     public ResultSet getAllVillageTownByTehsilId(final int tehsilId) throws Exception;
 
+    /**
+     * this function is to validateAvailabilityUsername
+     * @param
+     * @return
+     */
+    public ResultSet validateAvailabilityUsername(final String username) throws Exception;
+
 }

@@ -549,4 +549,20 @@ public class AutoSuggest {
         return userAddressComponent.getAllVillageTownByTehsilId(tehsilId);
     }
 
+
+    /**
+     * this function is to validate username availability
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/validateAvailabilityUsername/{username}", method = RequestMethod.GET, headers="Accept=application/json")
+    private ReturnStatus validateAvailabilityUsername(@PathVariable("username") String username,@RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:validateAvailabilityUsername";
+
+        return userAddressComponent.validateAvailabilityUsername(username);
+    }
+
+
 }

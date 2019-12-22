@@ -184,4 +184,12 @@ public interface UserAddressComponent {
      */
     public List<VillageTown> getAllVillageTownByTehsilId(final int tehsilId);
 
+
+    /**
+     * this function is to validateAvailabilityUsername
+     * @param
+     * @return
+     */
+    public ReturnStatus validateAvailabilityUsername(final String username);
+
 }

@@ -1,6 +1,8 @@
-package com.mkasana.FamilyTree.Pariwar.RestControllers;
+package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.RegisterUser;
 
+import com.mkasana.FamilyTree.Pariwar.Component.Register.RegisterUser.UserRegistrationComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
+import com.mkasana.FamilyTree.Pariwar.model.userRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -20,15 +22,20 @@ public class RegisterUser {
     @Autowired(required =true)
     private LoginValidation loginValidation;
 
-    @RequestMapping(value = "/register/user", method = RequestMethod.POST, headers="Accept=application/json")
-    private void registerUser(@RequestBody String loginRequestBody,
-                              @RequestHeader HttpHeaders headers) throws Exception {
+    @Autowired(required = true)
+    private UserRegistrationComponent userRegister;
 
+    @RequestMapping(value = "/register/user", method = RequestMethod.POST, headers="Accept=application/json")
+    private void registerUser(@RequestBody userRegistrationRequest request,
+                              @RequestHeader HttpHeaders headers) throws Exception {
+        /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
         });
+        */
 
-        System.out.printf("Body Passed : %s\n",loginRequestBody);
+        int userId = userRegister.registerUserBasicDetails(request);
+
         /*
         System.out.printf("File Passed : %s\n",file);
         System.out.printf("File Name : %s\n",file.getName());
@@ -50,16 +57,21 @@ public class RegisterUser {
     }
 
     @RequestMapping(value = "/register/user/file", method = RequestMethod.POST)
-    private void registerUserFile(@RequestParam("body") String body,
+    private void registerUserFile(@RequestParam("body") userRegistrationRequest request,
                               @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
 
 
-
+        /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
         });
 
-        System.out.printf("Body Passed : %s\n",body);
+        System.out.printf("Body Passed : %s\n",request.toString());
+        */
+
+        int userId = userRegister.registerUserBasicDetails(request);
+
+
         /*
         System.out.printf("File Passed : %s\n",file);
         System.out.printf("File Name : %s\n",file.getName());
@@ -80,7 +92,7 @@ public class RegisterUser {
 
         //Image Location ../../../userProfileImages/ $(Image Name)
         //Below Use the id ofuser to save the name if file
-        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/userProfileImages", "1.jpg");
+        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/userProfileImages", userId+".jpg");
         file.transferTo(filepath);
 
     }

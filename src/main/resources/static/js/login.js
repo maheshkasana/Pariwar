@@ -243,10 +243,12 @@ function uploadAndShowImage(event,elementId, elementIdValue) {
 * these below function are used for Registration of User.
 */
 
+//Contact details
 class contactDetails {
-    constructor() {
-
-         }
+    constructor(email_i, phone_i) {
+        this.emailAddress = email_i;
+        this.phone = phone_i;
+     }
 
     setEmailAddress(i_email) {
         this.emailAddress = i_email;
@@ -258,10 +260,14 @@ class contactDetails {
 
 }
 
-class religiousDetails {
-    constructor() {
 
-         }
+//Religious Details
+class religiousDetails {
+    constructor(i_religion,i_caste,i_subCaste) {
+        this.religion = i_religion;
+        this.caste = i_caste;
+        this.subCaste = i_subCaste;
+     }
 
     setReligion(i_religion) {
         this.religion = i_religion;
@@ -276,9 +282,15 @@ class religiousDetails {
     }
 }
 
-class AddressDetails {
-    constructor() {
 
+//Address Details
+class AddressDetails {
+    constructor(i_locality,i_village,i_tehsil,i_district,i_state) {
+        this.locality = i_locality;
+        this.village = i_village;
+        this.tehsil = i_tehsil;
+        this.district = i_district;
+        this.state = i_state;
     }
 
     setLocality(i_locality) {
@@ -303,69 +315,25 @@ class AddressDetails {
 
 }
 
+
+//Actual Class for Registeration Details
 class RegisterDetails {
     constructor() {
 
     }
 
-    SetContactDetails() {
-        this.contact = new contactDetails();
+    SetContactDetails(contact_i) {
+        this.contact = contact_i;
     }
 
-    SetReligiousDetails() {
-         this.religious = new religiousDetails();
+    SetReligiousDetails(religious_i) {
+         this.religious = religious_i;
     }
 
-    SetAddressDetails() {
-         this.address = new AddressDetails();
+    SetAddressDetails(address_i) {
+         this.address = address_i;
     }
 
-    setEmailAddress(i_email) {
-        this.contact.emailAddress = i_email;
-    }
-
-    setPhone(i_phone) {
-        this.contact.phone = i_phone;
-    }
-
- //----------
-
-    setReligion(i_religion) {
-        this.religious.religion = i_religion;
-    }
-
-    setCaste(i_caste) {
-        this.religious.caste = i_caste;
-    }
-
-    setSubCaste(i_subCaste) {
-        this.religious.subCaste = i_subCaste;
-    }
-
-
-    //------
-
-    setLocality(i_locality) {
-        this.address.locality = i_locality;
-    }
-
-    setVillage(i_village) {
-        this.address.village = i_village;
-    }
-
-    setDistrict(i_district) {
-        this.address.district = i_district;
-    }
-
-    setState(i_state) {
-        this.address.state = i_state;
-    }
-
-    setTehsil(i_tehsil) {
-        this.tehsil = i_tehsil;
-    }
-
- //-----------
     setUsername(i_username) {
         this.username = i_username;
     }
@@ -376,10 +344,6 @@ class RegisterDetails {
 
     setFirstname(i_firstname) {
         this.firstname = i_firstname;
-    }
-
-    setLastname(i_lastname) {
-        this.lastname = i_lastname;
     }
 
     setGender(i_gender) {
@@ -396,7 +360,7 @@ class RegisterDetails {
 }
 
 function responseFromRegisterRequest(response) {
-
+    alert("Response From Submit Button");
 }
 
 
@@ -404,36 +368,48 @@ function RegisterSubmitButton() {
 
     detailObject = new RegisterDetails();
 
-    var _username = document.getElementById("register_username").value;
-    var _password = document.getElementById("register_password").value;
-    var _fname = document.getElementById("register_firstname").value;
-    var _lname = document.getElementById("register_lastname").value;
-    var _gender = document.getElementById("register_gender").value;
-    var _dob = document.getElementById("register_dateOfBirth").value;
-    var _email = document.getElementById("register_email").value;
-    var _phone = document.getElementById("register_phone").value;
-    var _religion = document.getElementById("register_Religion").value;
-    var _locality = document.getElementById("register_Locality").value;
-    var _subcaste = document.getElementById("register_SubCaste").value;
-    var _caste = document.getElementById("register_Caste").value;
-    var _village = document.getElementById("register_Village").value;
-    var _district = document.getElementById("register_District").value;
-    var _state = document.getElementById("register_State").value;
-    var _tehsil = document.getElementById("register_Tehsil").value;
-    var _isFile = false;
+    //username
+    var status = new userNameStatusCode();
+    var usernameEle = document.getElementById("register_username");
+    if(usernameEle.name != status.GETAVAILABLE()) {
+        alert("Invalid Or Already Used username, please Validate");
+        return;
+    }
+    detailObject.username = usernameEle.value;
 
-    if(_username.length > 0)
-        detailObject.username = _username;
-    if(_password.length > 0)
-        detailObject.password = _password;
-    if(_fname.length > 0)
-        detailObject.firstname = _fname;
-    if(_lname.length > 0)
-        detailObject.lastname = _lname;
-    if(_gender.length > 0)
-        detailObject.gender = _gender;
-    if(_dob.length > 0)
-        detailObject.dateofbirth = _dob;
+    //Password
+    var passEle = document.getElementById("register_password");
+    if(passEle.name != status.GETVALID()) {
+         alert("Invalid Or Password Does not Match");
+         return;
+    }
+    detailObject.password = passEle.value;
+
+    //First Name + Last Name
+    var _fname = document.getElementById("register_firstname").value;
+    if(_fname == null || _fname.length <=0) {
+        alert("First Name Cannot be Empty");
+        return;
+    }
+
+    //last name
+    var _lname = document.getElementById("register_lastname").value;
+    if(_lname != null && _lname.length >0) {
+        _fname += " "+_lname;
+    }
+    detailObject.firstname = _fname;
+
+
+    // Gender
+    detailObject.gender = document.getElementById("register_gender").value;
+
+    //Date of Birth
+    var dobEle = document.getElementById("register_dateOfBirth");
+    detailObject.dateofbirth = dobEle.value;
+
+
+    //profile pic
+    var _isFile = false;
 
     if(document.getElementById("getProfileImage").value.length > 0) {
         _isFile = true;
@@ -441,57 +417,66 @@ function RegisterSubmitButton() {
         detailObject.profilepic = file.name;
     }
 
-    if((_email != null && _email.length > 0) || (_phone != null && _phone.length > 0)) {
-
-        detailObject.SetContactDetails();
-        if(_email.length > 0)
-            detailObject.setEmailAddress(_email);
-        if(_phone.length > 0)
-            detailObject.setPhone(_phone);
+    //Email
+    var _email = null;
+    var emailEle =  document.getElementById("register_email");
+    if(emailEle.name != -1) {
+       if(emailEle.name != status.GETVALID()) {
+             alert("Invalid Email, please correct");
+             return;
+       }
+       _email = emailEle.value;
     }
 
-    if((_religion !=null && _religion.length>0 ) || (_subcaste !=null && _subcaste.length>0 ) || (_caste !=null && _caste.length>0 )) {
-
-        detailObject.SetReligiousDetails();
-        if(_religion.length > 0)
-        detailObject.setReligion(_religion);
-        if(_caste.length > 0)
-        detailObject.setCaste(_caste);
-        if(_subcaste.length > 0)
-        detailObject.setSubCaste(_subcaste);
+    //Phone Number
+    var _phone = document.getElementById("register_phone").value;
+    if(_phone !=null && _phone.length!=0 && _phone.length !=10) {
+        alert("Please Enter Valid Phone number");
+        return;
     }
+    detailObject.SetContactDetails( new contactDetails(_email, _phone));
 
-    if(( _locality !=null && _locality.length > 0 ) || ( _village !=null && _village.length > 0 ) || ( _district !=null && _district.length > 0 ) || ( _state !=null && _state.length > 0 ) || ( _tehsil !=null && _tehsil.length > 0 )) {
 
-        detailObject.SetAddressDetails();
-
-        if(_locality.length > 0)
-            detailObject.setLocality(_locality);
-        if(_village.length > 0)
-            detailObject.setVillage(_village);
-        if(_district.length > 0)
-            detailObject.setDistrict(_district);
-        if(_state.length > 0)
-            detailObject.setState(_state);
-        if(_tehsil.length > 0)
-            detailObject.setTehsil(_tehsil);
+    //Religion related
+    var _religion = document.getElementById("register_Religion").name;
+    var _subcaste = 0;
+    var _caste = 0;
+    if(_religion > 0) {
+        _caste = document.getElementById("register_Caste").name;
+        if(_caste > 0)
+        {
+            _subcaste = document.getElementById("register_SubCaste").name;
+        }
     }
+    detailObject.SetReligiousDetails( new religiousDetails(_religion,_caste, _subcaste));
 
-    /*
-    console.log("Here Mahesh Kasana");
-    console.log(detailObject.profilepic);
-    console.log(JSON.stringify(detailObject))
-    */
+    var _locality = document.getElementById("register_Locality").value;
+    var _state = document.getElementById("register_State").name;
+    var _village = 0;
+    var _district = 0;
+    var _tehsil = 0;
+    if(_state > 0) {
+        _district = document.getElementById("register_District").name;
+        if(_district > 0) {
+            _tehsil = document.getElementById("register_Tehsil").name;
+            if(_tehsil > 0) {
+                _village = document.getElementById("register_Village").name;
+            }
+        }
+    }
+    detailObject.SetAddressDetails(new AddressDetails(_locality, _village, _tehsil, _district, _state));
+
 
     var urlFile = "http://localhost:8081/register/user/file";
     var url = "http://localhost:8081/register/user";
     var requestType = 'POST';
     var elementStatus = "loading_register";
     body = JSON.stringify(detailObject);
+    console.log(body);
     if(_isFile)
-        SendHttpRequestAndReturnResponse(urlFile, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", true, file, responseFromRegisterRequest);
+        SendHttpRequestAndReturnResponse(urlFile, requestType, false, body, elementStatus, "", true, file, responseFromRegisterRequest);
     else
-        SendHttpRequestAndReturnResponse(url, requestType, false, body, elementStatus, "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
+        SendHttpRequestAndReturnResponse(url, requestType, false, body, elementStatus, "", false, null, responseFromRegisterRequest);
 }
 
 /**
@@ -505,18 +490,23 @@ function validatePasswordToReEntred() {
     pass = document.getElementById("register_password");
     vset =  document.getElementById("valid_register_verify_password");
 
+    var status = new userNameStatusCode();
+
     if(vpass.value === pass.value) {
         vset.innerHTML = "<b>Re-Enter Password *</b>";
         vpass.style.borderColor="green";
         vpass.style.borderWidth="1px";
+        pass.name = status.GETVALID();
     } else {
         vset.innerHTML = "<b>Re-Enter Password *</b><b style='color:red;'> (Not Matched)</b>";
         vpass.style.borderColor="red";
         vpass.style.borderWidth="4px";
+        pass.name = status.GETINVALID();
     }
 }
 
 function validateRegisterDate() {
+    var status = new userNameStatusCode();
     var d = document.getElementById("register_dateOfBirth").value;
     var d1 = new Date(d).getTime();
     var d2 = new Date().getTime();
@@ -526,10 +516,12 @@ function validateRegisterDate() {
          ele.style.borderColor="red";
          ele.style.borderWidth="4px";
          vset.innerHTML = "<b>Date of Birth</b><b style='color:red;'> (Invalid)</b>";
+         ele.name = status.GETINVALID();
     }  else {
        ele.style.borderColor="green";
        ele.style.borderWidth="1px";
        vset.innerHTML = "<b>Date of Birth</b>";
+       ele.name = status.GETVALID();
     }
 }
 
@@ -548,16 +540,54 @@ function validateRegisterGender() {
      }
 }
 
+
+
+class userNameStatusCode {
+
+    constructor() {
+        this.INVALID = 0;
+        this.VALID = 1;
+        this.AVAILABLE = 2;
+        this.ALREDYUSED = 3;
+        this.FAILED = 4;
+    }
+
+
+    GETINVALID() {
+        return this.INVALID;
+    }
+
+    GETVALID() {
+         return this.VALID;
+    }
+
+    GETAVAILABLE() {
+         return this.AVAILABLE;
+    }
+
+    GETALREDYUSED() {
+        return this.ALREDYUSED;
+    }
+
+    GETFAILED() {
+        return this.FAILED;
+    }
+
+}
+
 function validateRegisterUsername() {
+    var status = new userNameStatusCode();
     var d = document.getElementById("register_username").value;
     var val = document.getElementById("valid_register_username");
     if(d.length < 5) {
          val.innerHTML =  "<b>Username *</b><b style='color:red;'> (Username should more than 6 char)</b>";
+         document.getElementById("register_username").name = status.GETINVALID();
     } else {
         val.innerHTML = "<b>Username *</b>";
+        document.getElementById("register_username").name = status.GETVALID();
     }
 }
-
+var status = new userNameStatusCode();
 function validateRegisterPassword() {
     var d = document.getElementById("register_password").value;
     var val = document.getElementById("valid_register_password");
@@ -570,14 +600,18 @@ function validateRegisterPassword() {
 
 
 function validateRegisterEmail() {
-    var d = document.getElementById("register_email").value;
+    var ele = document.getElementById("register_email");
     var val = document.getElementById("valid_register_email");
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var d = ele.value;
+    var status = new userNameStatusCode();
 
     if(d.match(mailformat)) {
           val.innerHTML =  "<b>Email Address</b>";
+          ele.name = status.GETVALID();
     } else {
            val.innerHTML = "<b>Email Address</b><b style='color:red;'> (Invalid Email)</b>";
+           ele.name = status.GETINVALID();
     }
 }
 
@@ -683,8 +717,12 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].name.substr(val.length);
+          if(val != null) {
+            b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].name.substr(val.length);
+          } else {
+            b.innerHTML = arr[i].name;
+          }
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"' style='border: 1px solid transparent; background-color: #eeeeee; padding: 10px; font-size: 16px;'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
@@ -769,6 +807,26 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
 
 /*--------End----------*/
 
+function resetReligionLowerDetailsIfChanged(val) {
+
+    if(3 <= val) {
+        ele = document.getElementById("register_Religion");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+    if(2 <= val) {
+        ele = document.getElementById("register_Caste");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+    if(1 <= val) {
+        ele = document.getElementById("register_SubCaste");
+        ele.value = "";
+        ele.name = 0;
+    }
+}
 
 function processAutoSuggestRegisterReligion(data) {
 
@@ -871,6 +929,33 @@ function autoSuggestRegisterSubCaste() {
 }
 
 
+function resetAddressLowerDetailsIfChanged(val) {
+
+    if(4 <= val) {
+        ele = document.getElementById("register_State");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+    if(3 <= val) {
+        ele = document.getElementById("register_District");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+    if(2 <= val) {
+        ele = document.getElementById("register_Tehsil");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+    if(1 <= val) {
+        ele = document.getElementById("register_Village");
+        ele.value = "";
+        ele.name = 0;
+    }
+
+}
 
 function processAutoSuggestRegisterState(data) {
 
@@ -1009,4 +1094,61 @@ function autoSuggestRegisterVillage() {
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterVillage);
+}
+
+
+//*********//////////*********//////////*********//////////*********//////////*********/
+
+class ReturnStatus {
+    constructor(status, msg, error) {
+        this.statusCode = status;
+        this.errorMessage = msg;
+        this.errorCode = error;
+    }
+
+}
+
+
+function processCheckUsernameAvailable(data) {
+
+    var obj = JSON.parse(data);
+    var returnStatus = new ReturnStatus(obj.statusCode, obj.errorMessage, obj.errorCode);
+    var ele = document.getElementById("register_username");
+    var ValEle = document.getElementById("valid_register_username");
+    var status = new userNameStatusCode();
+
+
+    if(returnStatus.statusCode == status.GETAVAILABLE()) {
+        ValEle.innerHTML =  "<b>Username *</b><b style='color:green;'> (Available)</b>";
+        ele.name = status.GETAVAILABLE();
+        return;
+    }
+
+    if(returnStatus.statusCode == status.GETALREDYUSED()) {
+        ValEle.innerHTML =  "<b>Username *</b><b style='color:red;'> (Not Available)</b>";
+        ele.name = status.GETALREDYUSED();
+        return;
+    }
+
+    if(returnStatus.statusCode == status.GETFAILED()) {
+        ValEle.innerHTML =  "<b>Username *</b><b style='color:red;'> (Retry Availability)</b>";
+        ele.name = status.GETFAILED();
+        return;
+    }
+}
+
+
+function checkUsernameAvailable() {
+
+    var status = new userNameStatusCode();
+    var ele =  document.getElementById("register_username");
+    if(status.GETINVALID() == ele.name) {
+            validateRegisterUsername();
+            return;
+    }
+
+    var username = ele.value;
+    var url = "http://localhost:8081/register/auto/validateAvailabilityUsername/" + username +";";
+    var requestType = 'GET';
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processCheckUsernameAvailable);
 }

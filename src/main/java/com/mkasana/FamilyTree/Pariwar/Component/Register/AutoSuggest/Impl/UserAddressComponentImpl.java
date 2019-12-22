@@ -302,5 +302,18 @@ public class UserAddressComponentImpl implements UserAddressComponent {
     }
 
 
+    /**
+     * this function is to validateAvailabilityUsername
+     * @param
+     * @return
+     */
+    public ReturnStatus validateAvailabilityUsername(final String username) {
+        String Function = "UserAddressComponentImpl:validateAvailabilityUsername";
+
+        return userAddressBuilder.validateAvailabilityUsername(username);
+
+    }
+
+
 }
 

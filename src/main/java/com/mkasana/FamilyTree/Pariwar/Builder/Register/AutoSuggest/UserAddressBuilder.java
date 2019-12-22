@@ -519,4 +519,31 @@ public class UserAddressBuilder {
         return villageTowns;
     }
 
+    /**
+     * this function is to validateAvailabilityUsername
+     * @param
+     * @return
+     */
+    public ReturnStatus validateAvailabilityUsername(final String username) {
+        final String function = "UserAddressBuilder:validateAvailabilityUsername";
+
+        ReturnStatus returnStatus = new ReturnStatus();
+
+        try {
+            ResultSet resultSet = userCountryDao.validateAvailabilityUsername(username);
+            if(resultSet.next()) {
+                returnStatus.setErrorCode("Username ["+username+"] already in use");
+                returnStatus.setStatusCode(usernameStatus.ALREADYUSED.getValue());
+                return returnStatus;
+            }
+            returnStatus.setErrorCode("Username ["+username+"] available");
+            returnStatus.setStatusCode(usernameStatus.AVAILABLE.getValue());
+        } catch(Exception e) {
+            returnStatus.setErrorCode("Failed to Validate Username");
+            returnStatus.setStatusCode(usernameStatus.FAILED.getValue());
+            //System.out.println(function + " Error : "+ e);
+        }
+        return returnStatus;
+    }
+
 }

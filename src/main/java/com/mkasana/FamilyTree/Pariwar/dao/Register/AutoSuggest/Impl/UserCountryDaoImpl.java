@@ -410,4 +410,23 @@ public class UserCountryDaoImpl implements UserCountryDao {
         }
     }
 
+    /**
+     * this function is to validateAvailabilityUsername
+     * @param
+     * @return
+     */
+    public ResultSet validateAvailabilityUsername(final String username) throws Exception {
+        String Function = "UserCountryDaoImpl:validateAvailabilityUsername";
+
+        String query = "SELECT * FROM userInfo WHERE Username = '" + username + "';";
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch (Exception e) {
+            String error = "[Error] UserCountryDaoImpl:validateAvailabilityUsername Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
 }
