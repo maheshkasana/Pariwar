@@ -110,4 +110,12 @@ public interface UserReligionDao {
     public ResultSet getAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId) throws Exception ;
 
 
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id.
+     * @param casteId
+
+     * @return
+     */
+    public ResultSet getAllSubCasteByCasteId(final int casteId) throws Exception ;
+
     }

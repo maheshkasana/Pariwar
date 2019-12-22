@@ -301,6 +301,24 @@ public class UserReligionDaoImpl implements UserReligionDao {
     }
 
 
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id.
+     * @param casteId
+
+     * @return
+     */
+    public ResultSet getAllSubCasteByCasteId(final int casteId) throws Exception {
+        String function = "UserReligionDaoImpl:getAllSubCasteByCasteId";
+        String query = "SELECT Id, UserSubcasteName, UserCasteId FROM UserSubCaste WHERE UserCasteId = " + casteId + ";";
+
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] UserReligionDaoImpl:getAllSubCasteByCasteIdOrReligionId Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
 
 
 }

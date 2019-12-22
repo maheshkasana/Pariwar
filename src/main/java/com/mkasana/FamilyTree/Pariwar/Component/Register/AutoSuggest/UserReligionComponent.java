@@ -168,5 +168,12 @@ public interface UserReligionComponent {
      */
     public List<SubCaste> getSuggestAllSubCasteByCasteIdOrReligionId(final int casteId, final int religionId);
 
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id.
+     * @param casteId
+
+     * @return
+     */
+    public List<SubCaste> getAllSubCasteByCasteId(final int casteId);
 
 }

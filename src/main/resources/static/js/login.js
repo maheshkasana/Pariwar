@@ -143,7 +143,7 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
     {
   	    if(this.readyState<4)
   	    {
-  	        if(elementStatus != null) {
+  	        if(elementStatus.length > 0 && elementStatus != null) {
      	   	    document.getElementById(elementStatus).innerHTML="<img src='images/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
      	   	}
   	    }
@@ -153,14 +153,14 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
     		    {
       		        if(this.responseText!=null)
                     {
-                        if(elementStatus != null) {
+                        if(elementStatus.length > 0 && elementStatus != null) {
                             document.getElementById(elementStatus).innerHTML="<p style='color: green;'><b>successful</b></p>";
                         }
                         callback(this.responseText);
                     }
                     else
                     {
-                        if(elementStatus != null) {
+                        if(elementStatus.length > 0 && elementStatus != null) {
                             document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>" ;
                         }
                         callback(this.responseText);
@@ -168,7 +168,7 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
 		   	    }
      		    else
      		    {
-     		        if(elementStatus != null) {
+     		        if(elementStatus.length > 0 && elementStatus != null) {
      		            document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>";
      		        }
     		    }
@@ -414,7 +414,7 @@ function RegisterSubmitButton() {
     var _phone = document.getElementById("register_phone").value;
     var _religion = document.getElementById("register_Religion").value;
     var _locality = document.getElementById("register_Locality").value;
-    var _subcaste = document.getElementById("register_subcaste").value;
+    var _subcaste = document.getElementById("register_SubCaste").value;
     var _caste = document.getElementById("register_Caste").value;
     var _village = document.getElementById("register_Village").value;
     var _district = document.getElementById("register_District").value;
@@ -656,11 +656,11 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
+   function addEventListenerFunction(e) {
       var a, b, i, val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
-      if (!val) { return false;}
+
       currentFocus = -1;
       /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
@@ -673,21 +673,20 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
       a.style.width = inp.offsetWidth+'px';
       a.style.maxHeight = inp.offsetWidth+'px';
       a.style.overflow = 'auto';
-
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
+
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        if (val == null || val.length == 0 || arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
           /*create a DIV element for each matching element:*/
-
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
           b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
           b.innerHTML += arr[i].name.substr(val.length);
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"'>";
+          b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"' style='border: 1px solid transparent; background-color: #eeeeee; padding: 10px; font-size: 16px;'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
@@ -700,9 +699,14 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
           a.appendChild(b);
         }
       }
-  });
+  }
+
+  inp.addEventListener("input", addEventListenerFunction);
+  inp.addEventListener("click", addEventListenerFunction);
+
   /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
+   function addEventListenerFunctionTwo(e) {
+
       var x = document.getElementById(this.id + "autocomplete-list");
       if (x) x = x.getElementsByTagName("div");
       if (e.keyCode == 40) {
@@ -725,7 +729,10 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
           if (x) x[currentFocus].click();
         }
       }
-  });
+  }
+
+  inp.addEventListener("keydown",addEventListenerFunctionTwo);
+
   function addActive(x) {
     /*a function to classify an item as "active":*/
     if (!x) return false;
@@ -756,55 +763,250 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
+  addEventListenerFunction(null);
 }
 
 
 /*--------End----------*/
 
 
+function processAutoSuggestRegisterReligion(data) {
 
-
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].religionName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_Religion");
+    registerAutoCompleteGenericFunction(document.getElementById("register_Religion"), listClassObjects, pos);
+}
 
 function autoSuggestRegisterReligion() {
 
-     var url = "http://localhost:8081/register/auto/allStates";
+     var url = "http://localhost:8081/register/auto/allReligions";
      var requestType = 'GET';
-     var countries = [];
 
-    countries.push(new arrClassInout("Afghanistan", 1));
-    countries.push(new arrClassInout("Albania", 2));
-    countries.push(new arrClassInout("Algeria", 3));
-    countries.push(new arrClassInout("Andorra", 4));
-    countries.push(new arrClassInout("Angola", 5));
-    countries.push(new arrClassInout("Anguilla", 6));
-    countries.push(new arrClassInout("Afghanistan", 1));
-    countries.push(new arrClassInout("Albania", 2));
-    countries.push(new arrClassInout("Algeria", 3));
-    countries.push(new arrClassInout("Andorra", 4));
-    countries.push(new arrClassInout("Angola", 5));
-    countries.push(new arrClassInout("Anguilla", 6));
-    countries.push(new arrClassInout("Antigua & Barbuda", 7));
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterReligion);
+}
 
 
-     pos = getPositionOfDivInScreen("register_Religion");
-     registerAutoCompleteGenericFunction(document.getElementById("register_Religion"), countries, pos);
-     //SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
 
+function processAutoSuggestRegisterCaste(data) {
+
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].userCasteName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_Caste");
+    registerAutoCompleteGenericFunction(document.getElementById("register_Caste"), listClassObjects, pos);
 }
 
 function autoSuggestRegisterCaste() {
 
-     var url = "http://localhost:8081/register/auto/allStates";
-     var requestType = 'GET';
-     var countries = ["Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"];
+    ele = document.getElementById("register_Religion");
+    vset =  document.getElementById("valid_register_Religion");
 
-     pos = getPositionOfDivInScreen("register_Caste");
-     registerAutoCompleteGenericFunction(document.getElementById("register_Caste"), countries, pos);
-     //SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "Kuch Bhi nhi, abhi Generic h", false, null, responseFromRegisterRequest);
+    religionId = ele.name;
 
+    if(religionId <= 0 || religionId.length <= 0) {
+        ele.style.borderColor="red";
+        ele.style.borderWidth="2px";
+        vset.innerHTML = "<b>Religion</b><b style='color:red;'> (Please Select)</b>";
+        return;
+    } else {
+        ele.style.borderColor="#d0d0d0";
+        ele.style.borderWidth="1px";
+        vset.innerHTML = "<b>Religion</b>";
+    }
+
+    var url = "http://localhost:8081/register/auto/religionAllCaste/" + religionId +";";
+    var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterCaste);
 }
 
-function showTheValueOfTheReligion()
-{
-    alert(document.getElementById("register_Religion").name);
+
+
+
+function processAutoSuggestRegisterSubCaste(data) {
+
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].userSubCasteName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_SubCaste");
+    registerAutoCompleteGenericFunction(document.getElementById("register_SubCaste"), listClassObjects, pos);
+}
+
+function autoSuggestRegisterSubCaste() {
+
+    ele = document.getElementById("register_Caste");
+    vset =  document.getElementById("valid_register_Caste");
+
+    casteId = ele.name;
+
+    if(casteId <= 0 || casteId.length <= 0) {
+        ele.style.borderColor="red";
+        ele.style.borderWidth="2px";
+        vset.innerHTML = "<b>Caste</b><b style='color:red;'> (Please Select)</b>";
+        return;
+    } else {
+        ele.style.borderColor="#d0d0d0";
+        ele.style.borderWidth="1px";
+        vset.innerHTML = "<b>Caste</b>";
+    }
+
+    var url = "http://localhost:8081/register/auto/casteAllSubCaste/" + casteId +";";
+    var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterSubCaste);
+}
+
+
+
+function processAutoSuggestRegisterState(data) {
+
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].stateName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_State");
+    registerAutoCompleteGenericFunction(document.getElementById("register_State"), listClassObjects, pos);
+}
+
+function autoSuggestRegisterState() {
+
+     var url = "http://localhost:8081/register/auto/allStates";
+     var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterState);
+}
+
+
+
+
+function processAutoSuggestRegisterDistrict(data) {
+
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].districtCode;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_District");
+    registerAutoCompleteGenericFunction(document.getElementById("register_District"), listClassObjects, pos);
+}
+
+function autoSuggestRegisterDistrict() {
+
+    ele = document.getElementById("register_State");
+    vset =  document.getElementById("valid_register_State");
+
+    stateId = ele.name;
+
+    if(stateId <= 0 || stateId.length <= 0) {
+        ele.style.borderColor="red";
+        ele.style.borderWidth="2px";
+        vset.innerHTML = "<b>State</b><b style='color:red;'> (Please Select)</b>";
+        return;
+    } else {
+        ele.style.borderColor="#d0d0d0";
+        ele.style.borderWidth="1px";
+        vset.innerHTML = "<b>State</b>";
+    }
+
+    var url = "http://localhost:8081/register/auto/districtByStateId/" + stateId +";";
+    var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterDistrict);
+}
+
+
+
+
+function processAutoSuggestRegisterTehsil(data) {
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].tehsilName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_Tehsil");
+    registerAutoCompleteGenericFunction(document.getElementById("register_Tehsil"), listClassObjects, pos);
+}
+
+function autoSuggestRegisterTehsil() {
+
+    ele = document.getElementById("register_District");
+    vset =  document.getElementById("valid_register_District");
+
+    districtId = ele.name;
+
+    if(districtId <= 0 || districtId.length <= 0) {
+        ele.style.borderColor="red";
+        ele.style.borderWidth="2px";
+        vset.innerHTML = "<b>District</b><b style='color:red;'> (Please Select)</b>";
+        return;
+    } else {
+        ele.style.borderColor="#d0d0d0";
+        ele.style.borderWidth="1px";
+        vset.innerHTML = "<b>District</b>";
+    }
+
+    var url = "http://localhost:8081/register/auto/allTehsilByDistrictId/" + districtId +";";
+    var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterTehsil);
+}
+
+
+
+function processAutoSuggestRegisterVillage(data) {
+
+    var listClassObjects = [];
+    var listOfSuggesations = JSON.parse(data);
+    for(i in listOfSuggesations) {
+        var name = listOfSuggesations[i].villageTownLocalAreaName;
+        var id = listOfSuggesations[i].id;
+        listClassObjects.push( new arrClassInout(name,id));
+    }
+    pos = getPositionOfDivInScreen("register_Village");
+    registerAutoCompleteGenericFunction(document.getElementById("register_Village"), listClassObjects, pos);
+}
+
+function autoSuggestRegisterVillage() {
+
+    ele = document.getElementById("register_Tehsil");
+    vset =  document.getElementById("valid_register_Tehsil");
+
+    tehsilId = ele.name;
+
+    if(tehsilId <= 0 || tehsilId.length <= 0) {
+        ele.style.borderColor="red";
+        ele.style.borderWidth="2px";
+        vset.innerHTML = "<b>SubDistrict/Tehsil/City</b><b style='color:red;'> (Please Select)</b>";
+        return;
+    } else {
+        ele.style.borderColor="#d0d0d0";
+        ele.style.borderWidth="1px";
+        vset.innerHTML = "<b>SubDistrict/Tehsil/City</b>";
+    }
+
+    var url = "http://localhost:8081/register/auto/allVillageTownByTehsilId/" + tehsilId +";";
+    var requestType = 'GET';
+
+    SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterVillage);
 }

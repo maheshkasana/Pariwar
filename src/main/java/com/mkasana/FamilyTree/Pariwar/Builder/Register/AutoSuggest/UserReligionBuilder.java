@@ -227,9 +227,9 @@ public class UserReligionBuilder {
         subCaste.setId(resultSet.getInt("Id"));
         subCaste.setUserSubCasteName(resultSet.getString("UserSubCasteName"));
         subCaste.setUserCasteId(resultSet.getInt("UserCasteId") );
-        subCaste.setUserReligionId(resultSet.getInt("UserReligionId"));
-        subCaste.setUserCasteName(resultSet.getString("UserCasteName"));
-        subCaste.setReligionName(resultSet.getString("ReligionName"));
+        //subCaste.setUserReligionId(resultSet.getInt("UserReligionId"));
+        //subCaste.setUserCasteName(resultSet.getString("UserCasteName"));
+        //subCaste.setReligionName(resultSet.getString("ReligionName"));
         return subCaste;
     }
 
@@ -327,5 +327,30 @@ public class UserReligionBuilder {
         return subCastes;
     }
 
+    /**
+     * this is to return all the Sub-caste belongs to the passed Caste Id.
+     * @param casteId, religionId
+
+     * @return
+     */
+    public List<SubCaste> getAllSubCasteByCasteId(final int casteId) {
+
+        String function = "UserReligionBuilder:getAllSubCaste:getAllSubCasteByCasteId";
+
+        ResultSet resultSet;
+        List<SubCaste> subCastes = new ArrayList<>();
+        try {
+            resultSet = userReligionDao.getAllSubCasteByCasteId(casteId);
+            while(resultSet.next()) {
+                SubCaste subCaste = null;
+                subCaste = convertResultSetToSubCaste(resultSet);
+                if(subCaste != null)
+                    subCastes.add(subCaste);
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return subCastes;
+    }
 
 }

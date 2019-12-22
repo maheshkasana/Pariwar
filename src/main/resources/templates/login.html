@@ -91,7 +91,7 @@
             </div>
             <div style="left: 50%; top: 0; width: 25%; float: left; padding: 0 18px 0 18px">
                 <div>
-                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="background-color:#006600;  min-width: 100px; margin-top:28px; width:90%;">Check Availability</button>
+                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="background-color:#99ceff;  min-width: 100px; margin-top:28px; width:90%; color : black; font-size:16px;">Check Availability</button>
                 </div>
                 <div>
                     <div style="margin-top:5px;">
@@ -118,7 +118,7 @@
                         <label id="valid_register_dateOfBirth"><b>Date of Birth</b></label>
                     </div>
                     <div>
-                        <input type="date" onchange="validateRegisterDate()" id="register_dateOfBirth" value="1995-07-03" style=" min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; width:90%; height:34px; border-radius: 0px;">
+                        <input type="date" onchange="validateRegisterDate()" id="register_dateOfBirth" value="1995-07-03" style=" padding: 10px; border: 1px solid #d4d4d4; min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; width:80%; height:34px; border-radius: 0px;">
                     </div>
                 </div>
             </div>
@@ -153,16 +153,16 @@
         <div class="Registercontent" id="RegisterDevId3">
             <div style="column-count: 3; ">
                 <div>
-                    <label><b>Religion</b></label>
-                    <input type="text" onmousedown="autoSuggestRegisterReligion()" onchange="autoSuggestRegisterReligion()" placeholder="Religion" id="register_Religion" name="0" required  ><div id="valid_register_Religion"></div>
+                    <label id="valid_register_Religion"><b>Religion</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterReligion()" placeholder="Religion" id="register_Religion" name="0" required  >
                 </div>
                 <div>
-                    <label><b>Caste</b></label>
-                    <input type="text" onmousedown="autoSuggestRegisterCaste()" onchange="autoSuggestRegisterCaste()" placeholder="Caste" id="register_Caste" name="register_Caste"  required  ><div id="valid_register_Caste"></div>
+                    <label id="valid_register_Caste"><b>Caste</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterCaste()" placeholder="Caste" id="register_Caste" name="0"  required  >
                 </div>
                 <div>
-                    <label><b>Sub Caste</b></label>
-                    <input type="text" placeholder="Sub Caste" id="register_subcaste" name="register_subcaste"  required  ><div id="valid_register_subcaste"></div>
+                    <label id="valid_register_SubCaste"><b>Sub Caste</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterSubCaste()"  placeholder="Sub Caste" id="register_SubCaste" name="0"  required  >
                 </div>
             </div>
         </div>
@@ -178,18 +178,18 @@
                 </div>
                 <div style="left: 32%; top: 0; width: 32%; float: left; padding: 0 18px 0 ">
                     <div>
-                        <label><b>State</b></label>
-                        <input type="text" placeholder="State" id="register_State" name="register_State"  required  ><div id="valid_register_State"></div>
-                        <label><b>District</b></label>
-                        <input type="text" placeholder="District" id="register_District" name="register_District"  required  ><div id="valid_register_District"></div>
+                        <label id="valid_register_State"><b>State</b></label>
+                        <input type="text" placeholder="State" id="register_State" name="0" onmousedown="autoSuggestRegisterState()"  required  >
+                        <label id="valid_register_District"><b>District</b></label>
+                        <input type="text" placeholder="District" id="register_District" name="0" onmousedown="autoSuggestRegisterDistrict()"  required  >
                     </div>
                 </div>
                 <div style="left: 65%; top: 0; width: 31%; float: left;">
                     <div>
-                        <label><b>SubDistrict/Tehsil/City</b></label>
-                        <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="register_Tehsil"  required  ><div id="valid_register_Tehsil"></div>
-                        <label><b>Village/Town</b></label>
-                        <input type="text" placeholder="Village/Town" id="register_Village" name="register_Village"  required  ><div id="valid_register_Village"></div>
+                        <label id="valid_register_Tehsil"><b>SubDistrict/Tehsil/City</b></label>
+                        <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="0" onmousedown="autoSuggestRegisterTehsil()"   required  >
+                        <label id="valid_register_Village"><b>Village/Town</b></label>
+                        <input type="text" placeholder="Village/Town" id="register_Village" name="0" onmousedown="autoSuggestRegisterVillage()"  required  >
                     </div>
                 </div>
             </div>

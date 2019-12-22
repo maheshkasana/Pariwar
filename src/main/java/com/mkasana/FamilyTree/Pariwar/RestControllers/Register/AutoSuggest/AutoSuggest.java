@@ -75,7 +75,7 @@ public class AutoSuggest {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/register/auto/religions", method = RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/register/auto/allReligions", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Religion> SuggestAllReligions(@RequestHeader HttpHeaders headers) throws Exception {
 
         String function = "AutoSuggestController:SuggestAllReligions";
@@ -205,6 +205,20 @@ public class AutoSuggest {
         String function = "AutoSuggestController:SuggestAllSubCaste";
 
         return userReligionComponent.getAllSubCaste();
+    }
+
+    /**
+     * this function is to Suggest Sub - Caste based on passed Caste Id or Religion Id;
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/register/auto/casteAllSubCaste/{casteId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<SubCaste> SuggestAllSubCasteByCasteId(@PathVariable("casteId") int casteId, @RequestHeader HttpHeaders headers) throws Exception {
+
+        String function = "AutoSuggestController:SuggestAllSubCasteByCasteId";
+
+        return userReligionComponent.getAllSubCasteByCasteId(casteId);
     }
 
     /**
