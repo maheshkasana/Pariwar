@@ -1,7 +1,9 @@
 package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.RegisterUser;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.RegisterUser.UserRegistrationComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
+import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import com.mkasana.FamilyTree.Pariwar.model.userRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,7 +29,7 @@ public class RegisterUser {
     private UserRegistrationComponent userRegister;
 
     @RequestMapping(value = "/register/user", method = RequestMethod.POST, headers="Accept=application/json")
-    private void registerUser(@RequestBody userRegistrationRequest request,
+    private ReturnStatus registerUser(@RequestBody userRegistrationRequest request,
                               @RequestHeader HttpHeaders headers) throws Exception {
         /*
         headers.forEach((key, value) -> {
@@ -35,7 +38,9 @@ public class RegisterUser {
         */
 
         int userId = userRegister.registerUserBasicDetails(request);
-
+        ReturnStatus returnStatus = new ReturnStatus();
+        returnStatus.setStatusCode(userId);
+        returnStatus.setErrorCode("");
         /*
         System.out.printf("File Passed : %s\n",file);
         System.out.printf("File Name : %s\n",file.getName());
@@ -53,13 +58,12 @@ public class RegisterUser {
         //System.out.printf("File Content  : "+ file.getInputStream());
         //return loginValidation.validateUser(loginRequestBody);
         */
-
+        return returnStatus;
     }
 
     @RequestMapping(value = "/register/user/file", method = RequestMethod.POST)
-    private void registerUserFile(@RequestParam("body") userRegistrationRequest request,
-                              @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
-
+    private ReturnStatus registerUserFile(@RequestParam("body") String request,
+                                          @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
 
         /*
         headers.forEach((key, value) -> {
@@ -69,8 +73,21 @@ public class RegisterUser {
         System.out.printf("Body Passed : %s\n",request.toString());
         */
 
-        int userId = userRegister.registerUserBasicDetails(request);
+        //int userId = userRegister.registerUserBasicDetails(request);
+        //System.out.printf("Body Passed : %s\n",request.toString());
 
+        ReturnStatus returnStatus = new ReturnStatus();
+        int userId = -1;
+        ObjectMapper objectMapper = new ObjectMapper();
+        userRegistrationRequest req = objectMapper.readValue(request, userRegistrationRequest.class);
+        //System.out.printf("Object Passed : %s\n",req.toString());
+        userId = userRegister.registerUserBasicDetails(req);
+        if(0 >= userId) {
+            System.out.println("Failed to register user");
+            returnStatus.setStatusCode(-1);
+            returnStatus.setErrorCode("Failed to register user, Please try after some time");
+            return returnStatus;
+        }
 
         /*
         System.out.printf("File Passed : %s\n",file);
@@ -92,8 +109,13 @@ public class RegisterUser {
 
         //Image Location ../../../userProfileImages/ $(Image Name)
         //Below Use the id ofuser to save the name if file
-        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/userProfileImages", userId+".jpg");
+
+        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/userProfileImages", "userProfilePic_"+userId+".jpg");
         file.transferTo(filepath);
+        returnStatus.setStatusCode(userId);
+        returnStatus.setErrorCode("Successfully registered user");
+        return returnStatus;
 
     }
+
 }

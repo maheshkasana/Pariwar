@@ -3,27 +3,16 @@ package com.mkasana.FamilyTree.Pariwar.model;
 public class LoginResponse {
 
     private String userName;
-    private String AuthToken;
-    private int id;
+    private String keyId;
     private Boolean status;
 
-    @Override
-    public String toString() {
-        return "<LoginResponse>" +
-                    "<userName>" + userName + "</userName>" +
-                    "<AuthToken>" + AuthToken + "</AuthToken>" +
-                    "<id>" + id + "</id>" +
-                    "<status>" + status + "</status>" +
-                "</LoginResponse>";
-    }
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String userName, String authToken, int id, Boolean status) {
+    public LoginResponse(String userName, String keyId, Boolean status) {
         this.userName = userName;
-        this.AuthToken = authToken;
-        this.id = id;
+        this.keyId = keyId;
         this.status = status;
     }
 
@@ -35,28 +24,28 @@ public class LoginResponse {
         this.userName = userName;
     }
 
-    public String getAuthToken() {
-        return AuthToken;
+    public String getKeyId() {
+        return keyId;
     }
 
-    public void setAuthToken(String authToken) {
-        AuthToken = authToken;
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Boolean getStatus() {
+        return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
     }
 
-    public Boolean getStatus() {
-        return this.status;
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "userName='" + userName + '\'' +
+                ", keyId='" + keyId + '\'' +
+                ", status=" + status +
+                '}';
     }
-
 }

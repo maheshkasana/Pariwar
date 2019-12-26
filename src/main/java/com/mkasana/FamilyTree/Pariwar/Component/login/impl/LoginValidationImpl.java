@@ -18,7 +18,7 @@ public class LoginValidationImpl implements LoginValidation {
         String SpResponse = databaseConnection.callStoredProcedure("ValidateLogin", loginRequestBody.toString());
         System.out.println("in LoginValidationImpl Response from SP "+SpResponse);
         */
-        LoginResponse login = new LoginResponse("MkasanaGurjar","asdasasd",101, Boolean.TRUE);
+        LoginResponse login = new LoginResponse("MkasanaGurjar","adsasda", Boolean.TRUE);
         return login;
     }
 }

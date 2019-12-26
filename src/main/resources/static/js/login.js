@@ -359,8 +359,26 @@ class RegisterDetails {
     }
 }
 
+function resetDetailsAndGoBackToMainAfterRegistreation() {
+
+    //location.replace("http://localhost:8081");
+    return ;
+}
+
+
 function responseFromRegisterRequest(response) {
-    alert("Response From Submit Button");
+     var resp = JSON.parse(response);
+     var userId = resp.statusCode;
+     var errorCode = resp.errorCode;
+     var errorMsg = resp.errorMessage;
+
+     if(0 >= userId) {
+        alert("Failed to Register, Retry after sometime");
+     } else {
+        document.getElementById('RegistredSuccessful').style.display='block';
+        document.getElementById('username_RegistredSuccessful').innerHTML = "Username : <b><u>" + document.getElementById('register_username').value + "</u></b>";
+        //resetDetailsAndGoBackToMainAfterRegistreation(userId);
+     }
 }
 
 
@@ -383,7 +401,7 @@ function RegisterSubmitButton() {
          alert("Invalid Or Password Does not Match");
          return;
     }
-    detailObject.password = passEle.value;
+    detailObject.password = btoa(passEle.value);
 
     //First Name + Last Name
     var _fname = document.getElementById("register_firstname").value;

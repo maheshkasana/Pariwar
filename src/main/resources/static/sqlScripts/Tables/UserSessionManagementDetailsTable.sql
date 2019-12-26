@@ -1,12 +1,11 @@
-DROP TABLE IF EXISTS DistrictDetails;
+DROP TABLE IF EXISTS UserSessionManagementDetails;
 
 
 CREATE TABLE UserSessionManagementDetails (
 	  Id INT AUTO_INCREMENT,
-    KeyId VARCHAR(100) NOT NULL,
+    Key VARCHAR(100) NOT NULL,
     UserId INT NOT NULL,
     Created LONG,
     Updated LONG,
-    Flag INT,
-    PRIMARY KEY(Id)
+	  Flag INT
 );

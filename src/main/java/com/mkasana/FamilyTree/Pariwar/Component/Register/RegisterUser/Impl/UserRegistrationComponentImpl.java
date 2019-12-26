@@ -22,9 +22,10 @@ public class UserRegistrationComponentImpl  implements UserRegistrationComponent
     public int registerUserBasicDetails(final userRegistrationRequest user) {
 
         String Function = "UserRegistrationComponentImpl::registerUserBasicDetails";
+        int userId = -1;
         try {
             userRegistrationBuilder.registerUserBasicDetails(user);
-            int userId = userRegistrationBuilder.getUserIdByUsername(user.getUsername());
+            userId = userRegistrationBuilder.getUserIdByUsername(user.getUsername());
             userRegistrationBuilder.createOrUpdateUserAddress(user.getAddress(), userId);
             userRegistrationBuilder.createOrUpdateUserReligiousDetails(user.getReligious(), userId);
             return userId;

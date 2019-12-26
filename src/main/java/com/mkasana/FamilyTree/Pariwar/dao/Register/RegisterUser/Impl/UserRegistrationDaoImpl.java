@@ -84,13 +84,13 @@ public class UserRegistrationDaoImpl implements UserRegistrationDao {
                 }
 
                 if(addressId <= 0) {
-                    String query = "INSERT INTO UserAddressDetails(UserId, firstAddress, VillageId, TehsilId, DistrictId, StateId) VALUES ("
+                    String query = "INSERT INTO UserAddressDetails(UserId, firstAddress, VillageId, TehsilId, DistrictId, StateId, Flag) VALUES ("
                             + userId + ","
                             + "'" + address.getLocality() + "',"
                             + address.getVillage() + ","
                             + address.getTehsil() + ","
                             + address.getDistrict() + ","
-                            + address.getState() + ");";
+                            + address.getState() + ", 1);";
 
                     databaseConnection.executeUpdate(query);
                     databaseConnection.commit();
