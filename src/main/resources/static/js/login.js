@@ -85,6 +85,7 @@ function checkIfAlreadyLoggedIn() {
     var token = getCookie("authKey");
     var status = getCookie("pariwarStatus");
     var id = getCookie("userId");
+    return;
     if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
         location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
 }
