@@ -7,17 +7,17 @@ class LoginRequestBody {
 }
 
 class LoginResponseBody {
-    constructor(username, token, status) {
-        this.username = username;
-        this.token = token;
-        this.status = status;
+    constructor(i_username, i_authKey, i_userId, i_status) {
+        this.username = i_username;
+        this.authKey = i_authKey;
+        this.userId = i_userId;
+        this.status = i_status;
     }
 }
 
 
 function TestsendHttpRequest()
 {
-    alert("in Sed HTTP");
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", "http://localhost:8081/index", false ); // false for synchronous request
     xmlHttp.send( null );
@@ -29,7 +29,7 @@ function setCookie(username, token,id, expiresminutes) {
   var d = new Date();
   d.setTime(d.getTime() + (expiresminutes*1000));
   var expires = "expires="+ d.toUTCString();
-  var cookiesString= "pariwarId=" + id.toString() + ", pariwarUsername=" + username + ", pariwarToken=" + token + ", " + expires + ", pariwarStatus=1";
+  var cookiesString= "userId=" + id.toString() + ", username=" + username + ", authKey=" + token + ", " + expires + ", pariwarStatus=1";
   document.cookie = cookiesString;
 }
 
@@ -61,10 +61,10 @@ function getCookie(cname) {
 
 function showCookies()
 {
-    alert("got Cookies username : "+ getCookie("pariwarUsername"));
-    alert("got Cookies Token : "+ getCookie("pariwarToken"));
+    alert("got Cookies username : "+ getCookie("username"));
+    alert("got Cookies Token : "+ getCookie("authKey"));
     alert("got Cookies status : "+ getCookie("pariwarStatus"));
-    alert("got Cookies id : "+ getCookie("pariwarId"));
+    alert("got Cookies id : "+ getCookie("userId"));
 
 }
 
@@ -81,14 +81,12 @@ function adjustLoginPopUpContentStyle() {
 function checkIfAlreadyLoggedIn() {
 
     adjustLoginPopUpContentStyle();
-
-    var userName = getCookie("pariwarUsername");
-    var token = getCookie("pariwarToken");
+    var userName = getCookie("username");
+    var token = getCookie("authKey");
     var status = getCookie("pariwarStatus");
-    var id = getCookie("pariwarId");
-
-    //if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
-        //location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
+    var id = getCookie("userId");
+    if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
+        location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
 }
 
 
@@ -97,11 +95,12 @@ function checkIfAlreadyLoggedIn() {
 */
 function responseFromLoginCheck(details)
 {
+    alert(details);
     var response = JSON.parse(details);
     if(response.status==true) {
         document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
-        setCookie(response.userName,response.authToken,response.id,5*60);
-        location.replace("http://localhost:8081/home?username="+response.userName+"&token="+response.authToken+"&userId="+response.id);
+        setCookie(response.username,response.authKey,response.userId,5*60);
+        location.replace("http://localhost:8081/home?username="+response.username+"&token="+response.authKey+"&userId="+response.userId);
     }
     else {
         document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
@@ -201,7 +200,7 @@ function check_login_user() {
 
     /* get data from login form */
     var username=document.getElementById('login_username').value;
-    var password=document.getElementById('login_password').value;
+    var password=btoa(document.getElementById('login_password').value);
 
     var url = "http://localhost:8081/login/validate";
     var requestType = 'POST';

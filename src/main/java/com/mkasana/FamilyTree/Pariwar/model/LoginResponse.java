@@ -2,34 +2,53 @@ package com.mkasana.FamilyTree.Pariwar.model;
 
 public class LoginResponse {
 
-    private String userName;
-    private String keyId;
+    private String username;
+    private String authKey;
+    private int userId;
     private Boolean status;
+    private String msg;
 
+    public LoginResponse(String username, String authKey, int userId, Boolean status, String msg) {
+        this.username = username;
+        this.authKey = authKey;
+        this.userId = userId;
+        this.status = status;
+        this.msg = msg;
+    }
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String userName, String keyId, Boolean status) {
-        this.userName = userName;
-        this.keyId = keyId;
-        this.status = status;
+    public String getMsg() {
+        return msg;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUsername() {
+        return username;
     }
 
-    public String getKeyId() {
-        return keyId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setKeyId(String keyId) {
-        this.keyId = keyId;
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Boolean getStatus() {
@@ -43,9 +62,11 @@ public class LoginResponse {
     @Override
     public String toString() {
         return "LoginResponse{" +
-                "userName='" + userName + '\'' +
-                ", keyId='" + keyId + '\'' +
+                "username='" + username + '\'' +
+                ", authKey='" + authKey + '\'' +
+                ", userId=" + userId +
                 ", status=" + status +
+                ", msg='" + msg + '\'' +
                 '}';
     }
 }

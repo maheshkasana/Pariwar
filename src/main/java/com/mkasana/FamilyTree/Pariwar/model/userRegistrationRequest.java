@@ -1,7 +1,7 @@
 package com.mkasana.FamilyTree.Pariwar.model;
 
 public class userRegistrationRequest {
-
+    int userId;
     String username;
     String password;
     String firstname;
@@ -22,9 +22,18 @@ public class userRegistrationRequest {
         this.address = address;
         this.religious = religious;
         this.contact = contact;
+        this.userId = 0;
     }
 
     public userRegistrationRequest() {
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -102,7 +111,8 @@ public class userRegistrationRequest {
     @Override
     public String toString() {
         return "userRegistrationRequest{" +
-                "username='" + username + '\'' +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", gender=" + gender +
