@@ -2,8 +2,10 @@ package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.RegisterUser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.RegisterUser.UserRegistrationComponent;
+import com.mkasana.FamilyTree.Pariwar.Component.Validations.ValidationFunctions;
 import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
 import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
+import com.mkasana.FamilyTree.Pariwar.model.SessionDetails;
 import com.mkasana.FamilyTree.Pariwar.model.userRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,9 +30,13 @@ public class RegisterUser {
     @Autowired(required = true)
     private UserRegistrationComponent userRegister;
 
+    @Autowired
+    private ValidationFunctions validate;
+
     @RequestMapping(value = "/register/user", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus registerUser(@RequestBody userRegistrationRequest request,
                               @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
         /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
@@ -64,7 +70,7 @@ public class RegisterUser {
     @RequestMapping(value = "/register/user/file", method = RequestMethod.POST)
     private ReturnStatus registerUserFile(@RequestParam("body") String request,
                                           @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);

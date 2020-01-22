@@ -1,16 +1,16 @@
 package com.mkasana.FamilyTree.Pariwar.RestControllers.Register.AutoSuggest;
 
+import com.mkasana.FamilyTree.Pariwar.Component.Validations.Impl.ValidationFunctionsImpl;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserAddressComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.Register.AutoSuggest.UserReligionComponent;
+import com.mkasana.FamilyTree.Pariwar.Component.Validations.ValidationFunctions;
 import com.mkasana.FamilyTree.Pariwar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -27,7 +27,8 @@ public class AutoSuggest {
     @Autowired
     private UserAddressComponent userAddressComponent;
 
-
+    @Autowired
+    private ValidationFunctions validate;
 
 
 
@@ -43,7 +44,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/religion", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewReligion(@RequestBody Religion religion, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewReligion";
 
         return userReligionComponent.createNewReligion(religion);
@@ -57,7 +58,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/religion/{religionId}", method = RequestMethod.GET, headers="Accept=application/json")
     private Religion SuggestReligion(@PathVariable("religionId") int religionId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestReligion";
 
         /*
@@ -77,7 +78,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allReligions", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Religion> SuggestAllReligions(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllReligions";
 
         return userReligionComponent.getAllReligions();
@@ -101,7 +102,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/caste", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewCaste(@RequestBody Caste caste, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewCaste";
 
         return userReligionComponent.createNewCaste(caste);
@@ -116,7 +117,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/caste/{casteId}", method = RequestMethod.GET, headers="Accept=application/json")
     private Caste SuggestCasteById(@PathVariable("casteId") int casteId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestCasteById";
 
         return userReligionComponent.getCasteById(casteId);
@@ -130,7 +131,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allCaste", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Caste> SuggestAllCaste(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllCaste";
 
         return userReligionComponent.getAllCaste();
@@ -144,7 +145,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/religionAllCaste/{religionId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Caste> SuggestAllCasteOfReligion(@PathVariable("religionId") int religionId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllCasteOfReligion";
 
         if(0 >= religionId) {
@@ -171,7 +172,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/subCaste", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewSubCaste(@RequestBody SubCaste subCaste, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewSubCaste";
 
         return userReligionComponent.createNewSubCaste(subCaste);
@@ -187,7 +188,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/subCaste/{subCasteId}", method = RequestMethod.GET, headers="Accept=application/json")
     private SubCaste SuggestSubCasteById(@PathVariable("subCasteId") int subCasteId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestSubCasteById";
 
         return userReligionComponent.getSubCasteById(subCasteId);
@@ -201,7 +202,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/AllSubCaste", method = RequestMethod.GET, headers="Accept=application/json")
     private List<SubCaste> SuggestAllSubCaste(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllSubCaste";
 
         return userReligionComponent.getAllSubCaste();
@@ -215,7 +216,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/casteAllSubCaste/{casteId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<SubCaste> SuggestAllSubCasteByCasteId(@PathVariable("casteId") int casteId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllSubCasteByCasteId";
 
         return userReligionComponent.getAllSubCasteByCasteId(casteId);
@@ -229,7 +230,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/AllSubCaste/{casteId}/{religionId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<SubCaste> SuggestAllSubCasteByCasteIdOrReligionId(@PathVariable("casteId") int casteId, @PathVariable("religionId") int religionId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllSubCasteByCasteIdOrReligionId";
 
         return userReligionComponent.getSuggestAllSubCasteByCasteIdOrReligionId(casteId, religionId);
@@ -250,7 +251,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/country/{countryId}", method = RequestMethod.GET, headers="Accept=application/json")
     private Country suggestCountryById(@PathVariable("countryId") int countryId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestCountryById";
 
         return userAddressComponent.getCountryById(countryId);
@@ -265,7 +266,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allCountries", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Country> suggestAllCountries(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:SuggestAllCountries";
 
         return userAddressComponent.getAllCountries();
@@ -280,10 +281,10 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/country", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewCountry(@RequestBody Country country,@RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+        String function = "AutoSuggestController:CreateNewCountry";
 
-    String function = "AutoSuggestController:CreateNewCountry";
-
-    return userAddressComponent.createNewCountry(country);
+        return userAddressComponent.createNewCountry(country);
     }
 
     /**
@@ -294,7 +295,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/state", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewState(@RequestBody State state,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewState";
 
         return userAddressComponent.createNewState(state);
@@ -308,7 +309,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/district", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewDistrict(@RequestBody District district,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:CreateNewDistrict";
 
         return userAddressComponent.createNewDistrict(district);
@@ -322,7 +323,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/tehsil", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewTehsil(@RequestBody Tehsil tehsil,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewTehsil";
 
         return userAddressComponent.createNewTehsil(tehsil);
@@ -336,7 +337,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/villageTown", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewVillageTown(@RequestBody VillageTown villageTown,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewVillageTown";
 
         return userAddressComponent.createNewVillageTown(villageTown);
@@ -350,7 +351,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/create/villageTown/inBatch", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus createNewVillageTownInBatch(@RequestBody List<VillageTown> villageTowns,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:createNewVillageTownInBatch";
 
         return userAddressComponent.createNewVillageTownInBatch(villageTowns);
@@ -366,7 +367,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/update/villageTown/pincode", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus updateVillageTownPinCode(@RequestBody VillageTown villageTown,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "AutoSuggestController:updateVillageTownPinCode";
 
         return userAddressComponent.updateVillageTownPinCode(villageTown);
@@ -385,7 +386,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/state/{stateId}", method = RequestMethod.GET, headers="Accept=application/json")
     private State suggestStateById(@PathVariable("stateId") int stateId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestStateById";
 
         return userAddressComponent.getStateById(stateId);
@@ -400,7 +401,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allStates", method = RequestMethod.GET, headers="Accept=application/json")
     private List<State> suggestAllStates(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllStates";
 
         return userAddressComponent.getAllState();
@@ -418,7 +419,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/district/{districtId}", method = RequestMethod.GET, headers="Accept=application/json")
     private District suggestDistrictById(@PathVariable("districtId") int districtId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestDistrictById";
 
         return userAddressComponent.getDistrictById(districtId);
@@ -432,7 +433,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/districtByStateId/{stateId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<District> suggestDistrictByStateId(@PathVariable("stateId") int stateId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestDistrictByStateId";
 
         return userAddressComponent.suggestDistrictByStateId(stateId);
@@ -446,7 +447,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allDistrict", method = RequestMethod.GET, headers="Accept=application/json")
     private List<District> suggestAllDistrict(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllDistrict";
 
         return userAddressComponent.getAllDistrict();
@@ -464,7 +465,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/tehsil/{tehsilId}", method = RequestMethod.GET, headers="Accept=application/json")
     private Tehsil suggestTehsilById(@PathVariable("tehsilId") int tehsilId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestTehsilById";
 
         return userAddressComponent.getTehsilById(tehsilId);
@@ -479,7 +480,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allTehsil", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Tehsil> suggestAllTehsil(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllTehsil";
 
         return userAddressComponent.getAllTehsil();
@@ -493,7 +494,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allTehsilByDistrictId/{districtId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<Tehsil> suggestAllTehsilByDistrictId(@PathVariable("districtId") int districtId,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllTehsilByDistrictId";
 
         return userAddressComponent.getAllTehsilByDistrictId(districtId);
@@ -513,7 +514,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/villageTown/{villageTownId}", method = RequestMethod.GET, headers="Accept=application/json")
     private VillageTown suggestVillageTownById(@PathVariable("villageTownId") int villageTownId, @RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestVillageTownById";
 
         return userAddressComponent.getVillageTownById(villageTownId);
@@ -528,7 +529,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allVillageTown", method = RequestMethod.GET, headers="Accept=application/json")
     private List<VillageTown> suggestAllVillageTown(@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllVillageTown";
 
         return userAddressComponent.getAllVillageTown();
@@ -543,7 +544,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/allVillageTownByTehsilId/{tehsilId}", method = RequestMethod.GET, headers="Accept=application/json")
     private List<VillageTown> suggestAllVillageTownByTehSilId(@PathVariable("tehsilId") int tehsilId,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:suggestAllVillageTownByTehSilId";
 
         return userAddressComponent.getAllVillageTownByTehsilId(tehsilId);
@@ -558,7 +559,7 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/validateAvailabilityUsername/{username}", method = RequestMethod.GET, headers="Accept=application/json")
     private ReturnStatus validateAvailabilityUsername(@PathVariable("username") String username,@RequestHeader HttpHeaders headers) throws Exception {
-
+        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:validateAvailabilityUsername";
 
         return userAddressComponent.validateAvailabilityUsername(username);
