@@ -24,19 +24,21 @@ public class ValidationFunctionsImpl implements ValidationFunctions {
     CommonAPIs commonAPIs;
 
     public SessionDetails validateRequest(final HttpHeaders headers, final Boolean compareUserId) throws Exception {
-                SessionDetails session = getSessionDetailsFromRequestHeaders(headers);
+                final SessionDetails session = getSessionDetailsFromRequestHeaders(headers);
                 if (session == null || session.getToken() == null) {
                     throw new Exception("Failed to authenticate user");
                 }
 
-                SessionDetails sessionDB = commonAPIs.getSessionDetailsByToken(session.getToken());
+                final SessionDetails sessionDB = commonAPIs.getSessionDetailsByToken(session.getToken());
                 //System.out.println("Session Details got from DB " + sessionDB);
                 if (sessionDB == null) {
                     throw new Exception("Failed to authenticate user, Invalid Token passed");
                 }
                 if(compareUserId) {
+                    //System.out.println("USerID :" + session.getUserId() + ", DB USerID:"+ sessionDB.getUserId() + ",");
+                    //System.out.println("USerName : " + session.getUsername() + ", DB USerName: "+ sessionDB.getUsername() + ",");
                     if(session.getUserId() != sessionDB.getUserId()
-                        || session.getUsername() != sessionDB.getUsername())
+                        || !session.getUsername().equals(sessionDB.getUsername()))
                         throw new Exception("Failed to authenticate user, Invalid Token passed");
                 }
                 return sessionDB;
@@ -58,7 +60,7 @@ public class ValidationFunctionsImpl implements ValidationFunctions {
                 flag = Boolean.TRUE;
                 }
 
-                if(entry.getKey().equals(RestControllersConstant.REQUEST_USERID)) {
+                if(entry.getKey().equals(RestControllersConstant.REQUEST_USERID) || entry.getKey().equals("userid")) {
                     session.setUserId(Integer.parseInt(entry.getValue().get(0)));
                     flag = Boolean.TRUE;
                 }
@@ -67,14 +69,14 @@ public class ValidationFunctionsImpl implements ValidationFunctions {
                     Map<String, String> listTOMap = getMapFromStringOfKeyValue(entry.getValue().get(0));
                     for (Map.Entry<String, String> keyval : listTOMap.entrySet()) {
                         //System.out.println("Key : " + keyval.getKey() + ", Value : " + keyval.getValue());
-                        if (keyval.getKey().equals(RestControllersConstant.REQUEST_USERID))
+                        if (keyval.getKey().equals(RestControllersConstant.REQUEST_USERID) || entry.getKey().equals("userid"))
                             session.setUserId(Integer.parseInt(keyval.getValue()));
                         if (keyval.getKey().equals(RestControllersConstant.REQUEST_USERNAME))
                             session.setUsername(keyval.getValue());
                         if (keyval.getKey().equals(RestControllersConstant.REQUEST_AUTHKEY))
                             session.setToken(keyval.getValue());
-                        return session;
                     }
+                    return session;
                 }
             }
             if(flag)
