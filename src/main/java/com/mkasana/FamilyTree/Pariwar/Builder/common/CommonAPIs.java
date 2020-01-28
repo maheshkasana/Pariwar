@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configurable
 @Component
@@ -180,6 +182,35 @@ public class CommonAPIs {
         }
         return null;
     }
+
+    public List<Integer> getUserParentIdList(final int userId) {
+        try {
+            ResultSet resultSet = userCommonAPIsDAO.getUserParentIdList(userId);
+            List<Integer> parentList = new ArrayList<>();
+            while(resultSet.next()) {
+                parentList.add(resultSet.getInt("ParentId"));
+            }
+            return parentList;
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Integer> getUserChildsIdList(final int userId) {
+        try {
+            ResultSet resultSet = userCommonAPIsDAO.getUserChildsIdList(userId);
+            List<Integer> childsList = new ArrayList<>();
+            while(resultSet.next()) {
+                childsList.add(resultSet.getInt("ChildId"));
+            }
+            return childsList;
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+    }
+
 
     private userRegistrationReligionDetails ConvertResultSetTouserRegistrationReligionDetailsObject(ResultSet resultSet) {
         userRegistrationReligionDetails details = new userRegistrationReligionDetails();

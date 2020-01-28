@@ -23,4 +23,9 @@ public interface CommonAPIsDAO {
     public ResultSet getRegistrationAddressDetailsByAddressDetailsId(final int addressDetailId) throws Exception;
 
     public ResultSet getRegistrationReligionDetailsByReligiousDetailId(final int ReligiousDetailsId) throws Exception;
+
+    public ResultSet getUserParentIdList(final int userId) throws Exception;
+
+    public ResultSet getUserChildsIdList(final int userId) throws Exception;
+
 }

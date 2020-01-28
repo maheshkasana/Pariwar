@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @Configurable
 public class CommonAPIsComponentImpl implements CommonAPIsComponent {
@@ -31,7 +34,168 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
             return null;
         }
 
-        int userId =  sessionDetails.getUserId();
+        final int userId =  sessionDetails.getUserId();
+
+        return getUserFullDetailsByUserId(userId);
+    }
+
+    /**
+     * This is to return the list parents with full details.
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getUserParentsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userParentList)
+            userParentFullDetails.add(getUserFullDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+    /**
+     * This is to return the basic details of the use parents
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getBasicUserParentsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userParentList)
+            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+    /**
+     * This is to return the list parents with full details.
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getUserChildsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        List<Integer> userChildsList = commonAPIsBuilder.getUserChildsIdList(userId);
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userChildsList)
+            userParentFullDetails.add(getUserFullDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+    /**
+     * This is to return the basic details of the use parents
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getBasicUserChildsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        List<Integer> userChildsList = commonAPIsBuilder.getUserChildsIdList(userId);
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userChildsList)
+            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+
+    /**
+     * This is to return the list Siblings with full details.
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getUserSiblingsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
+        List<Integer> userSiblingsList = new ArrayList<>();
+
+        for(int prntId : userParentList) {
+            for (int id : commonAPIsBuilder.getUserChildsIdList(prntId)) {
+                if (!userSiblingsList.contains(id))
+                    userSiblingsList.add(id);
+            }
+        }
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userSiblingsList)
+            userParentFullDetails.add(getUserFullDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+    /**
+     * This is to return the basic details of the use Siblings
+     * @param token
+     * @return
+     */
+    public List<UserFullDetails> getBasicUserSiblingsDetailsByToken(final String token) {
+
+        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
+        if(sessionDetails == null) {
+            System.out.println("Invalid Token Passed");
+            return null;
+        }
+        final int userId =  sessionDetails.getUserId();
+        final List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
+        List<Integer> userSiblingsList = new ArrayList<>();
+
+        for(int prntId : userParentList) {
+            for (int id : commonAPIsBuilder.getUserChildsIdList(prntId)) {
+                if (!userSiblingsList.contains(id))
+                    userSiblingsList.add(id);
+            }
+        }
+
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userSiblingsList)
+            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+
+        return userParentFullDetails;
+    }
+
+
+
+    private  UserFullDetails getUserFullDetailsByUserId(final int userId) {
         UserFullDetails userFullDetails = commonAPIsBuilder.getUserInfoDetailsByUserId(userId);
         if(userFullDetails == null) {
             System.out.println("Failed to retrive basic details of the User");
@@ -57,7 +221,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                 userFullDetails.getUserReligiousDetails().setSubCaste(userReligionBuilder.getSubCasteById(registrationReligionDetails.getSubCaste()));
             }
         }
+
         return userFullDetails;
     }
-
 }

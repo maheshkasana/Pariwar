@@ -15,9 +15,9 @@ public class Home {
     }
 
     @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
-    public String index(@RequestParam("username") String username, @RequestParam("token") String token, @RequestParam("userId") int userId) {
-        System.out.println("in /index Controller");
-        System.out.println("username:"+username+", token: "+token+", userId:"+userId);
-        return "home";
+    public String index() {
+        System.out.println("in /home Controller");
+        //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
+        return "UserView";
     }
 }

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Pariwar</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon">
+    <script type="text/javascript"  src="js/UserView.js"></script>
+    <link rel="stylesheet" href="css/assets/dist/css/bootstrap.min.css" th:href="@{css/assets/dist/css/bootstrap.min.css}"/>
+</head>
+<style type="text/css">
+  body {
+    background-color: #f2f2f2;
+    min-width: 100%;
+    min-height: 100%;
+  }
+</style>
+<body onload="checkIfNotLoggedInToSignIn()" bgcolor="#E6E6FA">
+<div style="width: 100%; height: 100%;">
+  <div class="navbar1" style="float:left; z-index : 2; opacity: 1;">
+    <div class="navbar-more-overlay" style="width:100%; height:100%;"></div>
+	  <nav class="navbar navbar-inverse navbar-fixed-top animate">
+		  <div class="container">
+			 <ul class="nav navbar-nav navbar-left mobile-bar">
+			   <li><a class="navbar-brand"><span class="glyphicon glyphicon-asterisk"></span><b>&nbsp;&nbsp;Pariwar</b></a></li>
+			 </ul>
+			 <ul class="nav navbar-nav navbar-right mobile-bar">
+        <li><a onclick="ShowDetailsOfUser(2575d5c0-7acb-4d7b-8e91-20e9cfccb806)"><span class="glyphicon glyphicon-home fa-lg"></span><b>&nbsp;&nbsp;Home</b></a></li>
+        <li><a><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;Profile</b></a></li>
+        <li><a><span class="glyphicon glyphicon-search"></span><b>&nbsp;&nbsp;Search</b></a></li>
+			 </ul>
+		  </div>
+	   </nav>
+  </div> 
+  <div class="UserParentDiv" id="UserParentDiv" style="overflow-x: auto; top: 10%; min-width: 100%; height:25%; background-color: #ffffff;  position:absolute;"></div>
+  <div  class="UserSiblingDiv" id="UserSiblingDiv" style="overflow-x: auto;  top: 40%; width: 100%; height:25%; background-color: #ffffff;  position:absolute;"></div>
+  <div class="UserChildDiv" id="UserChildDiv" style=" overflow-x: auto; top: 70%; width: 100%; height:25%; background-color: #ffffff; position:absolute;"></div>
+</div>
+</body>
+</html>

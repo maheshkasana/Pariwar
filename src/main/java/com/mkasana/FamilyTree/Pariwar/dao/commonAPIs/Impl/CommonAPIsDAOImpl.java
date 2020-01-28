@@ -132,4 +132,29 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
             throw new Exception(error);
         }
     }
+
+
+    public ResultSet getUserParentIdList(final int userId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:getUserParentIdList";
+        String query = "SELECT * FROM UserParent WHERE UserId = "+userId+";";
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] "+Function+" Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    public ResultSet getUserChildsIdList(final int userId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:getUserChildsIdList";
+        String query = "SELECT * FROM UserChild WHERE UserId = "+userId+";";
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] "+Function+" Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
 }
