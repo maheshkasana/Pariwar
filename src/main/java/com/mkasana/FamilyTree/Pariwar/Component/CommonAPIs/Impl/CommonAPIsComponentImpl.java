@@ -41,17 +41,11 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the list parents with full details.
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getUserParentsDetailsByToken(final String token) {
+    public List<UserFullDetails> getUserParentsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
-        }
-        final int userId =  sessionDetails.getUserId();
         List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
@@ -64,17 +58,11 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the basic details of the use parents
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getBasicUserParentsDetailsByToken(final String token) {
+    public List<UserFullDetails> getBasicUserParentsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
-        }
-        final int userId =  sessionDetails.getUserId();
         List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
@@ -87,18 +75,21 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the list parents with full details.
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getUserChildsDetailsByToken(final String token) {
+    public List<UserFullDetails> getUserChildsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
+        List<Integer> userSpouse = commonAPIsBuilder.getUserSpouseIdList(userId);
+        userSpouse.add(userId);
+
+        List<Integer> userChildsList = new ArrayList<>();
+        for(int id : userSpouse) {
+            for(int childId : commonAPIsBuilder.getUserChildsIdList(id)) {
+                if(!userChildsList.contains(childId))
+                    userChildsList.add(childId);
+            }
         }
-        final int userId =  sessionDetails.getUserId();
-        List<Integer> userChildsList = commonAPIsBuilder.getUserChildsIdList(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userChildsList)
@@ -110,18 +101,21 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the basic details of the use parents
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getBasicUserChildsDetailsByToken(final String token) {
+    public List<UserFullDetails> getBasicUserChildsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
+        List<Integer> userSpouse = commonAPIsBuilder.getUserSpouseIdList(userId);
+        userSpouse.add(userId);
+
+        List<Integer> userChildsList = new ArrayList<>();
+        for(int id : userSpouse) {
+            for(int childId : commonAPIsBuilder.getUserChildsIdList(id)) {
+                if(!userChildsList.contains(childId))
+                    userChildsList.add(childId);
+            }
         }
-        final int userId =  sessionDetails.getUserId();
-        List<Integer> userChildsList = commonAPIsBuilder.getUserChildsIdList(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userChildsList)
@@ -134,17 +128,11 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the list Siblings with full details.
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getUserSiblingsDetailsByToken(final String token) {
+    public List<UserFullDetails> getUserSiblingsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
-        }
-        final int userId =  sessionDetails.getUserId();
         List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
         List<Integer> userSiblingsList = new ArrayList<>();
 
@@ -154,6 +142,9 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                     userSiblingsList.add(id);
             }
         }
+
+        if (!userSiblingsList.contains(userId))
+            userSiblingsList.add(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userSiblingsList)
@@ -165,17 +156,11 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
     /**
      * This is to return the basic details of the use Siblings
-     * @param token
+     * @param userId
      * @return
      */
-    public List<UserFullDetails> getBasicUserSiblingsDetailsByToken(final String token) {
+    public List<UserFullDetails> getBasicUserSiblingsDetailsByUserId(final int userId) {
 
-        SessionDetails sessionDetails = commonAPIsBuilder.getSessionDetailsByToken(token);
-        if(sessionDetails == null) {
-            System.out.println("Invalid Token Passed");
-            return null;
-        }
-        final int userId =  sessionDetails.getUserId();
         final List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
         List<Integer> userSiblingsList = new ArrayList<>();
 
@@ -185,6 +170,9 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                     userSiblingsList.add(id);
             }
         }
+
+        if (!userSiblingsList.contains(userId))
+            userSiblingsList.add(userId);
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userSiblingsList)
@@ -202,8 +190,10 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
             return null;
         }
 
+        System.out.println("Here in Getting Full Details");
         if(userFullDetails.getUserAddressDetails().getIdAddress() > 0) {
             userRegistrationAddressDetails registrationAddressDetails = commonAPIsBuilder.getRegistrationAddressDetailsByAddressDetailsId(userFullDetails.getUserAddressDetails().getIdAddress());
+            System.out.println(registrationAddressDetails);
             if(registrationAddressDetails != null) {
                 userFullDetails.getUserAddressDetails().setLocality(registrationAddressDetails.getLocality());
                 userFullDetails.getUserAddressDetails().setState(userAddressBuilder.getStateById(registrationAddressDetails.getState()));
@@ -212,7 +202,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                 userFullDetails.getUserAddressDetails().setVillageTown(userAddressBuilder.getVillageTownById(registrationAddressDetails.getVillage()));
             }
         }
-
+        System.out.println(userFullDetails);
         if(userFullDetails.getUserReligiousDetails().getIdReligious() > 0) {
             userRegistrationReligionDetails registrationReligionDetails = commonAPIsBuilder.getRegistrationReligionDetailsByReligiousDetailId(userFullDetails.getUserReligiousDetails().getIdReligious());
             if(registrationReligionDetails != null) {
@@ -221,7 +211,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                 userFullDetails.getUserReligiousDetails().setSubCaste(userReligionBuilder.getSubCasteById(registrationReligionDetails.getSubCaste()));
             }
         }
-
+        System.out.println(userFullDetails);
         return userFullDetails;
     }
 }

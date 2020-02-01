@@ -28,4 +28,6 @@ public interface CommonAPIsDAO {
 
     public ResultSet getUserChildsIdList(final int userId) throws Exception;
 
+    public ResultSet getUserSpouseIdList(final int userId) throws Exception;
+
 }

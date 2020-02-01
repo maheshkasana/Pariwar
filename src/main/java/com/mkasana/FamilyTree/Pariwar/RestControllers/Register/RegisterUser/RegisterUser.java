@@ -116,7 +116,7 @@ public class RegisterUser {
         //Image Location ../../../userProfileImages/ $(Image Name)
         //Below Use the id ofuser to save the name if file
 
-        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/userProfileImages", "userProfilePic_"+userId+".jpg");
+        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/src/main/resources/static/images/userProfilePics/", "userProfilePic_"+userId+".jpg");
         file.transferTo(filepath);
         returnStatus.setStatusCode(userId);
         returnStatus.setErrorCode("Successfully registered user");

@@ -63,7 +63,6 @@ function showCookies()
 
 }
 
-
 function checkIfNotLoggedInToSignIn() {
     var userName = getCookie("username");
     var token = getCookie("authKey");
@@ -72,8 +71,7 @@ function checkIfNotLoggedInToSignIn() {
     if(userName == null || token==null || id<=0) {
         location.replace("http://localhost:8081/");
     } else {
-        var loggedInUser = new userLoggedIn(userName,token,id);
-        ShowDetailsOfUser(token);
+        ShowDetailsOfUser(id);
     }
 }
 
@@ -205,11 +203,11 @@ function getLeftMarginForFirst(wdth, lst) {
   return (100 - (lst*wdth))/2;
 }
 
-function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor) {
-  var divv = "<div class="+ className +" id="+ Id +" style='margin-left: "+ leftPer +"%;  width: "+wdth+"%; height: 100%; background-color:"+bckcolor+"; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>";
-        divv += "<div style='height: 75%;'><img src='"+imgSrc+"' alt='"+firstname+"' style='width: 100%; height: 100%;'></div>";
+function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId) {
+  var divv = "<a onclick='ShowDetailsOfUser("+userId+");'><div class="+ className +" id="+ Id +" style='margin-left: "+ leftPer +"%;  width: "+wdth+"%; height: 100%; background-color:"+bckcolor+"; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>";
+        divv += "<div style='height: 75%;'><img src='"+imgPath+"' alt='"+firstname+"' style='width: 100%; height: 100%;'></div>";
         divv += "<div style='height: 20%; text-align: center; font-size: 16px;'><b><p style='margin:0px;'>"+firstname+"</p></b><p style='margin:0px;'>"+sex+"/"+age+"</p></div>"; 
-      divv +="</div>";
+      divv +="</div></a>";
   return divv;
 }
 
@@ -224,7 +222,7 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male)
 
   var node = document.getElementById(DivId);
   var index = 1;
-
+  node.innerHTML = "";
   var flag = false;
   for(index = 1; index <= prntList.length; index++) {
     
@@ -232,15 +230,17 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male)
     if(userId == prntList[index-1].id)
        brdcolor = "#FFD700";
 
+    var imgPath =  "images/userProfilePics/userProfilePic_"+prntList[index-1].id+".jpg";
+
     if(flag)
       lftmargin = 0;
     else
       node.innerHTML = "";
 
     if(prntList[index-1].gender == "Male")
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "M", 24, male, "#929292", brdcolor);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "M", 24, male, "#929292", brdcolor,imgPath,prntList[index-1].id);
     else
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "F", 20, "images/female.svg", "#929292", brdcolor);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "F", 20, "images/female.svg", "#929292", brdcolor,imgPath,prntList[index-1].id);
 
     flag = true;
 
@@ -259,36 +259,51 @@ function OnClickAddTheDetails(userId) {
   }
 
 function getUserDetailsByTokenAndValidate(response) {
-    alert(response);
     if(response == null) {
         checkIfNotLoggedInToSignIn();
     }
 }
 
+
+function convertResponseToUser(response) {
+    var name = response.firstname;
+    var userId = response.userId;
+    var gender = response.gender;
+    if(gender == 1)
+        return new user(name, "Male", userId);
+    else
+        return new user(name, "Female", userId);
+}
+
+function convertResponseToUserList(str_response) {
+    response = JSON.parse(str_response);
+    var Lst = [];
+    for(i in response) {
+        Lst.push(convertResponseToUser(response[i]));
+    }
+    return Lst;
+}
+
 function UserParentsShowInUI(response) {
-    alert("In UserParentsShowInUI");
-    alert(response);
+    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserParentDiv", "images/man.svg");
 }
 
 function UserSiblingsAndShowInUI(response) {
-    alert("In UserSiblingsAndShowInUI");
-    alert(response);
+    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserSiblingDiv", "images/male.svg");
 }
 
 function UserChildernsAndShowInUI(response) {
-    alert("In UserChildernsAndShowInUI");
-    alert(response);
+    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserChildDiv", "images/male.svg");
 }
 
 
-function ShowDetailsOfUser(token) {
-
+function ShowDetailsOfUser(id) {
     //Validate User Details in DB
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/details/" + token +";", "GET", false, "", "", "No", false, null, getUserDetailsByTokenAndValidate);
+    SendHttpRequestAndReturnResponse("http://localhost:8081/user/details/" + id +";", "GET", false, "", "", "No", false, null, getUserDetailsByTokenAndValidate);
 
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/parent/basic/" + token +";", "GET", false, "", "", "No", false, null, UserParentsShowInUI);
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/siblings/details/" + token +";", "GET", false, "", "", "No", false, null, UserSiblingsAndShowInUI);
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/childerns/details/" + token +";", "GET", false, "", "", "No", false, null, UserChildernsAndShowInUI);
+    SendHttpRequestAndReturnResponse("http://localhost:8081/user/parent/basic/" + id +";", "GET", false, "", "", "No", false, null, UserParentsShowInUI);
+    SendHttpRequestAndReturnResponse("http://localhost:8081/user/siblings/basic/" + id +";", "GET", false, "", "", "No", false, null, UserSiblingsAndShowInUI);
+    SendHttpRequestAndReturnResponse("http://localhost:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null, UserChildernsAndShowInUI);
 }
 
 

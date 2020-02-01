@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pariwar</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon">
+    <script type="text/javascript"  src="js/UserProfile.js"></script>
+    <link rel="stylesheet" href="css/assets/dist/css/bootstrap.min.css" th:href="@{css/assets/dist/css/bootstrap.min.css}"/>
+</head>
+<style type="text/css">
+  body {
+    background-color: #f2f2f2;
+    min-width: 100%;
+    min-height: 100%;
+    border-top:    0px;
+    border-right:  0px;
+    border-right:  0px;
+    border-bottom: 1px solid red;
+  }
+
+
+input {
+  background-color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+}
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  outline:none;
+}
+
+.button-brand {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-brand:hover {
+  color: #ffffff;
+}
+
+.button-right {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-right:hover {
+  color: #000000;
+}
+
+
+</style>
+<body  onload="checkIfNotLoggedInToSignIn()" bgcolor="#E6E6FA">
+<div style="width: 100%; height: 100%;">
+    <div style="width: 100%; height: 8%; position: absolute; background-color: #000000;">
+        <div style="width: 10%; height: 100%; position: absolute; left:10%;">
+            <button class="button button-brand"><a><span class="glyphicon glyphicon-asterisk"><b>&nbsp;Pariwar</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 10%;">
+            <button class="button button-right"><a><span class="glyphicon glyphicon-search"><b>&nbsp;Search</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a><span class="glyphicon glyphicon-user"><b>&nbsp;Profile</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a onclick="OnClickAddTheDetails(10)"><span class="glyphicon glyphicon-home fa-lg"><b>&nbsp;Home</b></span></a></button>
+        </div>
+    </div>
+
+    <div  style=" top: 10%; min-width: 98%; margin-left: 2%; height:50%; background-color: #f2f2f2;  position:absolute;">
+        <div style=" width: 29%; height:100%; background-color: #ffffff; float: left;">
+            <div style="width: 100%; min-width: 200px; max-width: 100%; max-height: 80%; align-self: center; border-color: #666666; border-width:50px; color:; margin-top: 5%;">
+                <img style="height:80%; width:80%; margin-left: 10%; border-color: #666666; " border="5" src="images/male.svg" name="profileProflePic" id="profileProflePic">
+                <progress id="profileImageProgressBar" value="40" max="100" style="width:100%; display:none;"></progress>
+                <button class="button" id="profileButtonToUpdatePic" style="display:none;  width:80%; margin-left: 10%; font-size:18px; background-color: #aaaaaa;" onclick="document.getElementById('getProfileImage').click()">Upload Image</button>
+                <input type="file" onchange="uploadAndShowImage(event,'profileProflePic', 'getProfileImage')" accept="image/gif, image/jpeg, image/png" value="None" name="image" id="getProfileImage" style="display:none;">
+            </div>
+        </div>
+        <div style=" float: left; margin-left: 2%; width: 65%; height:100%; background-color: #f2f2f2; ">
+            <div style=" float: left; margin-left: 0%; width: 49%; height:100%; background-color: #ffffff; ">
+                <div style=" float: left; margin-left: 0%; width: 26%; height:100%; background-color: ; ">
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 20%;">
+                        <p style="font-size: 16px; text-align: right;">Name</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Username</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Gender</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">DOB</p>
+                    </div>
+                </div>
+
+                <div style=" float: left; margin-left: 4%; width: 60%; height:100%; background-color: ; ">
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Name" id="profile_firstname" name="profile_firstname"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Username" id="profile_username" name="profile_username"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Gender" id="profile_gender" name="profile_gender"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="DateOfBirth" id="profile_dob" name="profile_dob"  disabled  >
+                    </div>
+                </div>
+            </div>
+            <div style=" float: left; margin-left: 2%; width: 49%; height:100%; background-color:  #ffffff; ">
+                <div style=" float: left; margin-left: 0%; width: 26%; height:100%; background-color:  ; ">
+                    <div style="width: 100%; height: 15%; background-color:   ; margin-top: 20%;">
+                        <p style="font-size: 16px; text-align: right;">Mobile</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Email</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Religion</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Caste</p>
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">SubCaste</p>
+                    </div>
+                </div>
+                <div style=" float: left; margin-left: 4%; width: 60%; height:100%; background-color:  ; ">
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Mobile No." id="profile_mobile" name="profile_mobile"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Email" id="profile_email" name="profile_email"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Religion" id="profile_religion" name="profile_religion"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Caste" id="profile_caste" name="profile_caste"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 15%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Sub Caste" id="profile_subcaste" name="profile_subcaste"  disabled  >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  style="margin-left: 2%;  top: 62%; width: 94%; height:20%; background-color: ; position:absolute;">
+        <div style=" width: 30%; height:100%; background-color: #ffffff; float: left;">
+            <p style="font-size: 16px; margin-left: 5%;">House / Locality</p>
+            <textarea type="text" rows="8" style="border: 0px; width:100%; height: 70%; resize:none; margin-top:2.5%;" placeholder="     House Name / Number / Locality" id="profile_Locality" name="profile_Locality"  disabled  ></textarea><div id="valid_profile_Locality"></div>
+        </div>
+        <div style=" float: left; margin-left: 2%; width: 68%; height:100%; background-color: #f2f2f2; ">
+            <div style=" float: left; margin-left: 0%; width: 49%; height:100%; background-color:  #ffffff;  ">
+                <div style=" float: left; margin-left: 0%; width: 26%; height:100%; background-color: ; ">
+                    <div style="width: 100%; height: 35%; background-color:  ; margin-top: 20%;">
+                        <p style="font-size: 16px; text-align: right;">Village</p>
+                    </div>
+                    <div style="width: 100%; height: 35%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">Tehsil</p>
+                    </div>
+                </div>
+                <div style=" float: left; margin-left: 4%; width: 60%; height:100%; background-color: ; ">
+                    <div style="width: 100%; height: 35%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Village" id="profile_village" name="profile_village"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 35%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="Tehsil" id="profile_tehsil" name="profile_tehsil"  disabled  >
+                    </div>
+                </div>
+            </div>
+            <div style=" float: left; margin-left: 2%; width: 49%; height:100%; background-color:  #ffffff; ">
+                <div style=" float: left; margin-left: 0%; width: 26%; height:100%; background-color:  ; ">
+                    <div style="width: 100%; height: 35%; background-color:  ; margin-top: 20%;">
+                        <p style="font-size: 16px; text-align: right;">District</p>
+                    </div>
+                    <div style="width: 100%; height: 35%; background-color:  ; margin-top: 10%;">
+                        <p style="font-size: 16px; text-align: right;">State</p>
+                    </div>
+                </div>
+                <div style=" float: left; margin-left: 4%; width: 60%; height:100%; background-color:  ; ">
+                    <div style="width: 100%; height: 35%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="District" id="profile_district" name="profile_district"  disabled  >
+                    </div>
+                    <div style="width: 100%; height: 35%; background-color: ; margin-top: 5%;">
+                        <input style="width: 100%; border-top: 0px; border-left: 0px; border-right: 0px;"  type="text" placeholder="State" id="profile_state" name="profile_state"  disabled  >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile_update_submit"  id="profile_update_submit" style="display:none; margin-left: 2%;  top: 84%; width: 94%; height:6%; background-color: ; position:absolute;">
+        <button onclick="UpdateProfileSubmitButton()" style="width: 100%; height: 100%; font-size:20px; background-color: #aaaaaa;"><i class="fa fa-pencil-square-o"></i>  Submit</button>
+    </div>
+    <div class="profile_update_start"  id="profile_update_start" style="display:block; margin-left: 2%;  top: 84%; width: 94%; height:6%; background-color: red; position:absolute;">
+        <button onclick="UpdateProfileStartButton()" style="width: 100%; height: 100%; font-size:20px; background-color: #aaaaaa;"><i class="fa fa-pencil-square-o"></i>   Update Profile</button>
+    </div>
+    <div id="loading_update_profile" style="z-index: 1;  width: 50%; height: 50%;"></div>
+
+</div>
+</body>
+</html>

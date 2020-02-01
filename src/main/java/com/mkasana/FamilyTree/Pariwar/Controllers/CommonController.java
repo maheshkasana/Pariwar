@@ -7,17 +7,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class Home {
+public class CommonController {
 
     @RequestMapping("/")
-    public String home() {
+    public String login() {
         return "login";
     }
 
     @RequestMapping(value = "/home", method = {RequestMethod.POST, RequestMethod.GET})
-    public String index() {
+    public String home() {
         System.out.println("in /home Controller");
         //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
         return "UserView";
+    }
+
+    @RequestMapping(value = "/profile", method = {RequestMethod.POST, RequestMethod.GET})
+    public String profile() {
+        System.out.println("in /profile Controller");
+        //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
+        return "UserProfile";
     }
 }

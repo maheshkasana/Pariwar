@@ -36,81 +36,81 @@ public class CommonAPIsController {
     }
 
     /**
-     * this function is to get user parent with full details by token
+     * this function is to get user parent with full details
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/parent/details/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getUserParentsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/parent/details/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getUserParentsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getUserParentsDetailsByToken";
+        String function = "CommonAPIsComponent:getUserParentsDetailsByUserId";
 
-        return commonAPIsComponent.getUserParentsDetailsByToken(token);
+        return commonAPIsComponent.getUserParentsDetailsByUserId(userId);
     }
 
     /**
-     * this function is to get basic user parent details by token
+     * this function is to get basic user parent details =
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/parent/basic/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getBasicUserParentsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/parent/basic/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getBasicUserParentsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getBasicUserParentsDetailsByToken";
+        String function = "CommonAPIsComponent:getBasicUserParentsDetailsByUserId";
 
-        return commonAPIsComponent.getBasicUserParentsDetailsByToken(token);
+        return commonAPIsComponent.getBasicUserParentsDetailsByUserId(userId);
     }
 
     /**
-     * this function is to get user Siblings with full details by token
+     * this function is to get user Siblings with full details
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/siblings/details/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getUserSiblingsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/siblings/details/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getUserSiblingsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getUserSiblingsDetailsByToken";
+        String function = "CommonAPIsComponent:getUserSiblingsDetailsByUserId";
 
-        return commonAPIsComponent.getUserSiblingsDetailsByToken(token);
+        return commonAPIsComponent.getUserSiblingsDetailsByUserId(userId);
     }
 
     /**
-     * this function is to get basic user Siblings details by token
+     * this function is to get basic user Siblings details
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/siblings/basic/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getBasicUserSiblingsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/siblings/basic/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getBasicUserSiblingsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getBasicUserSiblingsDetailsByToken";
+        String function = "CommonAPIsComponent:getBasicUserSiblingsDetailsByUserId";
 
-        return commonAPIsComponent.getBasicUserSiblingsDetailsByToken(token);
+        return commonAPIsComponent.getBasicUserSiblingsDetailsByUserId(userId);
     }
 
     /**
-     * this function is to get user Childs with full details by token
+     * this function is to get user Childs with full details
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/childs/details/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getUserChildsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/childs/details/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getUserChildsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getUserChildsDetailsByToken";
+        String function = "CommonAPIsComponent:getUserChildsDetailsByUserId";
 
-        return commonAPIsComponent.getUserChildsDetailsByToken(token);
+        return commonAPIsComponent.getUserChildsDetailsByUserId(userId);
     }
 
     /**
-     * this function is to get basic user childs details by token
+     * this function is to get basic user childs details
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/user/childs/basic/{token}", method = RequestMethod.GET, headers="Accept=application/json")
-    private List<UserFullDetails> getBasicUserChildsDetailsByToken(@PathVariable("token") String token, @RequestHeader HttpHeaders headers) throws Exception {
+    @RequestMapping(value = "/user/childs/basic/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getBasicUserChildsDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
         SessionDetails session = validate.validateRequest(headers, false);
-        String function = "CommonAPIsComponent:getBasicUserChildsDetailsByToken";
+        String function = "CommonAPIsComponent:getBasicUserChildsDetailsByUserId";
 
-        return commonAPIsComponent.getBasicUserChildsDetailsByToken(token);
+        return commonAPIsComponent.getBasicUserChildsDetailsByUserId(userId);
     }
 
 }

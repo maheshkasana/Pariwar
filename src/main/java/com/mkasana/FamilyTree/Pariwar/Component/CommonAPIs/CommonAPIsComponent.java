@@ -9,16 +9,16 @@ public interface CommonAPIsComponent {
 
     public UserFullDetails getUserFullDetailsByToken(final String token);
 
-    public List<UserFullDetails> getUserParentsDetailsByToken(final String token);
+    public List<UserFullDetails> getUserParentsDetailsByUserId(final int userId);
 
-    public List<UserFullDetails> getBasicUserParentsDetailsByToken(final String token);
+    public List<UserFullDetails> getBasicUserParentsDetailsByUserId(final int userId);
 
-    public List<UserFullDetails> getUserSiblingsDetailsByToken(final String token);
+    public List<UserFullDetails> getUserSiblingsDetailsByUserId(final int userId);
 
-    public List<UserFullDetails> getBasicUserSiblingsDetailsByToken(final String token);
+    public List<UserFullDetails> getBasicUserSiblingsDetailsByUserId(final int userId);
 
-    public List<UserFullDetails> getUserChildsDetailsByToken(final String token);
+    public List<UserFullDetails> getUserChildsDetailsByUserId(final int userId);
 
-    public List<UserFullDetails> getBasicUserChildsDetailsByToken(final String token);
+    public List<UserFullDetails> getBasicUserChildsDetailsByUserId(final int userId);
 
 }

@@ -74,19 +74,19 @@
             <div style="left: 0; top: 0; width: 50%; float: left;">
                 <div>
                     <label id="valid_register_username"><b>Username *</b></label>
-                    <input type="text" placeholder="Username / Email / Phone" onchange="validateRegisterUsername()" id="register_username" name="0  "  required  >
+                    <input type="text" placeholder="Username / Email / Phone" onchange="validateRegisterUsername()" id="register_username" name="0  " style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
                 </div>
                 <div>
                     <label id="valid_register_password"><b>Password *</b></label>
-                    <input type="password" onchange="validateRegisterPassword()" placeholder="Enter Password" id="register_password"  required  name="0">
+                    <input type="password" onchange="validateRegisterPassword()" placeholder="Enter Password" id="register_password"  required style="border-top: 0px; border-left: 0px; border-right: 0px;"  name="0">
                 </div>
                 <div>
                     <label><b>First Name *</b></label>
-                    <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  ><div id="valid_register_firstname"></div>
+                    <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  style="border-top: 0px; border-left: 0px; border-right: 0px;" ><div id="valid_register_firstname"></div>
                 </div>
                 <div>
                     <label><b>Last Name</b></label>
-                    <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required  ><div id="valid_register_lastname"></div>
+                    <input type="text" placeholder="Last Name" id="register_lastname" name="register_lastname"  required style="border-top: 0px; border-left: 0px; border-right: 0px;"  ><div id="valid_register_lastname"></div>
                 </div>
             </div>
             <div style="left: 50%; top: 0; width: 25%; float: left; padding: 0 18px 0 18px">
@@ -98,7 +98,7 @@
                         <label id="valid_register_verify_password"><b>Re-Enter Password *</b></label>
                     </div>
                     <div>
-                        <input type="password" onchange="validatePasswordToReEntred()" placeholder="Re-Enter Password" id="register_verify_password"  style="min-width: 100px; width:90%;"  name="register_verify_password">
+                        <input type="password" onchange="validatePasswordToReEntred()" placeholder="Re-Enter Password" id="register_verify_password"  style="border-top: 0px; border-left: 0px; border-right: 0px; min-width: 100px; width:90%;"  name="register_verify_password">
                     </div>
                 </div>
                 <div>
@@ -118,7 +118,7 @@
                         <label id="valid_register_dateOfBirth"><b>Date of Birth</b></label>
                     </div>
                     <div>
-                        <input type="date" onchange="validateRegisterDate()" id="register_dateOfBirth" name="0" value="1995-07-03" style=" padding: 10px; border: 1px solid #d4d4d4; min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; width:80%; height:34px; border-radius: 0px;">
+                        <input type="date" onchange="validateRegisterDate()" id="register_dateOfBirth" name="0" value="1995-07-03" style="border-top: 0px; border-left: 0px; border-right: 0px; padding: 10px; border: 1px solid #d4d4d4; min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; width:80%; height:34px; border-radius: 0px;">
                     </div>
                 </div>
             </div>
@@ -137,14 +137,14 @@
             <div style="column-count: 2; ">
                 <div>
                     <label id="valid_register_email"><b>Email Address</b></label>
-                    <input type="text" placeholder="Email" onchange="validateRegisterEmail()" id="register_email" name="-1"  required  >
+                    <input type="text" placeholder="Email" onchange="validateRegisterEmail()" id="register_email" name="-1" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
                 </div>
                 <div>
                     <div>
                         <label id="valid_register_phone"><b>Phone Number</b></label>
                     </div>
                     <div>
-                        <input type="text" placeholder="Phone Number" onchange="validateRegisterPhone()" id="register_phone" name="-1" style=" min-width: 160px; width:50%;" required>
+                        <input type="text" placeholder="Phone Number" onchange="validateRegisterPhone()" id="register_phone" name="-1" style=" border-top: 0px; border-left: 0px; border-right: 0px; min-width: 160px; width:50%;" required>
                     </div>
                 </div>
             </div>
@@ -154,15 +154,15 @@
             <div style="column-count: 3; ">
                 <div>
                     <label id="valid_register_Religion"><b>Religion</b></label>
-                    <input type="text" onmousedown="autoSuggestRegisterReligion()" onchange="resetReligionLowerDetailsIfChanged(2)" placeholder="Religion" id="register_Religion" name="0" required  >
+                    <input type="text" onmousedown="autoSuggestRegisterReligion()" onchange="resetReligionLowerDetailsIfChanged(2)" placeholder="Religion" id="register_Religion" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
                 </div>
                 <div>
                     <label id="valid_register_Caste"><b>Caste</b></label>
-                    <input type="text" onmousedown="autoSuggestRegisterCaste()" onchange="resetReligionLowerDetailsIfChanged(1)" placeholder="Caste" id="register_Caste" name="0"  required  >
+                    <input type="text" onmousedown="autoSuggestRegisterCaste()" onchange="resetReligionLowerDetailsIfChanged(1)" placeholder="Caste" id="register_Caste" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
                 </div>
                 <div>
                     <label id="valid_register_SubCaste"><b>Sub Caste</b></label>
-                    <input type="text" onmousedown="autoSuggestRegisterSubCaste()"  onchange="resetReligionLowerDetailsIfChanged(0)" placeholder="Sub Caste" id="register_SubCaste" name="0"  required  >
+                    <input type="text" onmousedown="autoSuggestRegisterSubCaste()"  onchange="resetReligionLowerDetailsIfChanged(0)" placeholder="Sub Caste" id="register_SubCaste" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
                 </div>
             </div>
         </div>
@@ -173,23 +173,23 @@
                         <label><b>House / Locality</b></label>
                     </div>
                     <div>
-                        <textarea type="text" rows="8" style=" width:100%; resize:none; margin-top:2.5%;" placeholder="House Name / Number / Locality" id="register_Locality" name="register_Locality"  required  ></textarea><div id="valid_register_Locality"></div>
+                        <textarea type="text" rows="8" style="border-top: 0px; border-left: 0px; border-right: 0px; width:100%; resize:none; margin-top:2.5%;" placeholder="House Name / Number / Locality" id="register_Locality" name="register_Locality"  required  ></textarea><div id="valid_register_Locality"></div>
                     </div>
                 </div>
                 <div style="left: 32%; top: 0; width: 32%; float: left; padding: 0 18px 0 ">
                     <div>
                         <label id="valid_register_State"><b>State</b></label>
-                        <input type="text" placeholder="State" id="register_State" name="0" onmousedown="autoSuggestRegisterState()"  onchange="resetAddressLowerDetailsIfChanged(3)" required  >
+                        <input type="text" placeholder="State" id="register_State" name="0" onmousedown="autoSuggestRegisterState()"  onchange="resetAddressLowerDetailsIfChanged(3)" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
                         <label id="valid_register_District"><b>District</b></label>
-                        <input type="text" placeholder="District" id="register_District" name="0" onmousedown="autoSuggestRegisterDistrict()"  onchange="resetAddressLowerDetailsIfChanged(2)" required  >
+                        <input type="text" placeholder="District" id="register_District" name="0" onmousedown="autoSuggestRegisterDistrict()"  onchange="resetAddressLowerDetailsIfChanged(2)" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
                     </div>
                 </div>
                 <div style="left: 65%; top: 0; width: 31%; float: left;">
                     <div>
                         <label id="valid_register_Tehsil"><b>SubDistrict/Tehsil/City</b></label>
-                        <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="0" onmousedown="autoSuggestRegisterTehsil()" onchange="resetAddressLowerDetailsIfChanged(1)"  required  >
+                        <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="0" onmousedown="autoSuggestRegisterTehsil()" onchange="resetAddressLowerDetailsIfChanged(1)"  style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
                         <label id="valid_register_Village"><b>Village/Town</b></label>
-                        <input type="text" placeholder="Village/Town" id="register_Village" name="0" onmousedown="autoSuggestRegisterVillage()" onchange="resetAddressLowerDetailsIfChanged(0)"  required  >
+                        <input type="text" placeholder="Village/Town" id="register_Village" name="0" onmousedown="autoSuggestRegisterVillage()" onchange="resetAddressLowerDetailsIfChanged(0)" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
                     </div>
                 </div>
             </div>

@@ -211,6 +211,19 @@ public class CommonAPIs {
         }
     }
 
+    public List<Integer> getUserSpouseIdList(final int userId) {
+        try {
+            ResultSet resultSet = userCommonAPIsDAO.getUserSpouseIdList(userId);
+            List<Integer> spouseList = new ArrayList<>();
+            while(resultSet.next()) {
+                spouseList.add(resultSet.getInt("SpouseId"));
+            }
+            return spouseList;
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+    }
 
     private userRegistrationReligionDetails ConvertResultSetTouserRegistrationReligionDetailsObject(ResultSet resultSet) {
         userRegistrationReligionDetails details = new userRegistrationReligionDetails();

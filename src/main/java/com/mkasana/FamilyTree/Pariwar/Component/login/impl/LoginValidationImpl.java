@@ -39,17 +39,17 @@ public class LoginValidationImpl implements LoginValidation {
         final String password_i = new String(Base64.getDecoder().decode(loginRequestBody.getPassword()));
 
         userRegistrationRequest userBasicDetails = commonAPIs.getBasicUserDetailsByUsername(loginRequestBody.getUsername());
-        //System.out.print("Request for the Customer  : "+loginRequestBody.getUsername());
-        //System.out.print("Response for the Customer  : "+;
+        System.out.print("Request for the Customer  : "+loginRequestBody.getUsername());
+        System.out.print("user basic details : "+userBasicDetails);
         final String usernameDB = userBasicDetails.getUsername();
         final String passwordDB = new String(Base64.getDecoder().decode(userBasicDetails.getPassword()));
 
-        /*
+
         System.out.print("\nUsername In : " + username_i);
         System.out.print("\nPasssword In : " + new String(Base64.getDecoder().decode(password_i)));
         System.out.print("\nUsername DB : " + usernameDB);
         System.out.print("\nPassword DB : " + new String(Base64.getDecoder().decode(passwordDB)));
-        */
+
         LoginResponse resp = new LoginResponse("","", 0,Boolean.FALSE, "");
 
         if(username_i.equals(usernameDB) && password_i.equals(passwordDB)) {

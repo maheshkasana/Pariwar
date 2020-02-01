@@ -157,4 +157,17 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
             throw new Exception(error);
         }
     }
+
+    public ResultSet getUserSpouseIdList(final int userId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:getUserSpouseIdList";
+        String query = "SELECT * FROM UserSpouse WHERE UserId = "+userId+";";
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] "+Function+" Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
 }
