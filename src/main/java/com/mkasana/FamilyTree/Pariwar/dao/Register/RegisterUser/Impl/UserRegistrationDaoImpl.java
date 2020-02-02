@@ -57,6 +57,37 @@ public class UserRegistrationDaoImpl implements UserRegistrationDao {
     }
 
 
+    public void updateUserBasicDetails(final userRegistrationRequest req , final int userId) throws  Exception {
+        String Function = "UserRegistrationDaoImpl:updateUserBasicDetails";
+        long ut1 = Instant.now().getEpochSecond();
+        String query = "UPDATE userInfo SET FirstName ='"+ req.getFirstname() + "', Updated =" + ut1  + " WHERE Id ="+userId+";";
+
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] UserRegistrationDaoImpl:updateUserBasicDetails Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    public void UpdateUserLocalityAddress(final userRegistrationAddressDetails address , final int userId) throws  Exception {
+        String Function = "UserRegistrationDaoImpl:UpdateUserLocalityAddress";
+        long ut1 = Instant.now().getEpochSecond();
+        String query = "UPDATE UserAddressDetails SET firstAddress ='"+ address.getLocality() + "'  WHERE UserId ="+userId+";";
+
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] UserRegistrationDaoImpl:UpdateUserLocalityAddress Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
     public ResultSet getUserIdByUsername(final String username) throws Exception {
         String Function = "UserRegistrationDaoImpl:getUserIdByUsername";
 

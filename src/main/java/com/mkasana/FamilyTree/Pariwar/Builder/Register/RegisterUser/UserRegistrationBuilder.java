@@ -34,6 +34,29 @@ public class UserRegistrationBuilder {
         return 0;
     }
 
+    public int updateUserBasicDetails(final userRegistrationRequest req , final int userId) throws  Exception
+    {
+        try {
+            userRegistrationDao.updateUserBasicDetails(req, userId);
+        } catch(Exception e) {
+            System.out.println(e);
+            throw  new Exception("Failed to Create Basic user details");
+        }
+        return 0;
+    }
+
+    public int UpdateUserLocalityAddress(final userRegistrationAddressDetails address , final int userId) throws  Exception
+    {
+        try {
+            userRegistrationDao.UpdateUserLocalityAddress(address, userId);
+        } catch(Exception e) {
+            System.out.println(e);
+            throw  new Exception("Failed to Create Basic user details");
+        }
+        return 0;
+    }
+
+
     public int getUserIdByUsername(final String username) {
         try {
             ResultSet resultSet =  userRegistrationDao.getUserIdByUsername(username);

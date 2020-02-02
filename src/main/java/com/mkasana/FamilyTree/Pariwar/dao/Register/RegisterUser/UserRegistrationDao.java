@@ -20,4 +20,8 @@ public interface UserRegistrationDao {
     public  void createOrUpdateUserAddress(userRegistrationAddressDetails address, int userId) throws Exception;
 
     public  void createOrUpdateUserReligiousDetails(final userRegistrationReligionDetails religious, final int userId) throws Exception;
+
+    public void updateUserBasicDetails(final userRegistrationRequest req , final int userId) throws  Exception;
+
+    public void UpdateUserLocalityAddress(final userRegistrationAddressDetails address , final int userId) throws  Exception;
 }

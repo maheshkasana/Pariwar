@@ -237,4 +237,45 @@ public class CommonAPIs {
         }
     }
 
+
+    public List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(final SearchFilters filters) {
+        try {
+            ResultSet resultSet = userCommonAPIsDAO.searchUsersBasedOnPassedConstrains(filters);
+            List<SearchFiltersResponse> userList = new ArrayList<>();
+            while(resultSet.next()) {
+                SearchFiltersResponse user = new SearchFiltersResponse();
+                user.setUserid(resultSet.getInt("Id"));
+                user.setName(resultSet.getString("name"));
+                user.setUsername(resultSet.getString("username"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setLocaladdress(resultSet.getString("localaddress"));
+                user.setAddress(resultSet.getString("address"));
+                user.setReligion(resultSet.getString("religion"));
+                userList.add(user);
+                //spouseList.add(resultSet.getInt("SpouseId"));
+            }
+            return userList;
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+    }
+
+    public void addParentToLoggedInUser(final int userId, final int parentId) {
+        try {
+            userCommonAPIsDAO.addParentToUserId(userId, parentId);
+            userCommonAPIsDAO.addChildToParentId(parentId, userId);
+        } catch (Exception e) {
+            System.out.println("Failed to Add Parent to User");
+        }
+    }
+
+    public void addChildToLoggedInUser(final int userId, final int childId) {
+        try {
+            userCommonAPIsDAO.addParentToUserId(childId, userId);
+            userCommonAPIsDAO.addChildToParentId(userId, childId);
+        } catch (Exception e) {
+            System.out.println("Failed to Add Parent to User");
+        }
+    }
 }

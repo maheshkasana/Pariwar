@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pariwar</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon">
+    <script type="text/javascript"  src="js/UserSearch.js"></script>
+    <link rel="stylesheet" href="css/assets/dist/css/bootstrap.min.css" th:href="@{css/assets/dist/css/bootstrap.min.css}"/>
+</head>
+<style type="text/css">
+  body {
+    background-color: #f2f2f2;
+    min-width: 100%;
+    min-height: 100%;
+    border-top:    0px;
+    border-right:  0px;
+    border-right:  0px;
+    border-bottom: 1px solid red;
+  }
+
+
+/* Set a style for all buttons */
+.button-box {
+    background-color:  #666666;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Set a style for all buttons */
+.button-box:hover {
+    background-color:  #8e8e8e;
+    color: black;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+
+input {
+  background-color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+}
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  outline:none;
+}
+
+.button-brand {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-brand:hover {
+  color: #ffffff;
+}
+
+.button-right {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-right:hover {
+  color: #000000;
+}
+
+.OnlyBottomBorder {
+	border-top: 0px;
+	border-right: 0px;
+}
+
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+
+input {
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.autocomplete-items {
+  /*position: absolute;*/
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #8f8f8f;
+  color: #ffffff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+  color: black;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+
+</style>
+<body  onload="checkIfNotLoggedInToSignIn()" bgcolor="#E6E6FA">
+<div style="width: 100%; height: 100%;">
+    <div style="width: 100%; height: 8%; position: absolute; background-color: #000000;">
+        <div style="width: 10%; height: 100%; position: absolute; left:10%;">
+            <button class="button button-brand"><a><span class="glyphicon glyphicon-asterisk"><b>&nbsp;Pariwar</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 10%;">
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/search');"><span class="glyphicon glyphicon-search"><b>&nbsp;Search</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/profile');"><span class="glyphicon glyphicon-user"><b>&nbsp;Profile</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/home');"><span class="glyphicon glyphicon-home fa-lg"><b>&nbsp;Home</b></span></a></button>
+        </div>
+    </div>
+
+
+
+
+    <div  style=" top: 10%; min-width: 96%; margin-left: 2%; height:86%; background-color: #f2f2f2;  position:absolute;">
+        <div style=" width: 29%; height:100%; background-color: #ffffff; float: left;">
+            <div id="search_name_heading" style="font-size: 14px; margin-top: 5%;  margin-left: 5%;">
+                <p><b>Name</b></p>
+            </div>
+            <div  style="font-size: 14px; margin-top: -3%; margin-left: 5%; ">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder"  type="text" placeholder="Name" id="search_name" >
+            </div>
+            <div id="search_state_heading" style="font-size: 14px; margin-top: 5%;  margin-left: 5%;">
+                <p><b>State</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder" onmousedown="autoSuggestSearchState()"  onchange="resetAddressLowerDetailsIfChanged(3)" type="text" placeholder="State" id="search_state"  name="0">
+            </div>
+            <div id="search_district_heading" style="font-size: 14px; margin-top: 2%;  margin-left: 5%;">
+                <p><b>District</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder"  onmousedown="autoSuggestSearchDistrict()"  onchange="resetAddressLowerDetailsIfChanged(2)" type="text" placeholder="District / Jila" id="search_district" name="0">
+            </div>
+            <div id="search_tehsil_heading" style="font-size: 14px; margin-top: 2%;  margin-left: 5%;">
+                <p><b>Sud-Division / Tehsil</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder"  onmousedown="autoSuggestSearchTehsil()"  onchange="resetAddressLowerDetailsIfChanged(1)" type="text" placeholder="Sud-Division / Tehsil" id="search_tehsil" name="0">
+            </div>
+            <div id="search_village_heading" style="font-size: 14px; margin-top: 2%;  margin-left: 5%;">
+                <p><b>Village / Town</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder"  onmousedown="autoSuggestSearchVillage()"  onchange="resetAddressLowerDetailsIfChanged(0)" type="text" placeholder="Village / Town" id="search_village"  name="0">
+            </div>
+
+            <div id="search_religion_heading" style="font-size: 14px; margin-top: 5%;  margin-left: 5%;">
+                <p><b>Religion</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder" onmousedown="autoSuggestSearchReligion()"  onchange="resetReligionLowerDetailsIfChanged(2)"  type="text" placeholder="Religion" id="search_religion"  name="0">
+            </div>
+            <div id="search_caste_heading" style="font-size: 14px; margin-top: 2%;  margin-left: 5%;">
+                <p><b>Caste</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%; background-color: #ffffff;" class="OnlyBottomBorder" onmousedown="autoSuggestSearchCaste()"  onchange="resetReligionLowerDetailsIfChanged(1)" type="text" placeholder="Caste" id="search_caste"  name="0">
+            </div>
+            <div id="search_subcaste_heading" style="font-size: 14px; margin-top: 2%;  margin-left: 5%;">
+                <p><b>Sub-Caste</b></p>
+            </div>
+            <div style="font-size: 18px; margin-top: -3%; margin-left: 5%;">
+                <input style="width: 90%;  background-color: #ffffff;" class="OnlyBottomBorder" onmousedown="autoSuggestSearchSubCaste()"  onchange="resetReligionLowerDetailsIfChanged(0)" type="text" placeholder="Sub-Caste" id="search_subcaste" name="0">
+            </div>
+
+            <button onclick="SubmitSearchFilters()" class="button-box" style="width: 80%; height: 7%; margin-left: 10%; margin-top: 10%; font-size:20px;"></i>Submit</button>
+        </div>
+
+
+        <div id="searchListResponseUsers" style=" float: left; margin-left: 2%; width: 69%; height:100%; background-color: ; overflow: auto; ">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

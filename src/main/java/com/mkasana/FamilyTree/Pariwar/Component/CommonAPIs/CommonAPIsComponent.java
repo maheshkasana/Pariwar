@@ -1,5 +1,7 @@
 package com.mkasana.FamilyTree.Pariwar.Component.CommonAPIs;
 
+import com.mkasana.FamilyTree.Pariwar.model.SearchFilters;
+import com.mkasana.FamilyTree.Pariwar.model.SearchFiltersResponse;
 import com.mkasana.FamilyTree.Pariwar.model.UserFullDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -21,4 +23,9 @@ public interface CommonAPIsComponent {
 
     public List<UserFullDetails> getBasicUserChildsDetailsByUserId(final int userId);
 
+    public List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(final SearchFilters filters);
+
+    public void addParentToLoggedInUser(final int userId, final int parentId);
+
+    public void addChildToLoggedInUser(final int userId, final int childId);
 }

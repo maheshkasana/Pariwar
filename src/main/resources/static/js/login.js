@@ -703,16 +703,15 @@ function getPositionOfDivInScreen(element) {
 /*--------Start----------*/
 /* This Function is to generate list as per the user type, drop down and we can see the selected and Id in name of the Input*/
 function registerAutoCompleteGenericFunction(inp, arr, pos) {
-
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
-   function addEventListenerFunction(e) {
+  inp.addEventListener("input", function(e) {
       var a, b, i, val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
-
+      if (!val) { return false;}
       currentFocus = -1;
       /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
@@ -720,14 +719,13 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
       a.setAttribute("class", "autocomplete-items");
       a.setAttribute("z-index","5");
       a.style.position = "absolute";
-      a.style.left = pos.left+'px';
-      a.style.top = pos.bottom+'px';
+      a.style.left = (pos.left)+'px';
+      a.style.top = (pos.bottom)+'px';
       a.style.width = inp.offsetWidth+'px';
-      a.style.maxHeight = inp.offsetWidth+'px';
+      a.style.maxHeight = (screen.height-pos.bottom-50)+'px';
       a.style.overflow = 'auto';
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
-
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
@@ -742,7 +740,7 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
             b.innerHTML = arr[i].name;
           }
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"' style='border: 1px solid transparent; background-color: #eeeeee; padding: 10px; font-size: 16px;'>";
+         b.innerHTML += "<input type='hidden' value='" + arr[i].name + "' name='"+ arr[i].value +"' style='border: 1px solid transparent; background-color: #eeeeee; padding: 10px; font-size: 16px;'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
@@ -755,14 +753,9 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
           a.appendChild(b);
         }
       }
-  }
-
-  inp.addEventListener("input", addEventListenerFunction);
-  inp.addEventListener("click", addEventListenerFunction);
-
+  });
   /*execute a function presses a key on the keyboard:*/
-   function addEventListenerFunctionTwo(e) {
-
+  inp.addEventListener("keydown", function(e) {
       var x = document.getElementById(this.id + "autocomplete-list");
       if (x) x = x.getElementsByTagName("div");
       if (e.keyCode == 40) {
@@ -785,10 +778,7 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
           if (x) x[currentFocus].click();
         }
       }
-  }
-
-  inp.addEventListener("keydown",addEventListenerFunctionTwo);
-
+  });
   function addActive(x) {
     /*a function to classify an item as "active":*/
     if (!x) return false;
@@ -819,8 +809,8 @@ function registerAutoCompleteGenericFunction(inp, arr, pos) {
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
-  addEventListenerFunction(null);
 }
+
 
 
 /*--------End----------*/

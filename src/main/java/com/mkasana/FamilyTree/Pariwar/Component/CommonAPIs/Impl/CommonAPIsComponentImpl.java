@@ -4,10 +4,7 @@ import com.mkasana.FamilyTree.Pariwar.Builder.Register.AutoSuggest.UserAddressBu
 import com.mkasana.FamilyTree.Pariwar.Builder.Register.AutoSuggest.UserReligionBuilder;
 import com.mkasana.FamilyTree.Pariwar.Builder.common.CommonAPIs;
 import com.mkasana.FamilyTree.Pariwar.Component.CommonAPIs.CommonAPIsComponent;
-import com.mkasana.FamilyTree.Pariwar.model.SessionDetails;
-import com.mkasana.FamilyTree.Pariwar.model.UserFullDetails;
-import com.mkasana.FamilyTree.Pariwar.model.userRegistrationAddressDetails;
-import com.mkasana.FamilyTree.Pariwar.model.userRegistrationReligionDetails;
+import com.mkasana.FamilyTree.Pariwar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
@@ -181,6 +178,23 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
         return userParentFullDetails;
     }
 
+    /**
+     * this is to return the users for the give filters.
+     * @param filters
+     * @return
+     */
+    public List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(final SearchFilters filters) {
+        return commonAPIsBuilder.searchUsersBasedOnPassedConstrains(filters);
+    }
+
+    public void addParentToLoggedInUser(final int userId, final int parentId) {
+        commonAPIsBuilder.addParentToLoggedInUser(userId, parentId);
+    }
+
+    public void addChildToLoggedInUser(final int userId, final int childId) {
+        commonAPIsBuilder.addChildToLoggedInUser(userId, childId);
+    }
+
 
 
     private  UserFullDetails getUserFullDetailsByUserId(final int userId) {
@@ -190,10 +204,8 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
             return null;
         }
 
-        System.out.println("Here in Getting Full Details");
         if(userFullDetails.getUserAddressDetails().getIdAddress() > 0) {
             userRegistrationAddressDetails registrationAddressDetails = commonAPIsBuilder.getRegistrationAddressDetailsByAddressDetailsId(userFullDetails.getUserAddressDetails().getIdAddress());
-            System.out.println(registrationAddressDetails);
             if(registrationAddressDetails != null) {
                 userFullDetails.getUserAddressDetails().setLocality(registrationAddressDetails.getLocality());
                 userFullDetails.getUserAddressDetails().setState(userAddressBuilder.getStateById(registrationAddressDetails.getState()));
@@ -202,7 +214,6 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                 userFullDetails.getUserAddressDetails().setVillageTown(userAddressBuilder.getVillageTownById(registrationAddressDetails.getVillage()));
             }
         }
-        System.out.println(userFullDetails);
         if(userFullDetails.getUserReligiousDetails().getIdReligious() > 0) {
             userRegistrationReligionDetails registrationReligionDetails = commonAPIsBuilder.getRegistrationReligionDetailsByReligiousDetailId(userFullDetails.getUserReligiousDetails().getIdReligious());
             if(registrationReligionDetails != null) {
@@ -211,7 +222,6 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
                 userFullDetails.getUserReligiousDetails().setSubCaste(userReligionBuilder.getSubCasteById(registrationReligionDetails.getSubCaste()));
             }
         }
-        System.out.println(userFullDetails);
         return userFullDetails;
     }
 }

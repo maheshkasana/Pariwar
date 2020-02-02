@@ -58,13 +58,13 @@
             <button class="button button-brand"><a><span class="glyphicon glyphicon-asterisk"><b>&nbsp;Pariwar</b></span></a></button>
         </div>
         <div style="width: 10%; height: 100%; float: right; margin-right: 10%;">
-            <button class="button button-right"><a><span class="glyphicon glyphicon-search"><b>&nbsp;Search</b></span></a></button>
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/search');" ><span class="glyphicon glyphicon-search"><b>&nbsp;Search</b></span></a></button>
         </div>
         <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
-            <button class="button button-right"><a><span class="glyphicon glyphicon-user"><b>&nbsp;Profile</b></span></a></button>
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/profile');"><span class="glyphicon glyphicon-user"><b>&nbsp;Profile</b></span></a></button>
         </div>
         <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
-            <button class="button button-right" onclick="checkIfNotLoggedInToSignIn()"><a><span class="glyphicon glyphicon-home fa-lg"><b>&nbsp;Home</b></span></a></button>
+            <button class="button button-right" onclick="location.replace('http://localhost:8081/home');"><a><span class="glyphicon glyphicon-home fa-lg"><b>&nbsp;Home</b></span></a></button>
         </div>
     </div>
     <div class="UserParentDiv" id="UserParentDiv" style="overflow-x: auto; top: 10%; min-width: 100%; height:25%; background-color: #ffffff;  position:absolute;"></div>

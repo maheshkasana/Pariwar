@@ -2,10 +2,7 @@ package com.mkasana.FamilyTree.Pariwar.RestControllers.Common;
 
 import com.mkasana.FamilyTree.Pariwar.Component.CommonAPIs.CommonAPIsComponent;
 import com.mkasana.FamilyTree.Pariwar.Component.Validations.ValidationFunctions;
-import com.mkasana.FamilyTree.Pariwar.model.Religion;
-import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
-import com.mkasana.FamilyTree.Pariwar.model.SessionDetails;
-import com.mkasana.FamilyTree.Pariwar.model.UserFullDetails;
+import com.mkasana.FamilyTree.Pariwar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -112,5 +109,55 @@ public class CommonAPIsController {
 
         return commonAPIsComponent.getBasicUserChildsDetailsByUserId(userId);
     }
+
+    /**
+     * this function is to return result for the search filters.
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/user/search", method = RequestMethod.POST, headers="Accept=application/json")
+    private List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(@RequestBody SearchFilters filters,
+                                                                     @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, false);
+        String function = "CommonAPIsComponent:searchUsersBasedOnPassedConstrains";
+        System.out.println(filters);
+        return commonAPIsComponent.searchUsersBasedOnPassedConstrains(filters);
+    }
+
+    /**
+     * this function is to add parent to the logged in User.
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/user/add/parent/{parentId}", method = RequestMethod.POST, headers="Accept=application/json")
+    private void addParentToLoggedInUser(@PathVariable("parentId") int parentId, @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+        String function = "CommonAPIsComponent:addParentToLoggedInUser";
+        if(session == null) {
+            throw new Exception("failed to validate");
+        }
+        commonAPIsComponent.addParentToLoggedInUser(session.getUserId(), parentId);
+        return;
+    }
+
+
+
+    /**
+     * this function is to add parent to the logged in User.
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/user/add/child/{childId}", method = RequestMethod.POST, headers="Accept=application/json")
+    private void addChildToLoggedInUser(@PathVariable("childId") int childId, @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+        String function = "CommonAPIsComponent:addChildToLoggedInUser";
+        if(session == null) {
+            throw new Exception("failed to validate");
+        }
+        commonAPIsComponent.addChildToLoggedInUser(session.getUserId(), childId);
+        return;
+    }
+
+
 
 }

@@ -35,4 +35,17 @@ public class UserRegistrationComponentImpl  implements UserRegistrationComponent
         }
     }
 
+    public int updateUserBasicDetails(final userRegistrationRequest req, final int userId) {
+        String Function = "UserRegistrationComponentImpl::updateUserBasicDetails";
+        try {
+                userRegistrationBuilder.updateUserBasicDetails(req, userId);
+                userRegistrationBuilder.UpdateUserLocalityAddress(req.getAddress(), userId);
+                //userRegistrationBuilder.createOrUpdateUserReligiousDetails(req.getReligious(), userId);
+                return userId;
+        } catch(Exception e) {
+            System.out.println("Failed To create Create User");
+            return -1;
+        }
+    }
+
 }

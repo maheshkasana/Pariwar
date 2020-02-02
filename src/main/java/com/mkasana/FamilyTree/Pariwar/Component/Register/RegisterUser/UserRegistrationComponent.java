@@ -10,4 +10,6 @@ public interface UserRegistrationComponent {
      * @return
      */
     public int registerUserBasicDetails(final userRegistrationRequest user);
+
+    public int updateUserBasicDetails(final userRegistrationRequest user, final int userId);
 }

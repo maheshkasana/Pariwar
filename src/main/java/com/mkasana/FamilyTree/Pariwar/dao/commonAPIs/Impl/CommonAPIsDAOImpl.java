@@ -2,6 +2,7 @@ package com.mkasana.FamilyTree.Pariwar.dao.commonAPIs.Impl;
 
 import com.mkasana.FamilyTree.Pariwar.dao.DatabaseConnection;
 import com.mkasana.FamilyTree.Pariwar.dao.commonAPIs.CommonAPIsDAO;
+import com.mkasana.FamilyTree.Pariwar.model.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
@@ -165,6 +166,69 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
             return databaseConnection.executeQuery(query);
         } catch(Exception e) {
             String error = "[Error] "+Function+" Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    public ResultSet searchUsersBasedOnPassedConstrains(final SearchFilters filters) throws Exception {
+        String Function = "CommonAPIsDAOImpl:searchUsersBasedOnPassedConstrains";
+        String query = "SELECT userinfo.Id AS Id, userinfo.Username AS username, userinfo.FirstName AS name, userinfo.Gender AS gender, AD.firstAddress AS localaddress,"
+                        + " CONCAT(USC.UserSubcasteName , ', ' , UC.UserCasteName , ', ' , URD.ReligionName) AS Religion,"
+                        + " CONCAT(UAV.VillageTownLocalAreaName , ', ' , UAT.TehsilName , ', '  , UAD.DistrictCode, ', ' , UAS.StateName) AS Address FROM userinfo"
+                        + " JOIN UserAddressDetails AS AD ON AD.Id = userinfo.UserAddressDetailsId AND AD.UserId = userinfo.Id"
+                        + " JOIN UserReligionMapDetails AS RD ON RD.Id = userinfo.SubcasteReligion AND RD.UserId = userinfo.Id"
+                        + " LEFT JOIN UserReligion AS URD ON URD.Id = RD.ReligionId"
+                        + " LEFT JOIN UserCaste AS UC ON UC.Id = RD.CasteId"
+                        + " LEFT JOIN UserSubcaste AS USC ON USC.Id = RD.SubCasteId"
+                        + " LEFT JOIN StateDetails AS UAS ON UAS.Id = AD.StateId"
+                        + " LEFT JOIN DistrictDetails AS UAD ON UAD.Id = AD.DistrictId"
+                        +" LEFT JOIN TehsilDetails AS UAT ON UAT.Id = AD.TehsilId"
+                        + " LEFT JOIN VillageTownLocalAreaDetails AS UAV ON UAV.Id = AD.VillageId"
+                        + " WHERE (" + filters.getState() + " <=0 OR " + filters.getState() + " = AD.StateId)"
+                        + " AND (" + filters.getDistrict() + "<=0 OR "+ filters.getDistrict() + "= AD.DistrictId)"
+                        + " AND (" + filters.getTehsil() + "<=0 OR "+ filters.getTehsil() +" = AD.TehsilId)"
+                        + " AND (" + filters.getVillage() +"<=0 OR " + filters.getVillage() + "= AD.VillageId)"
+                        + " AND (" + filters.getReligion() + "<=0 OR " + filters.getReligion() + "= RD.ReligionId)"
+                        + " AND (" + filters.getCaste() + "<=0 OR " + filters.getCaste() + "= RD.CasteId)"
+                        + " AND (" + filters.getSubcaste() + "<=0 OR " + filters.getSubcaste() + "= RD.SubCasteId)"
+                        + " ORDER BY userinfo.Id ASC;";
+        System.out.println(query);
+        try {
+            return databaseConnection.executeQuery(query);
+        } catch(Exception e) {
+            String error = "[Error] "+Function+" Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
+    public void addParentToUserId(final int userId, final int parentId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:addParentToUserId";
+        long ut1 = Instant.now().getEpochSecond();
+
+        String query = "INSERT INTO USERPARENT (UserId, ParentId, ParentType, Flag) VALUES ("+userId +","+ parentId +",0,0)";
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] CommonAPIsDAOImpl:addParentToUserId Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+    public void addChildToParentId(final int parentId, final int userId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:addChildToParentId";
+        long ut1 = Instant.now().getEpochSecond();
+
+        String query = "INSERT INTO UserChild (UserId, ChildId, ChildType, Flag) VALUES("+parentId +","+ userId +",0,0)";
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] CommonAPIsDAOImpl:addChildToParentId Exception while executing query [" + query + "]\n" + e;
             System.out.println(error);
             throw new Exception(error);
         }

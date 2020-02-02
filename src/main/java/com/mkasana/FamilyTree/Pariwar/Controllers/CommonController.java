@@ -27,4 +27,11 @@ public class CommonController {
         //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
         return "UserProfile";
     }
+
+    @RequestMapping(value = "/search", method = {RequestMethod.POST, RequestMethod.GET})
+    public String search() {
+        System.out.println("in /search Controller");
+        //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
+        return "UserSearch";
+    }
 }

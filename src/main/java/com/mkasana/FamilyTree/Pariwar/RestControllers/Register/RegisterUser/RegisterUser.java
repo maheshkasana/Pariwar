@@ -124,4 +124,46 @@ public class RegisterUser {
 
     }
 
+
+    @RequestMapping(value = "/profile/update/user", method = RequestMethod.POST, headers="Accept=application/json")
+    private ReturnStatus updateProfileUser(@RequestBody userRegistrationRequest request,
+                                      @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+        int userId = session.getUserId();
+
+        userRegister.updateUserBasicDetails(request, userId);
+        ReturnStatus returnStatus = new ReturnStatus();
+        returnStatus.setStatusCode(userId);
+        returnStatus.setErrorCode("");
+
+        return returnStatus;
+    }
+
+    @RequestMapping(value = "/profile/update/user/file", method = RequestMethod.POST)
+    private ReturnStatus updateProfileUserFile(@RequestParam("body") String request,
+                                          @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+
+        ReturnStatus returnStatus = new ReturnStatus();
+        int userId = session.getUserId();
+        ObjectMapper objectMapper = new ObjectMapper();
+        userRegistrationRequest req = objectMapper.readValue(request, userRegistrationRequest.class);
+
+        userRegister.updateUserBasicDetails(req, userId);
+
+        if(0 >= userId) {
+            System.out.println("Failed to register user");
+            returnStatus.setStatusCode(-1);
+            returnStatus.setErrorCode("Failed to register user, Please try after some time");
+            return returnStatus;
+        }
+
+        Path filepath = Paths.get("/Volumes/unix/SpringProjects/Pariwar/src/main/resources/static/images/userProfilePics/", "userProfilePic_"+userId+".jpg");
+        file.transferTo(filepath);
+        returnStatus.setStatusCode(userId);
+        returnStatus.setErrorCode("Successfully registered user");
+        return returnStatus;
+
+    }
+
 }

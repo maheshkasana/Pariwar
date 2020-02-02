@@ -1,5 +1,6 @@
 package com.mkasana.FamilyTree.Pariwar.dao.commonAPIs;
 
+import com.mkasana.FamilyTree.Pariwar.model.SearchFilters;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
@@ -29,5 +30,11 @@ public interface CommonAPIsDAO {
     public ResultSet getUserChildsIdList(final int userId) throws Exception;
 
     public ResultSet getUserSpouseIdList(final int userId) throws Exception;
+
+    public ResultSet searchUsersBasedOnPassedConstrains(final SearchFilters filters) throws Exception;
+
+    public void addParentToUserId(final int userId, final int parentId) throws Exception;
+
+    public void addChildToParentId(final int parentId, final int userId) throws Exception;
 
 }
