@@ -365,7 +365,11 @@ function wait(ms)
     while(d2-d < ms);
 }
 
-
+function setCookieEmptyLogOut() {
+  var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
+  document.cookie = cookiesString;
+  location.replace("http://localhost:8081/");
+}
 
 
 function SendHttpRequestAndReturnResponseToSameFunction(url, requestType, isSync, body, elementStatus, elementStatusContent, isFile, fileObject)

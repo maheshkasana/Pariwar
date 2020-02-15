@@ -87,7 +87,7 @@ function checkIfAlreadyLoggedIn() {
     var id = getCookie("userId");
     return;
     if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
-        location.replace("http://localhost:8081/home?username="+userName+"&token="+token+"&userId="+id);
+        location.replace("http://localhost:8081/home");
 }
 
 
@@ -96,12 +96,11 @@ function checkIfAlreadyLoggedIn() {
 */
 function responseFromLoginCheck(details)
 {
-    alert(details);
     var response = JSON.parse(details);
     if(response.status==true) {
         document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
         setCookie(response.username,response.authKey,response.userId,5*60);
-        location.replace("http://localhost:8081/home?username="+response.username+"&token="+response.authKey+"&userId="+response.userId);
+        location.replace("http://localhost:8081/home");
     }
     else {
         document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
@@ -361,7 +360,7 @@ class RegisterDetails {
 
 function resetDetailsAndGoBackToMainAfterRegistreation() {
 
-    //location.replace("http://localhost:8081");
+    location.replace("http://localhost:8081");
     return ;
 }
 
@@ -377,7 +376,7 @@ function responseFromRegisterRequest(response) {
      } else {
         document.getElementById('RegistredSuccessful').style.display='block';
         document.getElementById('username_RegistredSuccessful').innerHTML = "Username : <b><u>" + document.getElementById('register_username').value + "</u></b>";
-        //resetDetailsAndGoBackToMainAfterRegistreation(userId);
+        resetDetailsAndGoBackToMainAfterRegistreation(userId);
      }
 }
 

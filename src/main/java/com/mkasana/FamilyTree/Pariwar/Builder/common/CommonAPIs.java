@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configurable
 @Component
@@ -261,6 +263,27 @@ public class CommonAPIs {
         }
     }
 
+    /**
+     * this is to filter out the names
+     * @return
+     */
+    public List<SearchFiltersResponse> filterByNameOnTheSearchList(final List<SearchFiltersResponse> listOfUsers, final String name) {
+        String[] nameList = name.toLowerCase().trim().split("\\s+");
+        if(name == null || name.length() <= 0 || Arrays.asList(nameList).size() <= 0)
+            return listOfUsers;
+        return listOfUsers.stream().filter(user -> isNameMatched(nameList, user.getName())).collect(Collectors.toList());
+    }
+
+    private boolean isNameMatched(final String[] nameList, final String userName) {
+        String[] userNameList = userName.toLowerCase().trim().split("\\s+");
+        for(String word : nameList) {
+            if(Arrays.asList(userNameList).contains(word))
+                return true;
+        }
+        return false;
+    }
+
+
     public void addParentToLoggedInUser(final int userId, final int parentId) {
         try {
             userCommonAPIsDAO.addParentToUserId(userId, parentId);
@@ -276,6 +299,15 @@ public class CommonAPIs {
             userCommonAPIsDAO.addChildToParentId(userId, childId);
         } catch (Exception e) {
             System.out.println("Failed to Add Parent to User");
+        }
+    }
+
+    public void addSpouseToUser(final int userId, final int spouseId) {
+        try {
+            userCommonAPIsDAO.addSpouseToUser(spouseId, userId);
+            userCommonAPIsDAO.addSpouseToUser(userId, spouseId);
+        } catch (Exception e) {
+            System.out.println("Failed to Add Spouse to User");
         }
     }
 }

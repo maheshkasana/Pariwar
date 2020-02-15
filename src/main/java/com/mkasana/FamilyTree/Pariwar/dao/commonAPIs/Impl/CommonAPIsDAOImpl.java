@@ -234,4 +234,21 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
         }
     }
 
+    @Override
+    public void addSpouseToUser(final int userId, final int spouseId) throws Exception {
+        String Function = "CommonAPIsDAOImpl:addSpouseToUser";
+        long ut1 = Instant.now().getEpochSecond();
+
+        String query = "INSERT INTO UserSpouse (UserId, SpouseId, SpouseType, Flag) VALUES("+userId +","+ spouseId +",0,0)";
+        try {
+            databaseConnection.executeUpdate(query);
+            databaseConnection.commit();
+        } catch(Exception e) {
+            String error = "[Error] CommonAPIsDAOImpl:addSpouseToUser Exception while executing query [" + query + "]\n" + e;
+            System.out.println(error);
+            throw new Exception(error);
+        }
+    }
+
+
 }

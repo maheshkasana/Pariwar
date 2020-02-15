@@ -559,7 +559,6 @@ public class AutoSuggest {
      */
     @RequestMapping(value = "/register/auto/validateAvailabilityUsername/{username}", method = RequestMethod.GET, headers="Accept=application/json")
     private ReturnStatus validateAvailabilityUsername(@PathVariable("username") String username,@RequestHeader HttpHeaders headers) throws Exception {
-        SessionDetails session = validate.validateRequest(headers, false);
         String function = "AutoSuggestController:validateAvailabilityUsername";
 
         return userAddressComponent.validateAvailabilityUsername(username);

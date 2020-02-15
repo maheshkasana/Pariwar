@@ -674,6 +674,11 @@ function addChildersSubmitButton(divId, userId) {
     SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/add/child/"+userId, "POST", false, "", "", "No", false, null);
  }
 
+ function addSpouseSubmitButton(divId, userId) {
+     document.getElementById(divId).style.display="none";
+     SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/add/spouse/"+userId, "POST", false, "", "", "No", false, null);
+  }
+
  function reachedLastGetMore(flag) {
  	if(flag >= lastListUsers) {
  		//alert("Reached last");
@@ -706,10 +711,13 @@ function getCustomDivFOrUser(topMrg, imageSrc, name, gender, religionDetails, lo
         			+ "</div>"
         		+ "</div>"
   				+ "<div id='userDetailsListContailnerSearch_" + userId +"' style='width: 20%; height: 80%; top:10%; background-color: ; left: 2%; position: relative;  float: left; display:" + isBlock + ";'>"
-        			+ "<div style='width: 100%; height: 40%; background-color: ; position: relative; float: left; overflow: auto; margin-top: 3%;'>"
+        			+ "<div style='width: 100%; height: 30%; background-color: ; position: relative; float: left; overflow: auto; margin-top: 0%;'>"
         				+ "<button class='button-box' onclick='addParentSubmitButton(\"userDetailsListContailnerSearch_" + userId +"\"," + userId + ")' style='width: 100%; height: 100%;'>Request Add Parent</button>"
         			+ "</div>"
-        			+ "<div style='width: 100%; height: 40%; background-color: ; position: relative; float: left; overflow: auto; margin-top: 5%;'>"
+        			+ "<div style='width: 100%; height: 30%; background-color: ; position: relative; float: left; overflow: auto; margin-top: 3%;'>"
+                        + "<button class='button-box' onclick='addSpouseSubmitButton(\"userDetailsListContailnerSearch_" + userId +"\"," + userId + ")' style='width: 100%; height: 100%;'>Request Add Spouse</button>"
+                     + "</div>"
+        			+ "<div style='width: 100%; height: 30%; background-color: ; position: relative; float: left; overflow: auto; margin-top: 3%;'>"
         				+ "<button class='button-box' onclick='addChildersSubmitButton(\"userDetailsListContailnerSearch_" + userId +"\","+ userId + ")' style='width: 100%; height: 100%;'>Request Add Childern</button>"
         			+ "</div>"
         		+ "</div>"
@@ -718,8 +726,19 @@ function getCustomDivFOrUser(topMrg, imageSrc, name, gender, religionDetails, lo
         	return divv;
 }
 
+function getDefaultDivForEmptyResponse() {
+	var divv = "<div style='width: 100%; background-color: #ffffff; height: 5%; margin-top: 0%; position: relative;'>"
+                   + "<h3>  <p style='text-align: center; color: #aaaaaa;'>No user found </p></h3>"
+                +"</div>" ;
+    return divv;
+}
 
 
+function setCookieEmptyLogOut() {
+  var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
+  document.cookie = cookiesString;
+  location.replace("http://localhost:8081/");
+}
 
 
 function getListOfUserParentAndChilds(userId) {
@@ -780,7 +799,7 @@ function SubmitSearchFilters() {
 	var tehsil_ = document.getElementById("search_tehsil").name;
 	var village_ = document.getElementById("search_village").name;
 
-	if(state_ <=0 || district_ <=0 || tehsil_ <=0 || village_ <=0) {
+	if(state_ <=0 || district_ <=0 || tehsil_ <=0) {
 		alert("Address Details Cannot be empty (State, District, Tehsil, Village)");
 		return;
 	}
@@ -795,13 +814,16 @@ function SubmitSearchFilters() {
 	}
 
 	requestBody = JSON.stringify(new searchParametersDetail(name_, state_, district_, tehsil_, village_, religion_, caste_, subcaste_));
-	console.log(requestBody);
+	//console.log(requestBody);
 	var lstResp =  SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/search", "POST", false, requestBody, "", "No", false, null);
 	if(lstResp == null) {
 	    return;
 	}
 	lst = JSON.parse(lstResp);
 	var parentDiv = document.getElementById("searchListResponseUsers");
+	if(lst.length <= 0) {
+        parentDiv.innerHTML = getDefaultDivForEmptyResponse();
+	}
 	for(i in lst) {
 
         var isBlock = "block";

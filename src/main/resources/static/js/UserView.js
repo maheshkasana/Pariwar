@@ -4,6 +4,7 @@ class user {
   this.name = name_;
   this.gender= gender_;
   this.id = id_;
+  this.isSpouse = 0;
   }
 }
 
@@ -17,6 +18,12 @@ class userLoggedIn {
 
 
 /*=============================================================*/
+
+function setCookieEmptyLogOut() {
+  var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
+  document.cookie = cookiesString;
+  location.replace("http://localhost:8081/");
+}
 
 function setCookie(username, token,id, expiresminutes) {
   var d = new Date();
@@ -149,6 +156,95 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
 
 /*===========================================================*/
 
+/*---------START of the function Send HTTP request and return -----------*/
+
+function SendHttpRequestAndReturnResponseToSameFunction(url, requestType, isSync, body, elementStatus, elementStatusContent, isFile, fileObject)
+{
+    var xhttp = new XMLHttpRequest();
+
+    var flag = false;
+
+    var result = null;
+
+    if(isFile) {
+        var formData = new FormData();
+        formData.append("Image", fileObject);
+        xhttp.addEventListener('progress', updateRegisterImageUploadProgressbar, false);
+        if ( xhttp.upload ) {
+           xhttp.upload.onprogress = function(e) {
+                    updateRegisterImageUploadProgressbar(e);
+           };
+        }
+    }
+
+    xhttp.onreadystatechange = function()
+    {
+  	    if(this.readyState<4)
+  	    {
+  	        if(elementStatus.length > 0 && elementStatus != null) {
+     	   	    document.getElementById(elementStatus).innerHTML="<img src='images/loading3.gif' style='width:30%; height:100%; border-radius: 60%;'>";
+     	   	}
+  	    }
+        else if(this.readyState==4)
+            {
+        	    if (this.status == 200)
+    		    {
+      		        if(this.responseText!=null)
+                    {
+                        if(elementStatus.length > 0 && elementStatus != null) {
+                            document.getElementById(elementStatus).innerHTML="<p style='color: green;'><b>successful</b></p>";
+                        }
+                        flag = true;
+                        //callback(this.responseText);
+                        result = this.responseText;
+                    }
+                    else
+                    {
+                        if(elementStatus.length > 0 && elementStatus != null) {
+                            document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>" ;
+                        }
+                        flag = true;
+                        result = null;
+                       // callback(this.responseText);
+                    }
+		   	    }
+     		    else
+     		    {
+     		        if(elementStatus.length > 0 && elementStatus != null) {
+     		            document.getElementById(elementStatus).innerHTML="<p style='color: red;'><b>Failed</b></p>";
+     		        }
+     		        flag = true;
+     		        result = null;
+    		    }
+		    }
+    };
+
+    xhttp.open(requestType, url, false);
+    if(isFile) {
+        xhttp.setRequestHeader("enctype","multipart/form-data");
+        formData.append("body", body);
+        xhttp.send(formData);
+        console.log(formData);
+    } else {
+        xhttp.setRequestHeader("Accept","application/json");
+        xhttp.setRequestHeader("Content-Type","application/json");
+        xhttp.send(body);
+    }
+    var try_ = 0;
+    while(flag == false && try_ < 5) {
+        wait(500);
+        try_ = try_ + 1;
+    }
+    return result;
+
+}
+
+
+/*---------End of the function Send HTTP request and return -----------*/
+
+
+
+
 function getUserDetails() {
   user = new user("Mahesh", "Male", 1);
   return user;
@@ -203,8 +299,9 @@ function getLeftMarginForFirst(wdth, lst) {
   return (100 - (lst*wdth))/2;
 }
 
-function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId) {
-  var divv = "<a onclick='ShowDetailsOfUser("+userId+");'><div class="+ className +" id="+ Id +" style='margin-left: "+ leftPer +"%;  width: "+wdth+"%; height: 100%; background-color:"+bckcolor+"; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>";
+function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId, hght, toptr) {
+
+  var divv = "<a onclick='ShowDetailsOfUser("+userId+");'><div class="+ className +" id="+ Id +" style='margin-left: "+ leftPer +"%;  width: "+wdth+"%; height: "+ hght +"%; top: "+ toptr +"%; background-color:"+bckcolor+"; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>";
         divv += "<div style='height: 75%;'><img src='"+imgPath+"' alt='"+firstname+"' style='width: 100%; height: 100%;'></div>";
         divv += "<div style='height: 20%; text-align: center; font-size: 16px;'><b><p style='margin:0px;'>"+firstname+"</p></b><p style='margin:0px;'>"+sex+"/"+age+"</p></div>"; 
       divv +="</div></a>";
@@ -212,10 +309,26 @@ function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcol
 }
 
 
-function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male) {
+function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male, spouse) {
   var wdth = 20;
   if(isLaptop())
     wdth = 10;
+
+  spouseLst = [];
+  prntList = [];
+  if(spouse == 1) {
+    spouseLst = convertResponseToUserList(SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/spouse/basic/" + userId +";", "GET", false, "", "", "No", false, null));
+  }
+
+  for(i = 0; i < respList.length; i++) {
+    prntList.push(respList[i]);
+    if(respList[i].id == userId) {
+        for(j = 0; j < spouseLst.length; j++) {
+            spouseLst[j].isSpouse = 1;
+            prntList.push(spouseLst[j]);
+        }
+    }
+  }
 
   var lftmargin = 0;
   lftmargin = getLeftMarginForFirst(wdth,prntList.length);
@@ -224,11 +337,18 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male)
   var index = 1;
   node.innerHTML = "";
   var flag = false;
+
   for(index = 1; index <= prntList.length; index++) {
-    
+
+    var hght = 100;
+
     var brdcolor = "#f2f2f2";
     if(userId == prntList[index-1].id)
        brdcolor = "#FFD700";
+    if(prntList[index-1].isSpouse == 1) {
+        brdcolor = "#000086";
+        hght = 90;
+     }
 
     var imgPath =  "images/userProfilePics/userProfilePic_"+prntList[index-1].id+".jpg";
 
@@ -238,9 +358,9 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male)
       node.innerHTML = "";
 
     if(prntList[index-1].gender == "Male")
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "M", 24, male, "#929292", brdcolor,imgPath,prntList[index-1].id);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "M", 24, male, "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght);
     else
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name, "F", 20, "images/female.svg", "#929292", brdcolor,imgPath,prntList[index-1].id);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "F", 20, "images/female.svg", "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght);
 
     flag = true;
 
@@ -249,11 +369,11 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,prntList, DivId, male)
 
 function OnClickAddTheDetails(userId) {
   //Add Parent
-  AddTheDetailsASperTheListPassedAndtoDivId(userId, getParents(), "UserParentDiv", "images/man.svg");
+  AddTheDetailsASperTheListPassedAndtoDivId(userId, getParents(), "UserParentDiv", "images/man.svg", 0);
   //Add Siblings and same
-  AddTheDetailsASperTheListPassedAndtoDivId(userId, getSiblings(), "UserSiblingDiv", "images/male.svg");
+  AddTheDetailsASperTheListPassedAndtoDivId(userId, getSiblings(), "UserSiblingDiv", "images/male.svg", 0);
   //Add Childs
-  AddTheDetailsASperTheListPassedAndtoDivId(userId, getChilds(), "UserChildDiv", "images/male.svg");
+  AddTheDetailsASperTheListPassedAndtoDivId(userId, getChilds(), "UserChildDiv", "images/male.svg", 0);
   //Add Childs
 
   }
@@ -284,26 +404,19 @@ function convertResponseToUserList(str_response) {
     return Lst;
 }
 
-function UserParentsShowInUI(response) {
-    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserParentDiv", "images/man.svg");
-}
-
-function UserSiblingsAndShowInUI(response) {
-    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserSiblingDiv", "images/male.svg");
-}
-
-function UserChildernsAndShowInUI(response) {
-    AddTheDetailsASperTheListPassedAndtoDivId(getCookie("userId"), convertResponseToUserList(response), "UserChildDiv", "images/male.svg");
-}
-
-
 function ShowDetailsOfUser(id) {
     //Validate User Details in DB
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/details/" + id +";", "GET", false, "", "", "No", false, null, getUserDetailsByTokenAndValidate);
+    user_ = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/details/" + id +";", "GET", false, "", "", "No", false, null);
+    getUserDetailsByTokenAndValidate(user_);
 
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/parent/basic/" + id +";", "GET", false, "", "", "No", false, null, UserParentsShowInUI);
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/siblings/basic/" + id +";", "GET", false, "", "", "No", false, null, UserSiblingsAndShowInUI);
-    SendHttpRequestAndReturnResponse("http://localhost:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null, UserChildernsAndShowInUI);
+    parentLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/parent/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(parentLst), "UserParentDiv", "images/man.svg", 0);
+
+    SiblinsLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/siblings/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(SiblinsLst), "UserSiblingDiv", "images/male.svg", 1);
+
+    ChildsList = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(ChildsList), "UserChildDiv", "images/male.svg", 0);
 }
 
 

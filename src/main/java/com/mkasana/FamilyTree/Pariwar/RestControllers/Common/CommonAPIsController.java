@@ -111,6 +111,19 @@ public class CommonAPIsController {
     }
 
     /**
+     * this function is to get basic user spouse details
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/user/spouse/basic/{userId}", method = RequestMethod.GET, headers="Accept=application/json")
+    private List<UserFullDetails> getBasicUserspouseDetailsByUserId(@PathVariable("userId") int userId, @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, false);
+        String function = "CommonAPIsComponent:getBasicUserspouseDetailsByUserId";
+
+        return commonAPIsComponent.getBasicUserspouseDetailsByUserId(userId);
+    }
+
+    /**
      * this function is to return result for the search filters.
      * @return
      * @throws Exception
@@ -118,7 +131,7 @@ public class CommonAPIsController {
     @RequestMapping(value = "/user/search", method = RequestMethod.POST, headers="Accept=application/json")
     private List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(@RequestBody SearchFilters filters,
                                                                      @RequestHeader HttpHeaders headers) throws Exception {
-        SessionDetails session = validate.validateRequest(headers, false);
+        SessionDetails session = validate.validateRequest(headers, true);
         String function = "CommonAPIsComponent:searchUsersBasedOnPassedConstrains";
         System.out.println(filters);
         return commonAPIsComponent.searchUsersBasedOnPassedConstrains(filters);
@@ -158,6 +171,21 @@ public class CommonAPIsController {
         return;
     }
 
+    /**
+     * this function is to add spouse to the logged in User.
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/user/add/spouse/{spouseId}", method = RequestMethod.POST, headers="Accept=application/json")
+    private void addSpouseToLoggedInUser(@PathVariable("spouseId") int spouseId, @RequestHeader HttpHeaders headers) throws Exception {
+        SessionDetails session = validate.validateRequest(headers, true);
+        String function = "CommonAPIsComponent:addSpouseToLoggedInUser";
+        if(session == null) {
+            throw new Exception("failed to validate");
+        }
+        commonAPIsComponent.addSpouseToUser(session.getUserId(), spouseId);
+        return;
+    }
 
 
 }

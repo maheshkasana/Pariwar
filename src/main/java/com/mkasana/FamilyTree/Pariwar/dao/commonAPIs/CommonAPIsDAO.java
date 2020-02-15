@@ -37,4 +37,5 @@ public interface CommonAPIsDAO {
 
     public void addChildToParentId(final int parentId, final int userId) throws Exception;
 
+    public void addSpouseToUser(final int userId, final int spouseId) throws Exception;
 }

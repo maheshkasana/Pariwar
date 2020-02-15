@@ -23,9 +23,13 @@ public interface CommonAPIsComponent {
 
     public List<UserFullDetails> getBasicUserChildsDetailsByUserId(final int userId);
 
+    public List<UserFullDetails> getBasicUserspouseDetailsByUserId(final int userId);
+
     public List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(final SearchFilters filters);
 
     public void addParentToLoggedInUser(final int userId, final int parentId);
 
     public void addChildToLoggedInUser(final int userId, final int childId);
+
+    public void addSpouseToUser(final int userId, final int spouseId);
 }

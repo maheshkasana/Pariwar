@@ -61,9 +61,21 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
     public List<UserFullDetails> getBasicUserParentsDetailsByUserId(final int userId) {
 
         List<Integer> userParentList = commonAPIsBuilder.getUserParentIdList(userId);
+        List<Integer> finalPrnt = new ArrayList<>();
+        for(int i : userParentList) {
+            if(!finalPrnt.contains(i)) {
+                finalPrnt.add(i);
+            }
+            List<Integer> parentSpouse = commonAPIsBuilder.getUserSpouseIdList(i);
+            for(int j : parentSpouse) {
+                if(!finalPrnt.contains(j)) {
+                    finalPrnt.add(j);
+                }
+            }
+        }
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
-        for(int id : userParentList)
+        for(int id : finalPrnt)
             userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
 
         return userParentFullDetails;
@@ -97,7 +109,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
 
     /**
-     * This is to return the basic details of the use parents
+     * This is to return the basic details of the use Childerns
      * @param userId
      * @return
      */
@@ -121,7 +133,21 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
         return userParentFullDetails;
     }
 
-
+    /**
+     * This is to return the basic details of the use Spouse
+     * @param userId
+     * @return
+     */
+    public List<UserFullDetails> getBasicUserspouseDetailsByUserId(final int userId) {
+        List<Integer> userSpouse = commonAPIsBuilder.getUserSpouseIdList(userId);
+        List<UserFullDetails> userParentFullDetails = new ArrayList<>();
+        for(int id : userSpouse) {
+            if(id != userId) {
+                userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+            }
+        }
+        return userParentFullDetails;
+    }
 
     /**
      * This is to return the list Siblings with full details.
@@ -184,7 +210,8 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
      * @return
      */
     public List<SearchFiltersResponse> searchUsersBasedOnPassedConstrains(final SearchFilters filters) {
-        return commonAPIsBuilder.searchUsersBasedOnPassedConstrains(filters);
+        return commonAPIsBuilder.filterByNameOnTheSearchList(commonAPIsBuilder.searchUsersBasedOnPassedConstrains(filters),
+                filters.getName());
     }
 
     public void addParentToLoggedInUser(final int userId, final int parentId) {
@@ -195,6 +222,9 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
         commonAPIsBuilder.addChildToLoggedInUser(userId, childId);
     }
 
+    public void addSpouseToUser(final int userId, final int spouseId) {
+        commonAPIsBuilder.addSpouseToUser(userId, spouseId);
+    }
 
 
     private  UserFullDetails getUserFullDetailsByUserId(final int userId) {
