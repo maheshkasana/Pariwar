@@ -1,10 +1,13 @@
 
 class user {
-  constructor(name_, gender_, id_) {
+  constructor(name_, gender_, id_, dob_, religious_, address_) {
   this.name = name_;
   this.gender= gender_;
   this.id = id_;
   this.isSpouse = 0;
+  this.dob = dob_;
+  this.religious = religious_;
+  this.address = address_;
   }
 }
 
@@ -299,15 +302,22 @@ function getLeftMarginForFirst(wdth, lst) {
   return (100 - (lst*wdth))/2;
 }
 
-function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId, hght, toptr) {
+function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId, hght, toptr, religious, address) {
 
-  var divv = "<a onclick='ShowDetailsOfUser("+userId+");'><div class="+ className +" id="+ Id +" style='margin-left: "+ leftPer +"%;  width: "+wdth+"%; height: "+ hght +"%; top: "+ toptr +"%; background-color:"+bckcolor+"; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>";
-        divv += "<div style='height: 75%;'><img src='"+imgPath+"' alt='"+firstname+"' style='width: 100%; height: 100%;'></div>";
-        divv += "<div style='height: 20%; text-align: center; font-size: 16px;'><b><p style='margin:0px;'>"+firstname+"</p></b><p style='margin:0px;'>"+sex+"/"+age+"</p></div>"; 
-      divv +="</div></a>";
+  var divv = "<a onclick='ShowDetailsOfUser("+userId+");' style='margin-left: "+ leftPer +"%; width:"+ wdth +"%; min-width:100px; height:98%;'>" +
+                "<div class="+ className +" id="+ Id +" style='  width: 100%; height: " + hght + "%; top: "+ toptr +"%; background-color:#ffffff; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>" +
+                    "<div style='height: 100%; width:100%;' class='container'>" +
+                        "<img src='"+imgPath+"' alt='"+firstname+"' style='width: 100%; height: 100%;'>" +
+                        "<div class='overlay'>" +
+                            "<div class='text'>" +
+                                "<p style='font-size: 14px;'> <u>" + firstname + "</u><br>" + sex + "/" + age + "<br>" + religious + "<br>" + address + "</p>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                "</div>" +
+             "</a>";
   return divv;
 }
-
 
 function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male, spouse) {
   var wdth = 20;
@@ -356,11 +366,11 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male,
       lftmargin = 0;
     else
       node.innerHTML = "";
-
+    var age_ = parseInt(moment().diff(prntList[index-1].dob,'years',true));
     if(prntList[index-1].gender == "Male")
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "M", 24, male, "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "M",age_ , male, "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght, prntList[index-1].religious, prntList[index-1].address);
     else
-      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "F", 20, "images/female.svg", "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght);
+      node.innerHTML += getNewDiv(wdth,DivId+index,DivId+index,lftmargin,prntList[index-1].name.split(" ")[0], "F", age_, "images/female.svg", "#929292", brdcolor,imgPath,prntList[index-1].id, hght, 100-hght, prntList[index-1].religious, prntList[index-1].address);
 
     flag = true;
 
@@ -386,13 +396,56 @@ function getUserDetailsByTokenAndValidate(response) {
 
 
 function convertResponseToUser(response) {
-    var name = response.firstname;
-    var userId = response.userId;
-    var gender = response.gender;
+    var name;
+    var userId;
+    var gender;
+    var dob;
+    var caste;
+    var subCaste;
+    var district;
+    var village;
+
+    try { name = response.firstname; } catch(err) { name = "" }
+    try { userId = response.userId; } catch(err) { userId = -1 }
+    try { gender = response.gender; } catch(err) { gender = "M" }
+    try { dob = response.dateofbirth; } catch(err) { dob = "1995-07-03" }
+    try { caste = response.userReligiousDetails.caste.userCasteName.split(" ")[0]; } catch(err) {  caste = null }
+    try { subCaste = response.userReligiousDetails.subCaste.userSubCasteName.split(" ")[0]; } catch(err) { subCaste = null }
+    try { district = response.userAddressDetails.district.districtCode.split(" ")[0]; } catch(err) { district = null }
+    try { village = response.userAddressDetails.villageTown.villageTownLocalAreaName.split(" ")[0]; } catch(err) { village = null }
+
+    var rl = "";
+    if(subCaste != null || caste != null) {
+        if(subCaste != null && caste != null) {
+            rl = subCaste + "/" + caste;
+        } else {
+            if(subCaste == null) {
+                rl =  caste;
+            } else {
+                rl = subCaste;
+            }
+        }
+    }
+
+    var ad = "";
+
+    if(village != null || district != null) {
+        if(village != null && district != null) {
+            ad = village + "/" + district;
+        } else {
+            if(village == null) {
+                ad =  district;
+            } else {
+                ad = village;
+            }
+        }
+    }
+
+
     if(gender == 1)
-        return new user(name, "Male", userId);
+        return new user(name, "Male", userId, dob, rl, ad);
     else
-        return new user(name, "Female", userId);
+        return new user(name, "Female", userId, dob, rl, ad);
 }
 
 function convertResponseToUserList(str_response) {

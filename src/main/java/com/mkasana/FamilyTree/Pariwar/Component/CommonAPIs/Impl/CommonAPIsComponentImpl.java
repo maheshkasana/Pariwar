@@ -76,7 +76,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : finalPrnt)
-            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+            userParentFullDetails.add(getUserFewBasicDetailsByUserId(id));
 
         return userParentFullDetails;
     }
@@ -128,7 +128,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userChildsList)
-            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+            userParentFullDetails.add(getUserFewBasicDetailsByUserId(id));
 
         return userParentFullDetails;
     }
@@ -143,7 +143,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userSpouse) {
             if(id != userId) {
-                userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+                userParentFullDetails.add(getUserFewBasicDetailsByUserId(id));
             }
         }
         return userParentFullDetails;
@@ -199,7 +199,7 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
 
         List<UserFullDetails> userParentFullDetails = new ArrayList<>();
         for(int id : userSiblingsList)
-            userParentFullDetails.add(commonAPIsBuilder.getUserInfoDetailsByUserId(id));
+            userParentFullDetails.add(getUserFewBasicDetailsByUserId(id));
 
         return userParentFullDetails;
     }
@@ -226,6 +226,29 @@ public class CommonAPIsComponentImpl implements CommonAPIsComponent {
         commonAPIsBuilder.addSpouseToUser(userId, spouseId);
     }
 
+    private  UserFullDetails getUserFewBasicDetailsByUserId(final int userId) {
+        UserFullDetails userFullDetails = commonAPIsBuilder.getUserInfoDetailsByUserId(userId);
+        if(userFullDetails == null) {
+            System.out.println("Failed to retrive basic details of the User");
+            return null;
+        }
+
+        if(userFullDetails.getUserAddressDetails().getIdAddress() > 0) {
+            userRegistrationAddressDetails registrationAddressDetails = commonAPIsBuilder.getRegistrationAddressDetailsByAddressDetailsId(userFullDetails.getUserAddressDetails().getIdAddress());
+            if(registrationAddressDetails != null) {
+                userFullDetails.getUserAddressDetails().setDistrict(userAddressBuilder.getDistrictById(registrationAddressDetails.getDistrict()));
+                userFullDetails.getUserAddressDetails().setVillageTown(userAddressBuilder.getVillageTownById(registrationAddressDetails.getVillage()));
+            }
+        }
+        if(userFullDetails.getUserReligiousDetails().getIdReligious() > 0) {
+            userRegistrationReligionDetails registrationReligionDetails = commonAPIsBuilder.getRegistrationReligionDetailsByReligiousDetailId(userFullDetails.getUserReligiousDetails().getIdReligious());
+            if(registrationReligionDetails != null) {
+                userFullDetails.getUserReligiousDetails().setCaste(userReligionBuilder.getCasteById(registrationReligionDetails.getCaste()));
+                userFullDetails.getUserReligiousDetails().setSubCaste(userReligionBuilder.getSubCasteById(registrationReligionDetails.getSubCaste()));
+            }
+        }
+        return userFullDetails;
+    }
 
     private  UserFullDetails getUserFullDetailsByUserId(final int userId) {
         UserFullDetails userFullDetails = commonAPIsBuilder.getUserInfoDetailsByUserId(userId);
