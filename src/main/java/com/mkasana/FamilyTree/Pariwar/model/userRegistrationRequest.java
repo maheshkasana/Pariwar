@@ -6,17 +6,19 @@ public class userRegistrationRequest {
     String password;
     String firstname;
     int  gender;
+    int relation;
     String dateofbirth;
     String profilepic;
     userRegistrationAddressDetails address;
     userRegistrationReligionDetails religious;
     userRegistrationContactDetails contact;
 
-    public userRegistrationRequest(String username, String password, String firstname, int gender, String dateofbirth, String profilepic, userRegistrationAddressDetails address, userRegistrationReligionDetails religious, userRegistrationContactDetails contact) {
+    public userRegistrationRequest(String username, String password, String firstname, int gender, int relation, String dateofbirth, String profilepic, userRegistrationAddressDetails address, userRegistrationReligionDetails religious, userRegistrationContactDetails contact) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.gender = gender;
+        this.relation = relation;
         this.dateofbirth = dateofbirth;
         this.profilepic = profilepic;
         this.address = address;
@@ -68,6 +70,15 @@ public class userRegistrationRequest {
         this.gender = gender;
     }
 
+    public int getRelation() {
+        return relation;
+    }
+
+    public void setRelation(int relation) {
+        this.relation = relation;
+    }
+
+
     public String getDateofbirth() {
         return dateofbirth;
     }
@@ -116,6 +127,7 @@ public class userRegistrationRequest {
                 ", password='" + password + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", gender=" + gender +
+                ", relation=" + relation +
                 ", dateofbirth='" + dateofbirth + '\'' +
                 ", profilepic='" + profilepic + '\'' +
                 ", address=" + address +

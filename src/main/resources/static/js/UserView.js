@@ -304,7 +304,7 @@ function getLeftMarginForFirst(wdth, lst) {
 
 function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcolor, brdcolor,imgPath, userId, hght, toptr, religious, address) {
 
-  var divv = "<a onclick='ShowDetailsOfUser("+userId+");' style='margin-left: "+ leftPer +"%; width:"+ wdth +"%; min-width:100px; height:98%;'>" +
+  var divv = "<a onclick='ShowDetailsOfUser("+userId+");' style='cursor: pointer; margin-left: "+ leftPer +"%; width:"+ wdth +"%; min-width:100px; height:98%;'>" +
                 "<div class="+ className +" id="+ Id +" style='  width: 100%; height: " + hght + "%; top: "+ toptr +"%; background-color:#ffffff; float: left; border: 5px solid "+brdcolor+"; border-radius: 10px; vertical-align: middle; position: relative;'>" +
                     "<div style='height: 100%; width:100%;' class='container'>" +
                         "<img src='"+imgPath+"' alt='"+firstname+"' style='width: 100%; height: 100%;'>" +
@@ -318,6 +318,23 @@ function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcol
              "</a>";
   return divv;
 }
+
+
+function addNewUserForTheCurrentUser() {
+    location.replace('http://localhost:8081/register');
+}
+
+function getNewAddDiv(wdth, lftmargin, txt) {
+
+  var divv = "<a onclick='addNewUserForTheCurrentUser();' style='cursor: cell; margin-left: "+ lftmargin +"%; width:"+ wdth +"%; min-width:100px; height:98%;'>" +
+                "<div id='addNewUserForTheCurrentUser' style='width: 100%; height: 100%; top: 0%; color:#1fa3ff; background-color:#ffffff; float: left; border: 5px solid #ffffff; border-radius: 10px;  position: relative;'>" +
+                        "<img src='images/addUserImage.png' alt='Add Relative' style='width: 30%; height: 20%; margin-top:45%; '>" +
+                        "<p><b> Add " + txt + "</b></p>" +
+                "</div>" +
+             "</a>";
+  return divv;
+}
+
 
 function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male, spouse) {
   var wdth = 20;
@@ -356,7 +373,7 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male,
     if(userId == prntList[index-1].id)
        brdcolor = "#FFD700";
     if(prntList[index-1].isSpouse == 1) {
-        brdcolor = "#000086";
+        brdcolor = "#1fa3ff";
         hght = 90;
      }
 
@@ -375,6 +392,22 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male,
     flag = true;
 
   }
+
+  if( prntList.length <= 0)
+    lftmargin = 45;
+  else
+    lftmargin = 0;
+
+    if(spouse == 0) {
+        node.innerHTML += getNewAddDiv(wdth,lftmargin, "Parent");
+    } else {
+    if(spouse == 1) {
+        node.innerHTML += getNewAddDiv(wdth,lftmargin, "Spouse/Siblings");
+    } else {
+    if(spouse == 2)
+        node.innerHTML += getNewAddDiv(wdth,lftmargin, "Childerns");
+    }
+    }
 }
 
 function OnClickAddTheDetails(userId) {
@@ -469,7 +502,7 @@ function ShowDetailsOfUser(id) {
     AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(SiblinsLst), "UserSiblingDiv", "images/male.svg", 1);
 
     ChildsList = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null);
-    AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(ChildsList), "UserChildDiv", "images/male.svg", 0);
+    AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(ChildsList), "UserChildDiv", "images/male.svg", 2);
 }
 
 

@@ -356,6 +356,11 @@ class RegisterDetails {
     setProfilepic(i_profilepic) {
         this.profilepic = i_profilepic;
     }
+
+    setUserRelation(i_relation) {
+            this.relation = i_relation;
+    }
+
 }
 
 function resetDetailsAndGoBackToMainAfterRegistreation() {
@@ -409,16 +414,22 @@ function RegisterSubmitButton() {
         return;
     }
 
+    try {
     //last name
     var _lname = document.getElementById("register_lastname").value;
     if(_lname != null && _lname.length >0) {
         _fname += " "+_lname;
-    }
+    } } catch(err) {}
     detailObject.firstname = _fname;
 
 
     // Gender
     detailObject.gender = document.getElementById("register_gender").value;
+
+    try {
+        detailObject.relation = document.getElementById("register_relation").value;
+    } catch(err) { }
+
 
     //Date of Birth
     var dobEle = document.getElementById("register_dateOfBirth");
@@ -557,6 +568,20 @@ function validateRegisterGender() {
      }
 }
 
+function validateRegisterRelation() {
+     var d = document.getElementById("register_relation");
+      vset =  document.getElementById("valid_register_relation");
+     if(d.value == 0) {
+           d.style.borderColor="red";
+           d.style.borderWidth="4px";
+           vset.innerHTML = "<b>Relation</b><b style='color:red;'> (Invalid)</b>";
+     }
+     else {
+            d.style.borderColor="green";
+            d.style.borderWidth="1px";
+            vset.innerHTML = "<b>Relation</b>";
+     }
+}
 
 
 class userNameStatusCode {

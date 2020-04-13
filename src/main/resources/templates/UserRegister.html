@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Pariwar</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" media="all" href="static/css/login.css" th:href="@{css/login.css}" />
+    <script src="js/login.js"></script>
+    <link rel="stylesheet" href="css/assets/dist/css/bootstrap.min.css" th:href="@{css/assets/dist/css/bootstrap.min.css}"/>
+
+
+</head>
+<style type="text/css">
+    body {
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+    }
+
+    html, body
+    {
+    height: 100%;
+    width: 100%;
+    }
+
+  body {
+    background-color: #f2f2f2;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  outline:none;
+}
+
+.button-brand {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-brand:hover {
+  color: #ffffff;
+}
+
+.button-right {
+  background-color: #000000;
+  color: #8f8f8f;
+}
+
+.button-right:hover {
+  color: #000000;
+}
+
+</style>
+
+<body bgcolor="#E6E6FA">
+<div style="width: 100%; height: 100%; overflow:auto;">
+    <div style="width: 100%; height: 8%; position: absolute; background-color: #000000;">
+        <div style="width: 10%; height: 100%; position: absolute; left:10%;">
+            <button class="button button-brand"><a><span class="glyphicon glyphicon-asterisk"><b>&nbsp;Pariwar</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right" onclick="setCookieEmptyLogOut()"><a><span class="glyphicon glyphicon-log-out"><b>&nbsp;Logout</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/search');" ><span class="glyphicon glyphicon-search"><b>&nbsp;Search</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right"><a onclick="location.replace('http://localhost:8081/profile');"><span class="glyphicon glyphicon-user"><b>&nbsp;Profile</b></span></a></button>
+        </div>
+        <div style="width: 10%; height: 100%; float: right; margin-right: 2%;">
+            <button class="button button-right" onclick="location.replace('http://localhost:8081/home');"><a><span class="glyphicon glyphicon-home fa-lg"><b>&nbsp;Home</b></span></a></button>
+        </div>
+    </div>
+
+    <div  style=" top: 10%; width: 80%; margin-left:10%; height:86%; background-color: #f2f2f2;  position:absolute;">
+        <button type="button" onclick="ToppleTheRegisterDiv('1', 'Personal Details')" class="Registercollapsible" style="background-color:#c3c3c3; border: 2px solid #ffffff;"><div id="RegisterDevButtonIcon1"><i class="fa fa-minus" style="font-size:20px;color:white; vertical-align: middle;">      Personal Details</i></div></button>
+        <div class="RegistercontentDev1" id="RegisterDevId1" style="margin-left:5%;">
+            <div style="left: 0; top: 0; width: 40%; float: left;">
+                <div>
+                    <label id="valid_register_username"><b>Username *</b></label>
+                    <input type="text" placeholder="Username / Email / Phone" onchange="validateRegisterUsername()" id="register_username" name="0  " style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
+                </div>
+                <div>
+                    <label id="valid_register_password"><b>Password *</b></label>
+                    <input type="password" onchange="validateRegisterPassword()" placeholder="Enter Password" id="register_password"  required style="border-top: 0px; border-left: 0px; border-right: 0px;"  name="0">
+                </div>
+                <div>
+                    <label><b>Name *</b></label>
+                    <input type="text" placeholder="First Name" id="register_firstname" name="register_firstname"  required  style="border-top: 0px; border-left: 0px; border-right: 0px;" >
+                </div>
+                <div>
+                    <div>
+                        <label id="valid_register_relation"><b>Your Relation *</b></label>
+                    </div>
+                    <div>
+                        <select id="register_relation" name="-1" value="1" onchange="validateRegisterRelation()" class="button" style=" background-color:#c3c3c3; min-width: 100px; margin-top:6px; font-size:12px; vertical-align: middle; width:100%; height:38px; border-radius: 0px;">
+                            <option value="0">Select Relation :</option>
+                            <option value="1">Parent</option>
+                            <option value="2">Spouse</option>
+                            <option value="3">Sibling</option>
+                            <option value="4">Child</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="left: 50%; margin-left:5%; top: 0; width: 30%; float: left; padding: 0 18px 0 18px">
+                <div>
+                    <button type="button" onclick="checkUsernameAvailable()"  class="cancelbtn" style="background-color:#99ceff;  min-width: 100px; margin-top:28px; width:90%; color : black; font-size:16px;">Check Availability</button>
+                </div>
+                <div>
+                    <div style="margin-top:5px;">
+                        <label id="valid_register_verify_password"><b>Re-Enter Password *</b></label>
+                    </div>
+                    <div>
+                        <input type="password" onchange="validatePasswordToReEntred()" placeholder="Re-Enter Password" id="register_verify_password"  style="border-top: 0px; border-left: 0px; border-right: 0px; min-width: 100px; width:90%;"  name="register_verify_password">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label id="valid_register_gender"><b>Gender</b></label>
+                    </div>
+                    <div>
+                        <select id="register_gender" name="-1" value="1" onchange="validateRegisterGender()" class="button" style="background-color:#c3c3c3; min-width: 100px; margin-top:6px; font-size:12px; vertical-align: middle; width:90%; height:38px; border-radius: 0px;">
+                            <option value="0">Select Gender :</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div style="margin-top:12px;">
+                        <label id="valid_register_dateOfBirth"><b>Date of Birth</b></label>
+                    </div>
+                    <div>
+                        <input type="date" onchange="validateRegisterDate()" id="register_dateOfBirth" name="0" value="1995-07-03" style=" width:90%; border-top: 0px; border-left: 0px; border-right: 0px; padding: 10px; border: 1px solid #d4d4d4; min-width: 100px; margin-top:6px; font-size:16px; vertical-align: middle; height:40px; border-radius: 0px;">
+                    </div>
+                </div>
+            </div>
+            <div style="left: 75%; top: 0; width: 20%; float: left;  border-color: #666666; border-width:5px; color:red;">
+                <div style="margin-top:28px;">
+                    <img style="height:auto; width:100%; border-color: #666666; " border="5" src="images/Camera.jpg"  name="registerProflePic" id="registerProflePic">
+                    <!-- <input type="file" onchange="uploadAndShowImage(event,'registerProflePic')" accept="image/gif, image/jpeg, image/png" value="Upload Image" name="image" id="Profle"> -->
+                    <progress id="registerImageProgressBar" value="40" max="100" style="width:100%; display:none;"></progress>
+                    <button style="display:block;width:100%; font-size:12px; background-color:#c3c3c3; color:white;" onclick="document.getElementById('getProfileImage').click()">Upload Image</button>
+                    <input type="file" onchange="uploadAndShowImage(event,'registerProflePic', 'getProfileImage')" accept="image/gif, image/jpeg, image/png" value="None" name="image" id="getProfileImage" style="display:none;">
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="ToppleTheRegisterDiv('2', 'Contact Details')" class="Registercollapsible" style="background-color:#c3c3c3; border: 2px solid #ffffff;"><div id="RegisterDevButtonIcon2"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Contact Details</i></div></button>
+        <div class="Registercontent" id="RegisterDevId2">
+            <div style="column-count: 2; ">
+                <div>
+                    <label id="valid_register_email"><b>Email Address</b></label>
+                    <input type="text" placeholder="Email" onchange="validateRegisterEmail()" id="register_email" name="-1" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
+                </div>
+                <div>
+                    <div>
+                        <label id="valid_register_phone"><b>Phone Number</b></label>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Phone Number" onchange="validateRegisterPhone()" id="register_phone" name="-1" style=" border-top: 0px; border-left: 0px; border-right: 0px; min-width: 160px; width:50%;" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="ToppleTheRegisterDiv('3', 'Religious Details')" class="Registercollapsible" style="background-color:#c3c3c3; border: 2px solid #ffffff;"><div id="RegisterDevButtonIcon3"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Religious Details</i></div></button>
+        <div class="Registercontent" id="RegisterDevId3">
+            <div style="column-count: 3; ">
+                <div>
+                    <label id="valid_register_Religion"><b>Religion</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterReligion()" onchange="resetReligionLowerDetailsIfChanged(2)" placeholder="Religion" id="register_Religion" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
+                </div>
+                <div>
+                    <label id="valid_register_Caste"><b>Caste</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterCaste()" onchange="resetReligionLowerDetailsIfChanged(1)" placeholder="Caste" id="register_Caste" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
+                </div>
+                <div>
+                    <label id="valid_register_SubCaste"><b>Sub Caste</b></label>
+                    <input type="text" onmousedown="autoSuggestRegisterSubCaste()"  onchange="resetReligionLowerDetailsIfChanged(0)" placeholder="Sub Caste" id="register_SubCaste" name="0" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="ToppleTheRegisterDiv('4', 'Address')" class="Registercollapsible" style="background-color:#c3c3c3; border: 2px solid #ffffff;"><div id="RegisterDevButtonIcon4"><i class="fa fa-plus" style="font-size:20px;color:white;vertical-align: middle; ">      Address</i></div></button>
+        <div class="Registercontent" id="RegisterDevId4">
+            <div style="left: 0; top: 0; width: 32%; float: left;">
+                <div>
+                    <label><b>House / Locality</b></label>
+                </div>
+                <div>
+                    <textarea type="text" rows="8" style="border-top: 0px; border-left: 0px; border-right: 0px; width:100%; resize:none; margin-top:2.5%;" placeholder="House Name / Number / Locality" id="register_Locality" name="register_Locality"  required  ></textarea><div id="valid_register_Locality"></div>
+                </div>
+            </div>
+            <div style="left: 32%; top: 0; width: 32%; float: left; padding: 0 18px 0 ">
+                <div>
+                    <label id="valid_register_State"><b>State</b></label>
+                    <input type="text" placeholder="State" id="register_State" name="0" onmousedown="autoSuggestRegisterState()"  onchange="resetAddressLowerDetailsIfChanged(3)" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
+                    <label id="valid_register_District"><b>District</b></label>
+                    <input type="text" placeholder="District" id="register_District" name="0" onmousedown="autoSuggestRegisterDistrict()"  onchange="resetAddressLowerDetailsIfChanged(2)" style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
+                </div>
+            </div>
+            <div style="left: 65%; top: 0; width: 31%; float: left;">
+                <div>
+                    <label id="valid_register_Tehsil"><b>SubDistrict/Tehsil/City</b></label>
+                    <input type="text" placeholder="SubDistrict/Tehsil/City" id="register_Tehsil" name="0" onmousedown="autoSuggestRegisterTehsil()" onchange="resetAddressLowerDetailsIfChanged(1)"  style="border-top: 0px; border-left: 0px; border-right: 0px;" required  >
+                    <label id="valid_register_Village"><b>Village/Town</b></label>
+                    <input type="text" placeholder="Village/Town" id="register_Village" name="0" onmousedown="autoSuggestRegisterVillage()" onchange="resetAddressLowerDetailsIfChanged(0)" style="border-top: 0px; border-left: 0px; border-right: 0px;"  required  >
+                </div>
+            </div>
+        </div>
+
+        <div class="Registercontainer">
+            <button onclick="RegisterSubmitButton()" style="font-size:20px; color:White;"><i class="fa fa-pencil-square-o" style="font-size:18px;"></i>  Register</button>
+            <div id="loading_register" style="z-index: 1;  width: 50%; height: 50%;"></div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

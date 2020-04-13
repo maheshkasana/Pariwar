@@ -7,6 +7,7 @@ import com.mkasana.FamilyTree.Pariwar.Component.login.LoginValidation;
 import com.mkasana.FamilyTree.Pariwar.model.ReturnStatus;
 import com.mkasana.FamilyTree.Pariwar.model.SessionDetails;
 import com.mkasana.FamilyTree.Pariwar.model.userRegistrationRequest;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -36,14 +37,25 @@ public class RegisterUser {
     @RequestMapping(value = "/register/user", method = RequestMethod.POST, headers="Accept=application/json")
     private ReturnStatus registerUser(@RequestBody userRegistrationRequest request,
                               @RequestHeader HttpHeaders headers) throws Exception {
-        SessionDetails session = validate.validateRequest(headers, true);
+        SessionDetails session = null;
+        try {
+            session = validate.validateRequest(headers, true);
+        } catch (Exception e) {}
+
+        if(request.getRelation() > 0 && session == null) {
+            throw new IllegalArgumentException("To add relation we must be logged In");
+        }
+        int creatorUser = 0;
+        if(request.getRelation() > 0 && session != null) {
+            creatorUser = session.getUserId();
+        }
         /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
         });
         */
 
-        int userId = userRegister.registerUserBasicDetails(request);
+        int userId = userRegister.registerUserBasicDetails(request, creatorUser);
         ReturnStatus returnStatus = new ReturnStatus();
         returnStatus.setStatusCode(userId);
         returnStatus.setErrorCode("");
@@ -70,7 +82,12 @@ public class RegisterUser {
     @RequestMapping(value = "/register/user/file", method = RequestMethod.POST)
     private ReturnStatus registerUserFile(@RequestParam("body") String request,
                                           @RequestParam("Image") MultipartFile file, @RequestHeader HttpHeaders headers) throws Exception {
-        SessionDetails session = validate.validateRequest(headers, true);
+        SessionDetails session = null;
+        try {
+            session = validate.validateRequest(headers, true);
+        } catch (Exception e) {
+
+        }
         /*
         headers.forEach((key, value) -> {
             System.out.printf("Parameter : %s, Value %s\n",key, value);
@@ -86,8 +103,15 @@ public class RegisterUser {
         int userId = -1;
         ObjectMapper objectMapper = new ObjectMapper();
         userRegistrationRequest req = objectMapper.readValue(request, userRegistrationRequest.class);
+        if(req.getRelation() > 0 && session == null) {
+            throw new IllegalArgumentException("To add relation we must be logged In");
+        }
+        int creatorUser = 0;
+        if(req.getRelation() > 0 && session != null) {
+            creatorUser = session.getUserId();
+        }
         //System.out.printf("Object Passed : %s\n",req.toString());
-        userId = userRegister.registerUserBasicDetails(req);
+        userId = userRegister.registerUserBasicDetails(req, creatorUser);
         if(0 >= userId) {
             System.out.println("Failed to register user");
             returnStatus.setStatusCode(-1);

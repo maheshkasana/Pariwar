@@ -57,4 +57,16 @@ public class CommonController {
         //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
         return "UserSearch";
     }
+
+    @RequestMapping(value = "/register", method = {RequestMethod.POST, RequestMethod.GET})
+    public String register(@RequestHeader HttpHeaders headers) throws Exception  {
+        try {
+            SessionDetails session = validate.validateRequest(headers, true);
+        } catch (Exception e ) {
+            return "login";
+        }
+        System.out.println("in /register Controller");
+        //System.out.println("username:"+username+", token: "+token+", userId:"+userId);
+        return "UserRegister";
+    }
 }

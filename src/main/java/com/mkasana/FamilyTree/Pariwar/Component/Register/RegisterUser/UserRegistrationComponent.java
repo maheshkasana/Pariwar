@@ -9,7 +9,7 @@ public interface UserRegistrationComponent {
      * @param user
      * @return
      */
-    public int registerUserBasicDetails(final userRegistrationRequest user);
+    public int registerUserBasicDetails(final userRegistrationRequest user, int creatorUser);
 
     public int updateUserBasicDetails(final userRegistrationRequest user, final int userId);
 }

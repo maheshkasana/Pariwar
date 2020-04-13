@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Configurable
@@ -308,6 +306,20 @@ public class CommonAPIs {
             userCommonAPIsDAO.addSpouseToUser(userId, spouseId);
         } catch (Exception e) {
             System.out.println("Failed to Add Spouse to User");
+        }
+    }
+
+    public void addSiblingToUser(final int userId, final int creatorUserId) {
+        try {
+            List<Integer> parentList = getUserParentIdList(creatorUserId);
+            Set<Integer> tmp = new HashSet<>();
+            List<Integer> uniqueParentList = parentList.stream().filter(i -> tmp.add(i)).collect(Collectors.toList());
+            for(Integer i : uniqueParentList) {
+                userCommonAPIsDAO.addParentToUserId(userId, i);
+                userCommonAPIsDAO.addChildToParentId(i, userId);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to Add Sibling to the user");
         }
     }
 }
