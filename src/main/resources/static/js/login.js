@@ -19,7 +19,7 @@ class LoginResponseBody {
 function TestsendHttpRequest()
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "http://localhost:8081/index", false ); // false for synchronous request
+    xmlHttp.open( "GET", "http://148.72.206.6:8081/index", false ); // false for synchronous request
     xmlHttp.send( null );
     alert(xmlHttp.responseText);
     return xmlHttp.responseText;
@@ -87,7 +87,7 @@ function checkIfAlreadyLoggedIn() {
     var id = getCookie("userId");
     return;
     if(userName!=null && userName.length > 0 && token!=null && token.length>0 && status==true && id>0)
-        location.replace("http://localhost:8081/home");
+        location.replace("http://148.72.206.6:8081/home");
 }
 
 
@@ -100,7 +100,7 @@ function responseFromLoginCheck(details)
     if(response.status==true) {
         document.getElementById('login_loading').innerHTML="<p style='color: green;'><b>Login successful</b></p>";
         setCookie(response.username,response.authKey,response.userId,5*60);
-        location.replace("http://localhost:8081/home");
+        location.replace("http://148.72.206.6:8081/home");
     }
     else {
         document.getElementById('login_loading').innerHTML="<p style='color: red;'><b>Failed to validate</b></p>" ;
@@ -185,7 +185,7 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
         xhttp.setRequestHeader("Content-Type","application/json");
         xhttp.send(body);
     }
-    //location.replace("http://localhost:8081/index")
+    //location.replace("http://148.72.206.6:8081/index")
     //return this.responseText;
 }
 
@@ -202,7 +202,7 @@ function check_login_user() {
     var username=document.getElementById('login_username').value;
     var password=btoa(document.getElementById('login_password').value);
 
-    var url = "http://localhost:8081/login/validate";
+    var url = "http://148.72.206.6:8081/login/validate";
     var requestType = 'POST';
     var elementStatus = "login_loading";
     requestJSON = new LoginRequestBody(username,password);
@@ -365,7 +365,7 @@ class RegisterDetails {
 
 function resetDetailsAndGoBackToMainAfterRegistreation() {
 
-    location.replace("http://localhost:8081");
+    location.replace("http://148.72.206.6:8081");
     return ;
 }
 
@@ -495,8 +495,8 @@ function RegisterSubmitButton() {
     detailObject.SetAddressDetails(new AddressDetails(_locality, _village, _tehsil, _district, _state));
 
 
-    var urlFile = "http://localhost:8081/register/user/file";
-    var url = "http://localhost:8081/register/user";
+    var urlFile = "http://148.72.206.6:8081/register/user/file";
+    var url = "http://148.72.206.6:8081/register/user";
     var requestType = 'POST';
     var elementStatus = "loading_register";
     body = JSON.stringify(detailObject);
@@ -875,7 +875,7 @@ function processAutoSuggestRegisterReligion(data) {
 
 function autoSuggestRegisterReligion() {
 
-     var url = "http://localhost:8081/register/auto/allReligions";
+     var url = "http://148.72.206.6:8081/register/auto/allReligions";
      var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterReligion);
@@ -914,7 +914,7 @@ function autoSuggestRegisterCaste() {
         vset.innerHTML = "<b>Religion</b>";
     }
 
-    var url = "http://localhost:8081/register/auto/religionAllCaste/" + religionId +";";
+    var url = "http://148.72.206.6:8081/register/auto/religionAllCaste/" + religionId +";";
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterCaste);
@@ -954,7 +954,7 @@ function autoSuggestRegisterSubCaste() {
         vset.innerHTML = "<b>Caste</b>";
     }
 
-    var url = "http://localhost:8081/register/auto/casteAllSubCaste/" + casteId +";";
+    var url = "http://148.72.206.6:8081/register/auto/casteAllSubCaste/" + casteId +";";
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterSubCaste);
@@ -1004,7 +1004,7 @@ function processAutoSuggestRegisterState(data) {
 
 function autoSuggestRegisterState() {
 
-     var url = "http://localhost:8081/register/auto/allStates";
+     var url = "http://148.72.206.6:8081/register/auto/allStates";
      var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterState);
@@ -1044,7 +1044,7 @@ function autoSuggestRegisterDistrict() {
         vset.innerHTML = "<b>State</b>";
     }
 
-    var url = "http://localhost:8081/register/auto/districtByStateId/" + stateId +";";
+    var url = "http://148.72.206.6:8081/register/auto/districtByStateId/" + stateId +";";
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterDistrict);
@@ -1083,7 +1083,7 @@ function autoSuggestRegisterTehsil() {
         vset.innerHTML = "<b>District</b>";
     }
 
-    var url = "http://localhost:8081/register/auto/allTehsilByDistrictId/" + districtId +";";
+    var url = "http://148.72.206.6:8081/register/auto/allTehsilByDistrictId/" + districtId +";";
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterTehsil);
@@ -1122,7 +1122,7 @@ function autoSuggestRegisterVillage() {
         vset.innerHTML = "<b>SubDistrict/Tehsil/City</b>";
     }
 
-    var url = "http://localhost:8081/register/auto/allVillageTownByTehsilId/" + tehsilId +";";
+    var url = "http://148.72.206.6:8081/register/auto/allVillageTownByTehsilId/" + tehsilId +";";
     var requestType = 'GET';
 
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processAutoSuggestRegisterVillage);
@@ -1180,7 +1180,7 @@ function checkUsernameAvailable() {
     }
 
     var username = ele.value;
-    var url = "http://localhost:8081/register/auto/validateAvailabilityUsername/" + username +";";
+    var url = "http://148.72.206.6:8081/register/auto/validateAvailabilityUsername/" + username +";";
     var requestType = 'GET';
     SendHttpRequestAndReturnResponse(url, requestType, false, "", "", "No", false, null, processCheckUsernameAvailable);
 }

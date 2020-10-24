@@ -52,7 +52,7 @@ function checkIfNotLoggedInToSignIn() {
     var status = getCookie("pariwarStatus");
     var id = getCookie("userId");
     if(userName == null || token==null || id<=0) {
-        location.replace("http://localhost:8081/");
+        location.replace("http://148.72.206.6:8081/");
     } else {
         ShowDetailsOfUser(token);
     }
@@ -127,7 +127,7 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
         xhttp.setRequestHeader("Content-Type","application/json");
         xhttp.send(body);
     }
-    //location.replace("http://localhost:8081/index")
+    //location.replace("http://148.72.206.6:8081/index")
     //return this.responseText;
 }
 
@@ -293,7 +293,7 @@ function responseFromRegisterRequest(response) {
     if(0 >= userId) {
         alert("Failed to Register, Retry after sometime");
       } else {
-            location.replace("http://localhost:8081/profile");
+            location.replace("http://148.72.206.6:8081/profile");
          }
 }
 
@@ -343,8 +343,8 @@ function UpdateProfileSubmitButton()
     detailObject.SetAddressDetails(new AddressDetails(_locality, 0, 0, 0, 0));
 
 
-    var urlFile = "http://localhost:8081/profile/update/user/file";
-    var url = "http://localhost:8081/profile/update/user";
+    var urlFile = "http://148.72.206.6:8081/profile/update/user/file";
+    var url = "http://148.72.206.6:8081/profile/update/user";
     var requestType = 'POST';
     var elementStatus = "loading_profile";
     body = JSON.stringify(detailObject);
@@ -368,7 +368,7 @@ function wait(ms)
 function setCookieEmptyLogOut() {
   var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
   document.cookie = cookiesString;
-  location.replace("http://localhost:8081/");
+  location.replace("http://148.72.206.6:8081/");
 }
 
 

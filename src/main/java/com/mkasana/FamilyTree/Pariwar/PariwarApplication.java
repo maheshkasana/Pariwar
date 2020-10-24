@@ -8,7 +8,13 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.mkasana.FamilyTree.Pariwar"})
-public class PariwarApplication {
+public class PariwarApplication extends SpringBootServletInitializer{
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(PariwarApplication.class);
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(PariwarApplication.class, args);
 	}

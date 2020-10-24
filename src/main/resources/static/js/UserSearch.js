@@ -74,7 +74,7 @@ function checkIfNotLoggedInToSignIn() {
     var status = getCookie("pariwarStatus");
     var id = getCookie("userId");
     if(userName == null || token==null || id<=0) {
-        //location.replace("http://localhost:8081/");
+        //location.replace("http://148.72.206.6:8081/");
     }
 }
 
@@ -408,7 +408,7 @@ function getListTemprory() {
 
 function autoSuggestSearchState() {
 
-     var url = "http://localhost:8081/register/auto/allStates";
+     var url = "http://148.72.206.6:8081/register/auto/allStates";
      var requestType = 'GET';
 
      document.getElementById("search_state").style.borderColor="green";
@@ -448,7 +448,7 @@ function autoSuggestSearchDistrict()
 
 	pos = getPositionOfDivInScreen("search_district");
 
-	var url = "http://localhost:8081/register/auto/districtByStateId/" + stateId +";";
+	var url = "http://148.72.206.6:8081/register/auto/districtByStateId/" + stateId +";";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -485,7 +485,7 @@ function autoSuggestSearchTehsil()
 
 	pos = getPositionOfDivInScreen("search_tehsil");
 
-	var url = "http://localhost:8081/register/auto/allTehsilByDistrictId/" + districtId +";";
+	var url = "http://148.72.206.6:8081/register/auto/allTehsilByDistrictId/" + districtId +";";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -522,7 +522,7 @@ function autoSuggestSearchVillage()
 
 	pos = getPositionOfDivInScreen("search_village");
 
-	var url = "http://localhost:8081/register/auto/allVillageTownByTehsilId/" + tehsilId +";";
+	var url = "http://148.72.206.6:8081/register/auto/allVillageTownByTehsilId/" + tehsilId +";";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -550,7 +550,7 @@ function autoSuggestSearchReligion()
 
 	pos = getPositionOfDivInScreen("search_religion");
 
-	var url = "http://localhost:8081/register/auto/allReligions";
+	var url = "http://148.72.206.6:8081/register/auto/allReligions";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -585,7 +585,7 @@ function autoSuggestSearchCaste()
 
 	pos = getPositionOfDivInScreen("search_caste");
 
-	var url = "http://localhost:8081/register/auto/religionAllCaste/" + religionId +";";
+	var url = "http://148.72.206.6:8081/register/auto/religionAllCaste/" + religionId +";";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -621,7 +621,7 @@ function autoSuggestSearchSubCaste()
 
 	pos = getPositionOfDivInScreen("search_subcaste");
 
-	var url = "http://localhost:8081/register/auto/casteAllSubCaste/" + casteId +";";
+	var url = "http://148.72.206.6:8081/register/auto/casteAllSubCaste/" + casteId +";";
     var requestType = 'GET';
 
     var lst =  SendHttpRequestAndReturnResponseToSameFunction(url, requestType, false, "", "", "No", false, null);
@@ -665,18 +665,18 @@ function getListTemproryNumber(n) {
 
  function addParentSubmitButton(divId, userId) {
     document.getElementById(divId).style.display="none";
-    SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/add/parent/"+userId, "POST", false, "", "", "No", false, null);
+    SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/add/parent/"+userId, "POST", false, "", "", "No", false, null);
 
  }
 
 function addChildersSubmitButton(divId, userId) {
     document.getElementById(divId).style.display="none";
-    SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/add/child/"+userId, "POST", false, "", "", "No", false, null);
+    SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/add/child/"+userId, "POST", false, "", "", "No", false, null);
  }
 
  function addSpouseSubmitButton(divId, userId) {
      document.getElementById(divId).style.display="none";
-     SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/add/spouse/"+userId, "POST", false, "", "", "No", false, null);
+     SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/add/spouse/"+userId, "POST", false, "", "", "No", false, null);
   }
 
  function reachedLastGetMore(flag) {
@@ -737,14 +737,14 @@ function getDefaultDivForEmptyResponse() {
 function setCookieEmptyLogOut() {
   var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
   document.cookie = cookiesString;
-  location.replace("http://localhost:8081/");
+  location.replace("http://148.72.206.6:8081/");
 }
 
 
 function getListOfUserParentAndChilds(userId) {
-    var parentLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/parent/basic/"+userId, "GET", false, "", "", "No", false, null);
-    var ChildsLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/childs/basic/"+userId, "GET", false, "", "", "No", false, null);
-    var SiblingsLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/siblings/basic/"+userId, "GET", false, "", "", "No", false, null);
+    var parentLst = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/parent/basic/"+userId, "GET", false, "", "", "No", false, null);
+    var ChildsLst = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/childs/basic/"+userId, "GET", false, "", "", "No", false, null);
+    var SiblingsLst = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/siblings/basic/"+userId, "GET", false, "", "", "No", false, null);
 
     var alreadyMapped = []
     if(parentLst != null) {
@@ -815,7 +815,7 @@ function SubmitSearchFilters() {
 
 	requestBody = JSON.stringify(new searchParametersDetail(name_, state_, district_, tehsil_, village_, religion_, caste_, subcaste_));
 	//console.log(requestBody);
-	var lstResp =  SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/search", "POST", false, requestBody, "", "No", false, null);
+	var lstResp =  SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/search", "POST", false, requestBody, "", "No", false, null);
 	if(lstResp == null) {
 	    return;
 	}

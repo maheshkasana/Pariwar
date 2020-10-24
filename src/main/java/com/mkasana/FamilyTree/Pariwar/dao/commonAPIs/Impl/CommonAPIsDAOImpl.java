@@ -21,7 +21,7 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
     public ResultSet getBasicUserDetailsByUsername(final String username) throws Exception {
         String Function = "CommonAPIsDAOImpl:getBasicUserDetailsByUsername";
 
-        String query = "SELECT * FROM userinfo WHERE Username = '"+username+"';";
+        String query = "SELECT * FROM userInfo WHERE Username = '"+username+"';";
 
         try {
             return databaseConnection.executeQuery(query);
@@ -95,7 +95,7 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
     public ResultSet getUserInfoDetailsByUserId(final int userId) throws Exception {
         String Function = "CommonAPIsDAOImpl:getUserInfoDetailsByUserId";
 
-        String query = "SELECT * FROM userinfo WHERE Id = "+userId+";";
+        String query = "SELECT * FROM userInfo WHERE Id = "+userId+";";
 
         try {
             return databaseConnection.executeQuery(query);
@@ -173,14 +173,14 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
 
     public ResultSet searchUsersBasedOnPassedConstrains(final SearchFilters filters) throws Exception {
         String Function = "CommonAPIsDAOImpl:searchUsersBasedOnPassedConstrains";
-        String query = "SELECT userinfo.Id AS Id, userinfo.Username AS username, userinfo.FirstName AS name, userinfo.Gender AS gender, AD.firstAddress AS localaddress,"
+        String query = "SELECT userInfo.Id AS Id, userInfo.Username AS username, userInfo.FirstName AS name, userInfo.Gender AS gender, AD.firstAddress AS localaddress,"
                         + " CONCAT(USC.UserSubcasteName , ', ' , UC.UserCasteName , ', ' , URD.ReligionName) AS Religion,"
-                        + " CONCAT(UAV.VillageTownLocalAreaName , ', ' , UAT.TehsilName , ', '  , UAD.DistrictCode, ', ' , UAS.StateName) AS Address FROM userinfo"
-                        + " JOIN UserAddressDetails AS AD ON AD.Id = userinfo.UserAddressDetailsId AND AD.UserId = userinfo.Id"
-                        + " JOIN UserReligionMapDetails AS RD ON RD.Id = userinfo.SubcasteReligion AND RD.UserId = userinfo.Id"
+                        + " CONCAT(UAV.VillageTownLocalAreaName , ', ' , UAT.TehsilName , ', '  , UAD.DistrictCode, ', ' , UAS.StateName) AS Address FROM userInfo"
+                        + " JOIN UserAddressDetails AS AD ON AD.Id = userInfo.UserAddressDetailsId AND AD.UserId = userInfo.Id"
+                        + " JOIN UserReligionMapDetails AS RD ON RD.Id = userInfo.SubcasteReligion AND RD.UserId = userInfo.Id"
                         + " LEFT JOIN UserReligion AS URD ON URD.Id = RD.ReligionId"
                         + " LEFT JOIN UserCaste AS UC ON UC.Id = RD.CasteId"
-                        + " LEFT JOIN UserSubcaste AS USC ON USC.Id = RD.SubCasteId"
+                        + " LEFT JOIN UserSubCaste AS USC ON USC.Id = RD.SubCasteId"
                         + " LEFT JOIN StateDetails AS UAS ON UAS.Id = AD.StateId"
                         + " LEFT JOIN DistrictDetails AS UAD ON UAD.Id = AD.DistrictId"
                         +" LEFT JOIN TehsilDetails AS UAT ON UAT.Id = AD.TehsilId"
@@ -192,7 +192,7 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
                         + " AND (" + filters.getReligion() + "<=0 OR " + filters.getReligion() + "= RD.ReligionId)"
                         + " AND (" + filters.getCaste() + "<=0 OR " + filters.getCaste() + "= RD.CasteId)"
                         + " AND (" + filters.getSubcaste() + "<=0 OR " + filters.getSubcaste() + "= RD.SubCasteId)"
-                        + " ORDER BY userinfo.Id ASC;";
+                        + " ORDER BY userInfo.Id ASC;";
         System.out.println(query);
         try {
             return databaseConnection.executeQuery(query);
@@ -208,7 +208,7 @@ public class CommonAPIsDAOImpl implements CommonAPIsDAO {
         String Function = "CommonAPIsDAOImpl:addParentToUserId";
         long ut1 = Instant.now().getEpochSecond();
 
-        String query = "INSERT INTO USERPARENT (UserId, ParentId, ParentType, Flag) VALUES ("+userId +","+ parentId +",0,0)";
+        String query = "INSERT INTO UserParent (UserId, ParentId, ParentType, Flag) VALUES ("+userId +","+ parentId +",0,0)";
         try {
             databaseConnection.executeUpdate(query);
             databaseConnection.commit();

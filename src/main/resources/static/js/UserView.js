@@ -25,7 +25,7 @@ class userLoggedIn {
 function setCookieEmptyLogOut() {
   var cookiesString= "userId='', username='', authKey='', '', pariwarStatus=1";
   document.cookie = cookiesString;
-  location.replace("http://localhost:8081/");
+  location.replace("http://148.72.206.6:8081/");
 }
 
 function setCookie(username, token,id, expiresminutes) {
@@ -79,7 +79,7 @@ function checkIfNotLoggedInToSignIn() {
     var status = getCookie("pariwarStatus");
     var id = getCookie("userId");
     if(userName == null || token==null || id<=0) {
-        location.replace("http://localhost:8081/");
+        location.replace("http://148.72.206.6:8081/");
     } else {
         ShowDetailsOfUser(id);
     }
@@ -150,7 +150,7 @@ function SendHttpRequestAndReturnResponse(url, requestType, isSync, body, elemen
         xhttp.setRequestHeader("Content-Type","application/json");
         xhttp.send(body);
     }
-    //location.replace("http://localhost:8081/index")
+    //location.replace("http://148.72.206.6:8081/index")
     //return this.responseText;
 }
 
@@ -321,7 +321,7 @@ function getNewDiv(wdth,className,Id,leftPer,firstname, sex, age, imgSrc, bckcol
 
 
 function addNewUserForTheCurrentUser() {
-    location.replace('http://localhost:8081/register');
+    location.replace('http://148.72.206.6:8081/register');
 }
 
 function getNewAddDiv(wdth, lftmargin, txt) {
@@ -344,7 +344,7 @@ function AddTheDetailsASperTheListPassedAndtoDivId(userId,respList, DivId, male,
   spouseLst = [];
   prntList = [];
   if(spouse == 1) {
-    spouseLst = convertResponseToUserList(SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/spouse/basic/" + userId +";", "GET", false, "", "", "No", false, null));
+    spouseLst = convertResponseToUserList(SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/spouse/basic/" + userId +";", "GET", false, "", "", "No", false, null));
   }
 
   for(i = 0; i < respList.length; i++) {
@@ -492,16 +492,16 @@ function convertResponseToUserList(str_response) {
 
 function ShowDetailsOfUser(id) {
     //Validate User Details in DB
-    user_ = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/details/" + id +";", "GET", false, "", "", "No", false, null);
+    user_ = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/details/" + id +";", "GET", false, "", "", "No", false, null);
     getUserDetailsByTokenAndValidate(user_);
 
-    parentLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/parent/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    parentLst = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/parent/basic/" + id +";", "GET", false, "", "", "No", false, null);
     AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(parentLst), "UserParentDiv", "images/man.svg", 0);
 
-    SiblinsLst = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/siblings/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    SiblinsLst = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/siblings/basic/" + id +";", "GET", false, "", "", "No", false, null);
     AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(SiblinsLst), "UserSiblingDiv", "images/male.svg", 1);
 
-    ChildsList = SendHttpRequestAndReturnResponseToSameFunction("http://localhost:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null);
+    ChildsList = SendHttpRequestAndReturnResponseToSameFunction("http://148.72.206.6:8081/user/childs/basic/" + id +";", "GET", false, "", "", "No", false, null);
     AddTheDetailsASperTheListPassedAndtoDivId(id, convertResponseToUserList(ChildsList), "UserChildDiv", "images/male.svg", 2);
 }
 
